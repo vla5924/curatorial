@@ -31,6 +31,7 @@ class VKLoginController extends Controller
                 'email' => $email,
                 'name' => $name,
             ]);
+            $user->assignRole('noname');
         }
         if ($user) {
             Auth::loginUsingId($user->id);

@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\Auth\VKLoginController;
+use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,13 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/practices', [PracticeController::class, 'all'])->name('practices');
-    Route::get('/practices/{group_alias}', [PracticeController::class, 'byGroup'])->name('practicesByGroup');
-    Route::get('/practice/{id}', [PracticeController::class, 'single'])->name('singlePractice');
+    Route::group(['middleware' => ['role:user']], function () {
+        Route::get('/practices', [PracticeController::class, 'all'])->name('practices');
+        Route::get('/practices/{group_alias}', [PracticeController::class, 'byGroup'])->name('practicesByGroup');
+        Route::get('/practice/{id}', [PracticeController::class, 'single'])->name('singlePractice');
+
+        Route::middleware(['role:admin'])->prefix('admin')->group(function () {
+            Route::resource('groups', GroupController::class);
+        });
+    });
 });

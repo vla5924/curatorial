@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd0e7705fe646764fc7c5e36a1d13bfd",
+    "content-hash": "fd55a46aef609b5864d8b77634e5a6ad",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,54 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.0.3"
             },
             "time": "2021-03-11T06:42:03+00:00"
+        },
+        {
+            "name": "atehnix/vk-client",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelRUS/vk-client.git",
+                "reference": "09babd2eba2ee31d718014c4f1590c68ed6b1f58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelRUS/vk-client/zipball/09babd2eba2ee31d718014c4f1590c68ed6b1f58",
+                "reference": "09babd2eba2ee31d718014c4f1590c68ed6b1f58",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0|~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ATehnix\\VkClient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ATehnix",
+                    "email": "atehnix@gmail.com"
+                }
+            ],
+            "description": "PHP client for Vk.com API",
+            "keywords": [
+                "api",
+                "client",
+                "php",
+                "vk",
+                "vk.com",
+                "vkontakte"
+            ],
+            "support": {
+                "issues": "https://github.com/LaravelRUS/vk-client/issues",
+                "source": "https://github.com/LaravelRUS/vk-client/tree/1.4.0"
+            },
+            "time": "2020-09-10T17:46:51+00:00"
         },
         {
             "name": "brick/math",
@@ -2623,6 +2671,84 @@
                 "source": "https://github.com/SocialiteProviders/VKontakte/tree/4.2.1"
             },
             "time": "2020-12-01T23:10:59+00:00"
+        },
+        {
+            "name": "spatie/laravel-permission",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "29c05324c170c0be108ccb86dd29f6a719c0a617"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/29c05324c170c0be108ccb86dd29f6a719c0a617",
+                "reference": "29c05324c170c0be108ccb86dd29f6a719c0a617",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^6.0|^7.0|^8.0",
+                "illuminate/container": "^6.0|^7.0|^8.0",
+                "illuminate/contracts": "^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "php": "^7.2.5|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "predis/predis": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Permission\\PermissionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Permission handling for Laravel 6.0 and up",
+            "homepage": "https://github.com/spatie/laravel-permission",
+            "keywords": [
+                "acl",
+                "laravel",
+                "permission",
+                "permissions",
+                "rbac",
+                "roles",
+                "security",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-permission/issues",
+                "source": "https://github.com/spatie/laravel-permission/tree/4.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-22T18:38:29+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
