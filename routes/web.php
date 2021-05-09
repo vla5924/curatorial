@@ -20,20 +20,21 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::group(['middleware' => 'guest'], function () {
+Route::middleware('guest')->group(function () {
     Route::get('/vk/redirect', [VKLoginController::class, 'redirect'])->name('vkAuth');
     Route::get('/vk/callback', [VKLoginController::class, 'callback']);
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::group(['middleware' => ['role:user']], function () {
+
+    Route::middleware('role:user')->group(function () {
         Route::get('/practices', [PracticeController::class, 'all'])->name('practices');
         Route::get('/practices/{group_alias}', [PracticeController::class, 'byGroup'])->name('practicesByGroup');
         Route::get('/practice/{id}', [PracticeController::class, 'single'])->name('singlePractice');
+    });
 
-        Route::middleware(['role:admin'])->prefix('admin')->group(function () {
-            Route::resource('groups', GroupController::class);
-        });
+    Route::middleware('role:admin')->prefix('admin')->group(function () {
+        Route::resource('groups', GroupController::class);
     });
 });

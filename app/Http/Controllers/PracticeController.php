@@ -17,7 +17,7 @@ class PracticeController extends Controller
     {
         $practices = Practice::paginate(5);
 
-        return view('pages.practice.list', [
+        return view('pages.practice.index', [
             'groups' => $this->groupsOrdered(),
             'practices' => $practices,
         ]);
@@ -27,7 +27,7 @@ class PracticeController extends Controller
     {
         $group = Group::where('alias', $groupAlias)->first();
 
-        return view('pages.practice.list', [
+        return view('pages.practice.index', [
             'groups' => $this->groupsOrdered(),
             'practices' => $group->practices()->paginate(5),
         ]);

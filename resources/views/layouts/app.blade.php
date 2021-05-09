@@ -254,19 +254,16 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="./index.html" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>Recently added</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="./index2.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>My practices</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="./index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>New practice</p>
                                     </a>
                                 </li>
@@ -284,43 +281,17 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="pages/layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>Recently added</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>My pollbunches</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="pages/layout/boxed.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>New pollbunch</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Administration
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="pages/charts/chartjs.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Users</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/charts/flot.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Groups</p>
                                     </a>
                                 </li>
                             </ul>
@@ -336,13 +307,11 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="pages/UI/general.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>Republisher</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="pages/UI/icons.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>Blocker</p>
                                     </a>
                                 </li>
@@ -359,14 +328,34 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="pages/forms/general.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>FAQs</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="pages/forms/advanced.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>About</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-header">ADMINISTRATION</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Groups
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('groups.index') }}" class="nav-link">
+                                        <p>All groups</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('groups.create') }}" class="nav-link">
+                                        <p>Add group</p>
                                     </a>
                                 </li>
                             </ul>

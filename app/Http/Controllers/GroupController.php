@@ -14,7 +14,11 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = Group::orderBy('name')->get();
+
+        return view('pages.admin.groups.index', [
+            'groups' => $groups,
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.groups.create');
     }
 
     /**
@@ -35,7 +39,13 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $group = new Group();
+        $group->name = $request->name;
+        $group->vk_id = $request->vk_id;
+        $group->alias = $request->alias;
+        $group->save();
+
+        return redirect()->back()->withSuccess('Group added successfully');
     }
 
     /**
