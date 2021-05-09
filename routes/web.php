@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
-use App\Http\Controllers\VKAuthController;
+use App\Http\Controllers\Auth\VKLoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,15 +20,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/vk/redirect', [VKAuthController::class, 'redirect'])->name('vkAuth');
-    Route::get('/vk/callback', [VKAuthController::class, 'callback']);
+    Route::get('/vk/redirect', [VKLoginController::class, 'redirect'])->name('vkAuth');
+    Route::get('/vk/callback', [VKLoginController::class, 'callback']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [PracticeController::class, 'all']);
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/practices', [PracticeController::class, 'all'])->name('practices');
     Route::get('/practices/{group_alias}', [PracticeController::class, 'byGroup'])->name('practicesByGroup');
     Route::get('/practice/{id}', [PracticeController::class, 'single'])->name('singlePractice');
 });
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
