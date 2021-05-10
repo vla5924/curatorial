@@ -13,22 +13,22 @@ class VKLoginController extends Controller
 {
     public function redirect()
     {
-        return Socialite::driver('vkontakte')->scopes(['email', 'photos', 'video', 'groups'])->redirect();
+        return Socialite::driver('vkontakte')->scopes(['photos', 'video', 'groups'])->redirect();
     }
 
     public function callback()
     {
         $oauthUser = Socialite::driver('vkontakte')->user();
-        $email = $oauthUser->getEmail();
+        $id = $oauthUser->getId();
         $name = $oauthUser->getName();
         $token = $oauthUser->accessTokenResponseBody['access_token'];
         $expires = (int)floor($oauthUser->accessTokenResponseBody['expires_in'] / 60);
-        $user = User::where(['email' => $email])->first();
+        $user = User::where(['vk_id' => $id])->first();
         if ($user) {
             $user->fill(['name' => $name]);
         } else {
             $user = User::create([
-                'email' => $email,
+                'vk_id' => $id,
                 'name' => $name,
             ]);
             $user->assignRole('noname');
