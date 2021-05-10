@@ -4,42 +4,135 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\Practice;
+use App\Models\PracticePicture;
+use ErrorException;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PracticeController extends Controller
 {
-    private function groupsOrdered()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return Group::orderBy('name')->get();
-    }
-
-    public function all()
-    {
-        $practices = Practice::paginate(5);
+        $practices = Practice::orderBy('created_at', 'desc')->paginate(5);
 
         return view('pages.practice.index', [
-            'groups' => $this->groupsOrdered(),
             'practices' => $practices,
         ]);
     }
 
-    public function byGroup($groupAlias)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $group = Group::where('alias', $groupAlias)->first();
+        $groups = Group::orderBy('name')->get();
 
-        return view('pages.practice.index', [
-            'groups' => $this->groupsOrdered(),
-            'practices' => $group->practices()->paginate(5),
+        return view('pages.practice.create', [
+            'groups' => $groups,
         ]);
     }
 
-    public function single($id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $practice = Practice::where('id', $id)->first();
+        $practice = new Practice;
+        $practice->name = $request->name;
+        $practice->group_id = $request->group_id;
+        $practice->user_id = Auth::user()->id;
 
-        return view('pages.practice.single', [
-            'groups' => $this->groupsOrdered(),
+        $files = $request->file('pictures', []);
+        if ($files instanceof UploadedFile)
+            $files = [$files];
+        if (count($files) > 12 or empty($files)) {
+            return redirect()->back()->with('failure', 'You must choose from 1 to 12 files.');
+        }
+
+        $practice->save();
+        $controller = new PracticePictureController;
+        try {
+            foreach ($files as $file) {
+                $controller->store($practice, $file);
+            }
+        } catch (ErrorException $e) {
+            $practice->delete();
+            return redirect()->back()->with('failure', $e->getMessage());
+        }
+
+        return redirect()->back()->withSuccess('Practice created successfully');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Practice  $practice
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Practice $practice)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Practice  $practice
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Practice $practice)
+    {
+        $groups = Group::orderBy('name')->get();
+
+        return view('pages.practice.edit', [
             'practice' => $practice,
+            'groups' => $groups,
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Practice  $practice
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Practice $practice)
+    {
+        $practice->name = $request->name;
+        $practice->group_id = $request->group_id;
+        $practice->save();
+
+        return redirect()->back()->withSuccess('Practice updated successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Practice  $practice
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Practice $practice)
+    {
+        $pictures = PracticePicture::where('practice_id', $practice->id)->get();
+        foreach ($pictures as $picture) {
+            Storage::delete($picture->path);
+            $picture->delete();
+        }
+        $practice->delete();
+
+        return redirect()->back()->withSuccess('Practice deleted successfully');
     }
 }

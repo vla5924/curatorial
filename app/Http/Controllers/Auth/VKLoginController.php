@@ -36,7 +36,7 @@ class VKLoginController extends Controller
         if ($user) {
             Auth::loginUsingId($user->id);
             VKTokenService::setToken($token, $expires);
-            return redirect()->route('practices');
+            return redirect()->route('home');
         }
         return back(400);
     }

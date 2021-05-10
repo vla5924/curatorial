@@ -28,10 +28,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::middleware('role:user')->group(function () {
-        Route::get('/practices', [PracticeController::class, 'all'])->name('practices');
-        Route::get('/practices/{group_alias}', [PracticeController::class, 'byGroup'])->name('practicesByGroup');
-        Route::get('/practice/{id}', [PracticeController::class, 'single'])->name('singlePractice');
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('practice', PracticeController::class);
     });
 
     Route::middleware('role:admin')->prefix('admin')->group(function () {

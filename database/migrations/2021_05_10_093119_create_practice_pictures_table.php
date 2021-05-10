@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePracticesTable extends Migration
+class CreatePracticePicturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreatePracticesTable extends Migration
      */
     public function up()
     {
-        Schema::create('practices', function (Blueprint $table) {
+        Schema::create('practice_pictures', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('group_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('name');
+            $table->bigInteger('practice_id')->unsigned();
+            $table->string('path');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreatePracticesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('practices');
+        Schema::dropIfExists('practice_pictures');
     }
 }

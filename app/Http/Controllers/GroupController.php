@@ -67,7 +67,9 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        //
+        return view('pages.admin.groups.edit', [
+            'group' => $group,
+        ]);
     }
 
     /**
@@ -79,7 +81,12 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        //
+        $group->name = $request->name;
+        $group->vk_id = $request->vk_id;
+        $group->alias = $request->alias;
+        $group->save();
+
+        return redirect()->back()->withSuccess('Group updated successfully');
     }
 
     /**
@@ -90,6 +97,8 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        $group->delete();
+
+        return redirect()->back()->withSuccess('Group deleted successfully');
     }
 }

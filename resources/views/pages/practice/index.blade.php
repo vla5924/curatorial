@@ -1,17 +1,46 @@
 @extends('layouts.app')
 
-@section('title', 'Curatorial Practice')
+@section('title', 'Practices')
 
 @section('content')
-    @include('components.groups')
+<div class="card">
+    @include('components.form-alert')
 
-    @foreach ($practices as $practice)
-        <p>
-            name: {{ $practice->name }} |
-            <a href="{{ route('singlePractice', $practice->id) }}">more...</a> |
-            <a href="{{ route('practicesByGroup', $practice->group->alias) }}">{{ $practice->group->name }}</a>
-        </p>
-    @endforeach
-
-    {{ $practices->links('vendor.pagination.bootstrap-4') }}
+    <div class="card-body p-0" style="display: block;">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Group</th>
+                    <th>Author</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($practices as $practice)
+                <tr>
+                    <td>
+                        <a>{{ $practice->name }}</a><br />
+                        <small>Created at {{ $practice->created_at }}</small>
+                    </td>
+                    <td>{{ $practice->group->name }}</td>
+                    <td>{{ $practice->user->name }}</td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
+                            <i class="fas fa-pencil-alt"></i> Edit
+                        </a>
+                        <button type="submit" class="btn btn-danger btn-sm" href="#" form="destroy-{{ $practice->id }}" onclick="if(!confirm('Delete?')) return false;">
+                                <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <form method="POST" action="{{ route('practice.destroy', $practice->id) }}" id="destroy-{{ $practice->id }}" hidden>
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection

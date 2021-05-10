@@ -4,6 +4,8 @@
 
 @section('content')
 <div class="card">
+    @include('components.form-alert')
+
     <div class="card-body p-0" style="display: block;">
         <table class="table table-striped projects">
             <thead>
@@ -21,12 +23,16 @@
                     <td>{{ $group->vk_id }}</td>
                     <td>{{ $group->alias }}</td>
                     <td class="project-actions text-right">
-                        <a class="btn btn-info btn-sm" href="#">
+                        <a class="btn btn-info btn-sm" href="{{ route('groups.edit', $group->id) }}">
                             <i class="fas fa-pencil-alt"></i> Edit
                         </a>
-                        <a class="btn btn-danger btn-sm" href="#">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                        <button type="submit" class="btn btn-danger btn-sm" href="#" form="destroy-{{ $group->id }}" onclick="if(!confirm('Delete?')) return false;">
+                                <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <form method="POST" action="{{ route('groups.destroy', $group->id) }}" id="destroy-{{ $group->id }}" hidden>
+                            @csrf
+                            @method('DELETE')
+                        </form>
                     </td>
                 </tr>
                 @endforeach

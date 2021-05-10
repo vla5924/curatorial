@@ -13,4 +13,14 @@ class Practice extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function practicePictures()
+    {
+        return $this->hasMany(PracticePicture::class);
+    }
 }
