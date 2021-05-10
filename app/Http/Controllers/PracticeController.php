@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\Practice;
-use App\Models\PracticePicture;
 use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -83,7 +82,9 @@ class PracticeController extends Controller
      */
     public function show(Practice $practice)
     {
-        //
+        return view('pages.practice.show', [
+            'practice' => $practice,
+        ]);
     }
 
     /**
@@ -126,8 +127,7 @@ class PracticeController extends Controller
      */
     public function destroy(Practice $practice)
     {
-        $pictures = PracticePicture::where('practice_id', $practice->id)->get();
-        foreach ($pictures as $picture) {
+        foreach ($practice->pictures as $picture) {
             Storage::delete($picture->path);
             $picture->delete();
         }

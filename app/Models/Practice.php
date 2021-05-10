@@ -19,7 +19,7 @@ class Practice extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function practicePictures()
+    public function pictures()
     {
         return $this->hasMany(PracticePicture::class);
     }
