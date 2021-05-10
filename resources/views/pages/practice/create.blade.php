@@ -13,7 +13,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Enter email" required>
+                    <input type="text" class="form-control" name="name" placeholder="Enter practice name briefly describing its theme" required>
                 </div>
                 <div class="form-group">
                     <label>Group</label>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\VKTokenService;
+use App\Http\Services\VkTokenService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class VKLoginController extends Controller
         }
         if ($user) {
             Auth::loginUsingId($user->id);
-            VKTokenService::setToken($token, $expires);
+            VkTokenService::setToken($token, $expires);
             return redirect()->route('home');
         }
         return back(400);

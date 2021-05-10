@@ -26,6 +26,15 @@ class PracticeController extends Controller
         ]);
     }
 
+    public function my()
+    {
+        $practices = Practice::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('pages.practice.index', [
+            'practices' => $practices,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -134,5 +143,16 @@ class PracticeController extends Controller
         $practice->delete();
 
         return redirect()->back()->withSuccess('Practice deleted successfully');
+    }
+
+    public function publish(int $id)
+    {
+        $practice = Practice::where('id', $id)->first();
+        $groups = Group::orderBy('name')->get();
+
+        return view('pages.practice.publish', [
+            'practice' => $practice,
+            'groups' => $groups,
+        ]);
     }
 }
