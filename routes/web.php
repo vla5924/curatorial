@@ -51,6 +51,6 @@ Route::middleware('auth')->group(function () {
 Route::prefix('internal')->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::get('/practice/test', [ApiPracticeController::class, 'test']);
-        Route::get('/practice/{id}/publish', [ApiPracticeController::class, 'publish']);
+        Route::post('/practice/{id}/publish', [ApiPracticeController::class, 'publish'])->name('internal.practice.publish');
     });
 });

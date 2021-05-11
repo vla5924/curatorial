@@ -62,7 +62,7 @@
     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
         <h3 class="text-primary"><i class="fas fa-paint-brush"></i> {{ $practice->name }}</h3>
         <div class="mt-3 mb-5">
-            <a class="btn btn-primary btn-sm" href="{{ route('practice.edit', $practice->id) }}">
+            <a class="btn btn-primary btn-sm" href="{{ route('practice.publish', $practice->id) }}">
                 <i class="fab fa-vk"></i> Publish
             </a>
             <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
