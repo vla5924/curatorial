@@ -34,4 +34,8 @@ Tools:
 
 Permissions:
 * view permissions
-* edit permissions
+* assign permissions
+
+Roles:
+* view roles
+* assign roles

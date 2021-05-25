@@ -42,7 +42,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'use republisher']);
 
         Permission::create(['name' => 'view permissions']);
-        Permission::create(['name' => 'edit permissions']);
+        Permission::create(['name' => 'assign permissions']);
+
+        Permission::create(['name' => 'view roles']);
+        Permission::create(['name' => 'assign roles']);
 
         Role::create(['name' => 'noname']);
 
