@@ -135,6 +135,7 @@
                                 </p>
                             </a>
                         </li>
+                        @can('view practices')
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -154,13 +155,17 @@
                                         <p>My practices</p>
                                     </a>
                                 </li>
+                                @can('create practices')
                                 <li class="nav-item">
                                     <a href="{{ route('practice.create') }}" class="nav-link">
                                         <p>Create practice</p>
                                     </a>
                                 </li>
+                                @endcan
                             </ul>
                         </li>
+                        @endcan
+                        @can('view pollbunches')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -181,13 +186,16 @@
                                         <p>My pollbunches</p>
                                     </a>
                                 </li>
+                                @can('create pollbunches')
                                 <li class="nav-item">
                                     <a href="pages/layout/boxed.html" class="nav-link">
-                                        <p>New pollbunch</p>
+                                        <p>Create pollbunch</p>
                                     </a>
                                 </li>
+                                @endcan
                             </ul>
                         </li>
+                        @endcan
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tree"></i>
@@ -197,16 +205,20 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="pages/UI/general.html" class="nav-link">
-                                        <p>Republisher</p>
-                                    </a>
-                                </li>
+                                @can('use blocker')
                                 <li class="nav-item">
                                     <a href="pages/UI/icons.html" class="nav-link">
                                         <p>Blocker</p>
                                     </a>
                                 </li>
+                                @endcan
+                                @can('use republisher')
+                                <li class="nav-item">
+                                    <a href="pages/UI/general.html" class="nav-link">
+                                        <p>Republisher</p>
+                                    </a>
+                                </li>
+                                @endcan
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -253,6 +265,7 @@
                         </li>
                         @role('admin')
                         <li class="nav-header">ADMINISTRATION</li>
+                        @can('view groups')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
@@ -267,13 +280,23 @@
                                         <p>All groups</p>
                                     </a>
                                 </li>
+                                @can('assign groups')
+                                <li class="nav-item">
+                                    <a href="{{ route('groups.assign') }}" class="nav-link">
+                                        <p>Assign groups</p>
+                                    </a>
+                                </li>
+                                @endcan
+                                @can('create groups')
                                 <li class="nav-item">
                                     <a href="{{ route('groups.create') }}" class="nav-link">
                                         <p>Add group</p>
                                     </a>
                                 </li>
+                                @endcan
                             </ul>
                         </li>
+                        @endcan
                         @endrole
                     </ul>
                 </nav><!-- /.sidebar-menu -->

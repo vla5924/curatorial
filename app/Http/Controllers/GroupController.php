@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -100,5 +101,16 @@ class GroupController extends Controller
         $group->delete();
 
         return redirect()->back()->withSuccess('Group deleted successfully');
+    }
+
+    public function assign()
+    {
+        $users = User::orderBy('name')->paginate(20);
+        $groups = Group::orderBy('name')->get();
+
+        return view('pages.admin.groups.assign', [
+            'users' => $users,
+            'groups' => $groups,
+        ]);
     }
 }

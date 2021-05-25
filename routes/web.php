@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\PracticeController as ApiPracticeController;
+use App\Http\Controllers\Api\GroupController as ApiGroupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\Auth\VKLoginController;
@@ -46,16 +47,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/extra-token', [ExtraTokenController::class, 'store'])->name('extra-token.store');
     });
 
-    Route::middleware('can:view groups')->resource('groups', GroupController::class)->only('index');
-    Route::middleware('can:create groups')->resource('groups', GroupController::class)->only(['create', 'store']);
-    Route::middleware('can:edit groups')->resource('groups', GroupController::class)->only(['edit', 'update']);
-    Route::middleware('can:delete groups')->resource('groups', GroupController::class)->only('destroy');
-
     Route::prefix('internal')->group(function () {
         Route::middleware('role:admin')->group(function () {
             Route::get('/practice/test', [ApiPracticeController::class, 'test']);
         });
 
         Route::middleware('can:publish practices')->post('/practice/{id}/publish', [ApiPracticeController::class, 'publish'])->name('internal.practice.publish');
+        
+        Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
     });
+
+    Route::middleware('can:assign groups')->get('/groups/assign', [GroupController::class, 'assign'])->name('groups.assign');
+    Route::middleware('can:view groups')->resource('groups', GroupController::class)->only('index');
+    Route::middleware('can:create groups')->resource('groups', GroupController::class)->only(['create', 'store']);
+    Route::middleware('can:edit groups')->resource('groups', GroupController::class)->only(['edit', 'update']);
+    Route::middleware('can:delete groups')->resource('groups', GroupController::class)->only('destroy');
 });
