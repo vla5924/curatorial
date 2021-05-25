@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\PracticeController as ApiPracticeController;
 use App\Http\Controllers\Api\GroupController as ApiGroupController;
+use App\Http\Controllers\Api\PollbunchController as ApiPollbunchController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\Auth\VKLoginController;
@@ -26,8 +27,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware('guest')->group(function () {
-    Route::get('/vk/redirect', [VKLoginController::class, 'redirect'])->name('vkAuth');
-    Route::get('/vk/callback', [VKLoginController::class, 'callback']);
+    Route::get('/vk/redirect', [VKLoginController::class, 'redirect'])->name('login.vk.redirect');
+    Route::get('/vk/callback', [VKLoginController::class, 'callback'])->name('login.vk.callback');
 });
 
 Route::middleware('auth')->group(function () {
@@ -63,7 +64,9 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('can:publish practices')->post('/practice/{id}/publish', [ApiPracticeController::class, 'publish'])->name('internal.practice.publish');
-        
+
+        Route::middleware('can:publish pollbunches')->post('/pollbunches/{id}/publish', [ApiPollbunchController::class, 'publish'])->name('internal.pollbunches.publish');
+
         Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
     });
 

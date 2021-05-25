@@ -23,7 +23,7 @@
     <div class="card-body">
       <p class="login-box-msg">Please log in to proceed into workspace.</p>
       <div class="social-auth-links text-center mt-2 mb-3">
-        <a href="{{ route('vkAuth') }}" class="btn btn-block btn-primary">
+        <a href="{{ route('login.vk.redirect') }}" class="btn btn-block btn-primary">
           <i class="fab fa-vk mr-2"></i> Log in with VK
         </a>
       </div>
