@@ -177,18 +177,18 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="pages/layout/top-nav.html" class="nav-link">
+                                    <a href="{{ route('pollbunches.index') }}" class="nav-link">
                                         <p>Recently added</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                    <a href="{{ route('pollbunches.my') }}" class="nav-link">
                                         <p>My pollbunches</p>
                                     </a>
                                 </li>
                                 @can('create pollbunches')
                                 <li class="nav-item">
-                                    <a href="pages/layout/boxed.html" class="nav-link">
+                                    <a href="{{ route('pollbunches.create') }}" class="nav-link">
                                         <p>Create pollbunch</p>
                                     </a>
                                 </li>

@@ -42,11 +42,7 @@ class PracticeController extends Controller
      */
     public function create()
     {
-        $groups = Group::orderBy('name')->get();
-
-        return view('pages.practice.create', [
-            'groups' => $groups,
-        ]);
+        return view('pages.practice.create');
     }
 
     /**
@@ -104,11 +100,8 @@ class PracticeController extends Controller
      */
     public function edit(Practice $practice)
     {
-        $groups = Group::orderBy('name')->get();
-
         return view('pages.practice.edit', [
             'practice' => $practice,
-            'groups' => $groups,
         ]);
     }
 
@@ -148,11 +141,9 @@ class PracticeController extends Controller
     public function publish(int $id)
     {
         $practice = Practice::where('id', $id)->first();
-        $groups = Group::orderBy('name')->get();
 
         return view('pages.practice.publish', [
             'practice' => $practice,
-            'groups' => $groups,
         ]);
     }
 }

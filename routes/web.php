@@ -7,6 +7,7 @@ use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\Auth\VKLoginController;
 use App\Http\Controllers\ExtraTokenController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PollbunchController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,15 @@ Route::middleware('auth')->group(function () {
     });
     Route::middleware('can:edit practices')->resource('practice', PracticeController::class)->only(['edit', 'update']);
     Route::middleware('can:delete practices')->resource('practice', PracticeController::class)->only('destroy');
+
+    Route::middleware('can:publish pollbunches')->get('/pollbunches/{id}/publish', [PollbunchController::class, 'publish'])->name('pollbunches.publish');
+    Route::middleware('can:create pollbunches')->resource('pollbunches', PollbunchController::class)->only(['create', 'store']);
+    Route::middleware('can:view pollbunches')->group(function () {
+        Route::get('/pollbunches/my', [PollbunchController::class, 'my'])->name('pollbunches.my');
+        Route::resource('pollbunches', PollbunchController::class)->only(['index', 'show']);
+    });
+    Route::middleware('can:edit pollbunches')->resource('pollbunches', PollbunchController::class)->only(['edit', 'update']);
+    Route::middleware('can:delete pollbunches')->resource('pollbunches', PollbunchController::class)->only('destroy');
 
     Route::middleware('role:admin')->prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
