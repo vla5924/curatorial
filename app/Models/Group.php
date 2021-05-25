@@ -13,4 +13,9 @@ class Group extends Model
     {
         return $this->hasMany(Practice::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
