@@ -45,7 +45,7 @@
             </tbody>
         </table>
 
-        {{ $users->links() }}
+        {{ $practices->links() }}
     </div>
 </div>
 @endsection

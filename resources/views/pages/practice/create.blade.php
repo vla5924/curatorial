@@ -18,9 +18,7 @@
                 <div class="form-group">
                     <label>Group</label>
                     <select class="form-control" style="width: 100%;" name="group_id" required>
-                        @foreach ($groups as $group)
-                            <option value="{{ $group->id }}">{{ $group->name }}</option>
-                        @endforeach
+                        @include('components.user-groups')
                     </select>
                 </div>
                 <div class="form-group">

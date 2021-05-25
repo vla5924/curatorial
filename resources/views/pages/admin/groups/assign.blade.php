@@ -36,6 +36,8 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $users->links() }}
     </div>
 </div>
 @endsection
@@ -62,6 +64,8 @@ let internal = {
                     class: 'bg-success',
                     title: 'Change saved',
                     body: `Group ${groupId} ${part} user ${userId} successfully.`,
+                    autohide: true,
+                    delay: 1000,
                 });
             } else {
                 checkbox.checked = prevState;
@@ -70,6 +74,8 @@ let internal = {
                     title: 'Change not saved',
                     subtitle: 'API error',
                     body: data.error,
+                    autohide: true,
+                    delay: 1000,
                 });
             }
         })
@@ -81,6 +87,8 @@ let internal = {
                 title: 'Change not saved',
                 subtitle: 'Server error',
                 body: body,
+                autohide: true,
+                delay: 1000,
             });
         }).always(function () {
             checkbox.disabled = false;

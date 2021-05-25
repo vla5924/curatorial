@@ -33,11 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::middleware('can:publish practices')->get('/practice/{id}/publish', [PracticeController::class, 'publish'])->name('practice.publish');
+    Route::middleware('can:create practices')->resource('practice', PracticeController::class)->only(['create', 'store']);
     Route::middleware('can:view practices')->group(function () {
         Route::get('/practice/my', [PracticeController::class, 'my'])->name('practice.my');
         Route::resource('practice', PracticeController::class)->only(['index', 'show']);
     });
-    Route::middleware('can:create practices')->resource('practice', PracticeController::class)->only(['create', 'store']);
     Route::middleware('can:edit practices')->resource('practice', PracticeController::class)->only(['edit', 'update']);
     Route::middleware('can:delete practices')->resource('practice', PracticeController::class)->only('destroy');
 

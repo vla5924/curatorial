@@ -12,7 +12,7 @@
                     <label>Group</label>
                     <select class="form-control" style="width: 100%;" id="field-group-id" required>
                         @foreach ($groups as $group)
-                            <option value="{{ $group->id }}" {{ $group->id == $practice->group->id ? 'selected' : '' }}>{{ $group->name }}</option>
+                            @include('components.user-groups', ['selected' => $practice->group->id])
                         @endforeach
                     </select>
                 </div>
