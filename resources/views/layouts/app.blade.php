@@ -131,13 +131,12 @@
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Home
-                                    <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>
                         @can('view practices')
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Practices
@@ -172,7 +171,6 @@
                                 <p>
                                     Pollbunches
                                     <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">6</span>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
@@ -347,6 +345,7 @@
     <script src="/theme/dist/js/adminlte.js"></script>
     <script src="/theme/dist/js/demo.js"></script>
     <script src="/theme/dist/js/pages/dashboard.js"></script>
+    <script src="/js/misc.js"></script>
     <script>@yield('inline-script')</script>
 </body>
 

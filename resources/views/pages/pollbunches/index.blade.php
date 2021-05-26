@@ -32,7 +32,7 @@
                         <a class="btn btn-info btn-sm" href="{{ route('pollbunches.edit', $pollbunch->id) }}">
                             <i class="fas fa-pencil-alt"></i> Edit
                         </a>
-                        <button type="submit" class="btn btn-danger btn-sm" href="#" form="destroy-{{ $pollbunch->id }}" onclick="if(!confirm('Delete?')) return false;">
+                        <button type="submit" class="btn btn-danger btn-sm btn-delete" form="destroy-{{ $pollbunch->id }}">
                                 <i class="fas fa-trash"></i> Delete
                         </button>
                         <form method="POST" action="{{ route('pollbunches.destroy', $pollbunch->id) }}" id="destroy-{{ $pollbunch->id }}" hidden>

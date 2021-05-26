@@ -68,7 +68,7 @@
             <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
                 <i class="fas fa-pencil-alt"></i> Edit
             </a>
-            <button type="submit" class="btn btn-danger btn-sm" href="#" form="destroy-{{ $practice->id }}" onclick="if(!confirm('Delete?')) return false;">
+            <button type="submit" class="btn btn-danger btn-sm btn-delete" href="#" form="destroy-{{ $practice->id }}">
                     <i class="fas fa-trash"></i> Delete
             </button>
             <form method="POST" action="{{ route('practice.destroy', $practice->id) }}" id="destroy-{{ $practice->id }}" hidden>
