@@ -81,7 +81,7 @@ class PracticePublishService extends VkApiService
 
             try {
                 $response = $this->api->request('wall.post', [
-                    'owner_id'       => '-' . $group->vk_id,
+                    'owner_id'       => -$group->vk_id,
                     'from_group'     => 1,
                     'close_comments' => 0,
                     'signed'         => (int)$signed,
@@ -100,7 +100,7 @@ class PracticePublishService extends VkApiService
 
             $results[] = [
                 'ok' => true,
-                'post_id' => '-' . $group->vk_id . '_' . $response['post_id'],
+                'post_id' => (-$group->vk_id) . '_' . $response['post_id'],
             ];
         }
 

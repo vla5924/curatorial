@@ -11,18 +11,16 @@
                 <div class="form-group">
                     <label>Group</label>
                     <select class="form-control" style="width: 100%;" id="field-group-id" required>
-                        @foreach ($groups as $group)
-                            @include('components.user-groups', ['selected' => $practice->group->id])
-                        @endforeach
+                    @include('components.user-groups', ['selected' => $pollbunch->group->id])
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Main contents</label>
-                    <input type="text" class="form-control" id="field-message" value="{{ $practice->name }}" placeholder="Enter main contents of post here (it should include theme and must not include hashtags)">
+                    <input type="text" class="form-control" id="field-message" value="{{ $pollbunch->name }}" placeholder="Enter main contents of post here (it should include theme and must not include hashtags)">
                 </div>
                 <div class="form-group">
                     <label>Hashtags</label>
-                    <input type="text" class="form-control" id="field-hashtags" value="#{{ $practice->group->alias }}_p" placeholder="Enter corresponding hashtags (they will be appended to each post)">
+                    <input type="text" class="form-control" id="field-hashtags" value="#{{ $pollbunch->group->alias }}_p" placeholder="Enter corresponding hashtags (they will be appended to each post)">
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -43,23 +41,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Pictures about to plublish</label>
-                    <div class="row">
-                        @foreach ($practice->pictures as $picture)
-                            <div class="col-6 col-md-4 col-lg-3">
-                                <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary" id="btn-publish">Publish</button>
                     <span class="custom-control custom-switch mx-4" style="display: inline-block">
                       <input type="checkbox" class="custom-control-input" checked id="field-signed">
                       <label class="custom-control-label" for="field-sign">Add signature</label>
-                    </span>{{ csrf_token() }}
+                    </span>
             </div>
     </div>
 </div>
@@ -70,8 +58,8 @@ $(function () {
     $('#start_datetime').datetimepicker({
         icons: { time: 'far fa-clock' },
         format: 'DD.MM.YYYY HH:mm',
-        minDate: '{{ date('d.m.Y H:i') }}',
-        defaultDate: '{{ date('d.m.Y H:i') }}',
+        minDate: moment(),
+        defaultDate: moment(),
     });
 
     $('#btn-publish').click(function() {
@@ -89,7 +77,7 @@ $(function () {
         };
         console.log(request);
 
-        $.post('{{ route('internal.practice.publish', $practice->id) }}', request)
+        $.post('{{ route('internal.pollbunches.publish', $pollbunch->id) }}', request)
         .done(function (data) {
             if (data.ok) {
                 let body = '';
@@ -97,7 +85,7 @@ $(function () {
                     body += `<i class="fas fa-check fa-fw"></i> #${i}: Postponed <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
                 $(document).Toasts('create', {
                     class: 'bg-success',
-                    title: 'Practice published',
+                    title: 'Pollbunch published',
                     body: body,
                 });
             } else {
@@ -115,7 +103,7 @@ $(function () {
                 }
                 $(document).Toasts('create', {
                     class: 'bg-danger',
-                    title: 'Practice not published',
+                    title: 'Pollbunch not published',
                     subtitle: 'API error',
                     body: body,
                 });
@@ -125,7 +113,7 @@ $(function () {
             let body = response.responseJSON.message ? response.responseJSON.message : 'Internal server error.';
             $(document).Toasts('create', {
                 class: 'bg-danger',
-                title: 'Practice not published',
+                title: 'Pollbunch not published',
                 subtitle: 'Server error',
                 body: body,
             });

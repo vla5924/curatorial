@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pollbunch ' . $practice->id)
+@section('title', 'Pollbunch ' . $pollbunch->id)
 
 @section('content')
 
@@ -14,7 +14,7 @@
             <div class="info-box bg-light">
             <div class="info-box-content">
                 <span class="info-box-text text-center text-muted">Author</span>
-                <span class="info-box-number text-center text-muted mb-0">{{ $practice->user->name }}</span>
+                <span class="info-box-number text-center text-muted mb-0">{{ $pollbunch->user->name }}</span>
             </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <div class="info-box bg-light">
             <div class="info-box-content">
                 <span class="info-box-text text-center text-muted">Group</span>
-                <span class="info-box-number text-center text-muted mb-0">{{ $practice->group->name }}</span>
+                <span class="info-box-number text-center text-muted mb-0">{{ $pollbunch->group->name }}</span>
             </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="info-box bg-light">
             <div class="info-box-content">
                 <span class="info-box-text text-center text-muted">Created at</span>
-                <span class="info-box-number text-center text-muted mb-0">{{ $practice->created_at }}</span>
+                <span class="info-box-number text-center text-muted mb-0">{{ $pollbunch->created_at }}</span>
             </div>
             </div>
         </div>
@@ -41,16 +41,29 @@
                 <thead>
                 <tr>
                     <th style="width: 10px">Order</th>
-                    <th>Picture</th>
+                    <th>Question</th>
+                    <th>Answers</th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1 ?>
-                    @foreach ($practice->pictures as $picture)
+                    @foreach ($pollbunch->questions as $question)
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>
-                            <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
+                            @if ($question->multiple)
+                                <i class="fas fa-check-double"></i>
+                            @endif
+                            {{ $question->text }}
+                        </td>
+                        <td>
+                            @foreach ($question->answers as $answer)
+                            {{ $answer->text }}
+                            @if ($answer->correct)
+                                <i class="fas fa-check"></i>
+                            @endif
+                            <br>
+                            @endforeach
                         </td>
                     </tr>
                     @endforeach
@@ -60,18 +73,18 @@
         </div>
     </div>
     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-        <h3 class="text-primary"><i class="fas fa-paint-brush"></i> {{ $practice->name }}</h3>
+        <h3 class="text-primary"><i class="fas fa-paint-brush"></i> {{ $pollbunch->name }}</h3>
         <div class="mt-3 mb-5">
-            <a class="btn btn-primary btn-sm" href="{{ route('practice.publish', $practice->id) }}">
+            <a class="btn btn-primary btn-sm" href="{{ route('pollbunches.publish', $pollbunch->id) }}">
                 <i class="fab fa-vk"></i> Publish
             </a>
-            <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
+            <a class="btn btn-info btn-sm" href="{{ route('pollbunches.edit', $pollbunch->id) }}">
                 <i class="fas fa-pencil-alt"></i> Edit
             </a>
-            <button type="submit" class="btn btn-danger btn-sm" href="#" form="destroy-{{ $practice->id }}" onclick="if(!confirm('Delete?')) return false;">
+            <button type="submit" class="btn btn-danger btn-sm" href="#" form="destroy-{{ $pollbunch->id }}" onclick="if(!confirm('Delete?')) return false;">
                     <i class="fas fa-trash"></i> Delete
             </button>
-            <form method="POST" action="{{ route('practice.destroy', $practice->id) }}" id="destroy-{{ $practice->id }}" hidden>
+            <form method="POST" action="{{ route('pollbunches.destroy', $pollbunch->id) }}" id="destroy-{{ $pollbunch->id }}" hidden>
                 @csrf
                 @method('DELETE')
             </form>
@@ -79,10 +92,10 @@
 
         <div class="text-muted">
         <p class="text-sm">Unique identifier
-            <b class="d-block">{{ $practice->id }}</b>
+            <b class="d-block">{{ $pollbunch->id }}</b>
         </p>
-        <p class="text-sm">Pictures count
-            <b class="d-block">{{ count($practice->pictures) }}</b>
+        <p class="text-sm">Questions count
+            <b class="d-block">{{ count($pollbunch->questions) }}</b>
         </p>
         </div>
     </div>

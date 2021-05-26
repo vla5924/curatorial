@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\PracticePublishService as PracticePublishService;
+use App\Http\Services\PracticePublishService;
 use App\Models\Group;
 use App\Models\Practice;
 use ATehnix\VkClient\Exceptions\VkException;
@@ -32,7 +32,7 @@ class PracticeController extends Controller
         $fullMessage = $request->message . PHP_EOL . PHP_EOL . $request->hashtags;
 
         try {
-            $service = new PracticePublishService();
+            $service = new PracticePublishService;
             return $service->publish(
                 $practice,
                 $group,

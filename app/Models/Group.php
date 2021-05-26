@@ -14,6 +14,11 @@ class Group extends Model
         return $this->hasMany(Practice::class);
     }
 
+    public function pollbunches()
+    {
+        return $this->hasMany(Pollbunch::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class);

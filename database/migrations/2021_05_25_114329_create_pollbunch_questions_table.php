@@ -18,7 +18,7 @@ class CreatePollbunchQuestionsTable extends Migration
             $table->bigInteger('pollbunch_id')->unsigned();
             $table->string('text');
             $table->boolean('multiple');
-            $table->string('vk_poll_id');
+            $table->string('vk_poll_id')->nullable()->default(null);
             $table->timestamps();
         });
     }

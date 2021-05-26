@@ -11,9 +11,7 @@
                 <div class="form-group">
                     <label>Group</label>
                     <select class="form-control" style="width: 100%;" id="field-group-id" required>
-                        @foreach ($groups as $group)
-                            @include('components.user-groups', ['selected' => $practice->group->id])
-                        @endforeach
+                    @include('components.user-groups', ['selected' => $practice->group->id])
                     </select>
                 </div>
                 <div class="form-group">
@@ -70,8 +68,8 @@ $(function () {
     $('#start_datetime').datetimepicker({
         icons: { time: 'far fa-clock' },
         format: 'DD.MM.YYYY HH:mm',
-        minDate: '{{ date('d.m.Y H:i') }}',
-        defaultDate: '{{ date('d.m.Y H:i') }}',
+        minDate: moment(),
+        defaultDate: moment(),
     });
 
     $('#btn-publish').click(function() {

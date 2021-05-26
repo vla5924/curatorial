@@ -9,6 +9,16 @@ class Pollbunch extends Model
 {
     use HasFactory;
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function questions()
     {
         return $this->hasMany(PollbunchQuestion::class);

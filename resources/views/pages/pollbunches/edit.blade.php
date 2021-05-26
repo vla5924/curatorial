@@ -7,19 +7,19 @@
     <div class="card card-primary">
         @include('components.form-alert')
 
-        <form method="POST" action="{{ route('practice.update', $practice->id) }}">
+        <form method="POST" action="{{ route('pollbunches.update', $pollbunch->id) }}">
             @csrf
             @method('PUT')
 
             <div class="card-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" value="{{ $practice->name }}" name="name" placeholder="Enter email" required>
+                    <input type="text" class="form-control" value="{{ $pollbunch->name }}" name="name" placeholder="Enter email" required>
                 </div>
                 <div class="form-group">
                     <label>Group</label>
                     <select class="form-control" style="width: 100%;" name="group_id" required>
-                        @include('components.user-groups', ['selected' => $practice->group->id])
+                        @include('components.user-groups', ['selected' => $pollbunch->group->id])
                     </select>
                 </div>
             </div>
