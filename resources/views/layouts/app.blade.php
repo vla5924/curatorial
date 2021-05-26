@@ -137,7 +137,7 @@
                         @can('view practices')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-book"></i>
                                 <p>
                                     Practices
                                     <i class="right fas fa-angle-left"></i>
@@ -167,7 +167,7 @@
                         @can('view pollbunches')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
+                                <i class="nav-icon fas fa-tasks"></i>
                                 <p>
                                     Pollbunches
                                     <i class="fas fa-angle-left right"></i>
@@ -196,7 +196,7 @@
                         @endcan
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tree"></i>
+                                <i class="nav-icon fas fa-tools"></i>
                                 <p>
                                     Tools
                                     <i class="fas fa-angle-left right"></i>
@@ -221,7 +221,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
+                                <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Settings
                                     <i class="fas fa-angle-left right"></i>
@@ -242,7 +242,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
+                                <i class="nav-icon fas fa-question-circle"></i>
                                 <p>
                                     Help
                                     <i class="fas fa-angle-left right"></i>
@@ -266,7 +266,7 @@
                         @can('view groups')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <i class="nav-icon fas fa-user-friends"></i>
                                 <p>
                                     Groups
                                     <i class="right fas fa-angle-left"></i>
@@ -289,6 +289,33 @@
                                 <li class="nav-item">
                                     <a href="{{ route('groups.create') }}" class="nav-link">
                                         <p>Add group</p>
+                                    </a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+                        @can('view groups')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user-lock"></i>
+                                <p>
+                                    Permissions
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @can('assign roles')
+                                <li class="nav-item">
+                                    <a href="{{ route('roles.assign') }}" class="nav-link">
+                                        <p>Assign roles</p>
+                                    </a>
+                                </li>
+                                @endcan
+                                @can('assign permissions')
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <p>Assign permissions</p>
                                     </a>
                                 </li>
                                 @endcan

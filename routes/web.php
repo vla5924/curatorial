@@ -3,12 +3,14 @@
 use App\Http\Controllers\Api\PracticeController as ApiPracticeController;
 use App\Http\Controllers\Api\GroupController as ApiGroupController;
 use App\Http\Controllers\Api\PollbunchController as ApiPollbunchController;
+use App\Http\Controllers\Api\RoleController as ApiRoleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\Auth\VKLoginController;
 use App\Http\Controllers\ExtraTokenController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PollbunchController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +70,8 @@ Route::middleware('auth')->group(function () {
         Route::middleware('can:publish pollbunches')->post('/pollbunches/{id}/publish', [ApiPollbunchController::class, 'publish'])->name('internal.pollbunches.publish');
 
         Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
+
+        Route::middleware('can:assign roles')->post('/roles/assign', [ApiRoleController::class, 'assign'])->name('internal.roles.assign');
     });
 
     Route::middleware('can:assign groups')->get('/groups/assign', [GroupController::class, 'assign'])->name('groups.assign');
@@ -75,4 +79,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:create groups')->resource('groups', GroupController::class)->only(['create', 'store']);
     Route::middleware('can:edit groups')->resource('groups', GroupController::class)->only(['edit', 'update']);
     Route::middleware('can:delete groups')->resource('groups', GroupController::class)->only('destroy');
+
+    Route::middleware('can:assign roles')->get('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
 });
