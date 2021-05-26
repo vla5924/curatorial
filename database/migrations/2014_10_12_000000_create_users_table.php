@@ -17,6 +17,10 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->bigInteger('vk_id')->unsigned()->unique();
             $table->string('name');
+            $table->string('avatar')->nullable()->default(null);
+            $table->text('education')->nullable()->default(null);
+            $table->text('location')->nullable()->default(null);
+            $table->text('notes')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

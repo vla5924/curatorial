@@ -21,15 +21,20 @@ class VKLoginController extends Controller
         $oauthUser = Socialite::driver('vkontakte')->user();
         $id = $oauthUser->getId();
         $name = $oauthUser->getName();
+        $avatar = $oauthUser->getAvatar();
         $token = $oauthUser->accessTokenResponseBody['access_token'];
         $expires = (int)floor($oauthUser->accessTokenResponseBody['expires_in'] / 60);
         $user = User::where(['vk_id' => $id])->first();
         if ($user) {
-            $user->fill(['name' => $name]);
+            $user->fill([
+                'name' => $name,
+                'avatar' => $avatar,
+            ]);
         } else {
             $user = User::create([
                 'vk_id' => $id,
                 'name' => $name,
+                'avatar' => $avatar,
             ]);
             $user->assignRole('noname');
         }

@@ -9,7 +9,10 @@ use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\Auth\VKLoginController;
 use App\Http\Controllers\ExtraTokenController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\HelpController;
 use App\Http\Controllers\PollbunchController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileInformationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +39,21 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
+    Route::middleware('can:view profiles')->resource('users', ProfileController::class)->only('show');
+
+    Route::prefix('settings')->group(function () {
+        Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
+        Route::get('/extra-token', [ExtraTokenController::class, 'index'])->name('extra-token.index');
+        Route::post('/extra-token', [ExtraTokenController::class, 'store'])->name('extra-token.store');
+        Route::get('/information', [ProfileInformationController::class, 'index'])->name('information.index');
+        Route::post('/information', [ProfileInformationController::class, 'store'])->name('information.store');
+    });
+
+    Route::prefix('help')->group(function () {
+        Route::get('/', [HelpController::class, 'index'])->name('help.index');
+        Route::get('/about', [HelpController::class, 'about'])->name('help.about');
+    });
+
     Route::middleware('can:publish practices')->get('/practice/{id}/publish', [PracticeController::class, 'publish'])->name('practice.publish');
     Route::middleware('can:create practices')->resource('practice', PracticeController::class)->only(['create', 'store']);
     Route::middleware('can:view practices')->group(function () {
@@ -53,12 +71,6 @@ Route::middleware('auth')->group(function () {
     });
     Route::middleware('can:edit pollbunches')->resource('pollbunches', PollbunchController::class)->only(['edit', 'update']);
     Route::middleware('can:delete pollbunches')->resource('pollbunches', PollbunchController::class)->only('destroy');
-
-    Route::middleware('role:admin')->prefix('settings')->group(function () {
-        Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
-        Route::get('/extra-token', [ExtraTokenController::class, 'index'])->name('extra-token.index');
-        Route::post('/extra-token', [ExtraTokenController::class, 'store'])->name('extra-token.store');
-    });
 
     Route::prefix('internal')->group(function () {
         Route::middleware('role:admin')->group(function () {
