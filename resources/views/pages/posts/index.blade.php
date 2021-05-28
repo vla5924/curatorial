@@ -28,18 +28,27 @@
                 @foreach ($posts as $post)
                 <tr>
                     <td>
-                        <a>
-                            {{ $post->group->name }}
-                        </a>
+                        {{ $post->group->name }}
                         <br />
                         <small>
-                            {{ $post->created_at }}
+                            <a href="//vk.com/wall-{{ $post->group->vk_id }}_{{ $post->vk_id }}" target="_blank">
+                                {{ $post->created_at }}
+                            </a>
                         </small>
                     </td>
                     <td class="small-text">
-                        {{ $post->text }}
+                        <p>{{ $post->text }}</p>
                         @foreach ($post->attachments as $attachment)
-                        {{ $attachment->type }}
+                            @switch($attachment->type)
+                                @case('photo')
+                                    <img src="{{ $attachment->meta['sm'] }}" height="60">
+                                    @break
+                                @case('video')
+                                    <img src="{{ $attachment->meta['thumb'] }}" height="60">
+                                    @break
+                                @default
+                                    {{ $attachment->type }}
+                            @endswitch
                         @endforeach
                     </td>
                     <td>
