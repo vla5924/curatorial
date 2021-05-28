@@ -26,7 +26,11 @@
         <span class="info-box-icon bg-primary"><i class="fas fa-smile"></i></span>
         <div class="info-box-content">
             <span class="info-box-number">Developer</span>
-            <span class="info-box-text">My name is Maksim Vlasov and I am the one who developed the whole service you are currently using.</span>
+            <span class="info-box-text">
+                My name is
+                <a href="{{ route('users.show', 1) }}">Maksim Vlasov</a>
+                and I am the one who developed the whole application you are currently using.
+            </span>
         </div>
     </div>
 </div>

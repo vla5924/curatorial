@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\BlockerController;
 use App\Http\Controllers\Api\PracticeController as ApiPracticeController;
 use App\Http\Controllers\Api\GroupController as ApiGroupController;
 use App\Http\Controllers\Api\PollbunchController as ApiPollbunchController;
 use App\Http\Controllers\Api\PostController as ApiPostController;
+use App\Http\Controllers\Api\RepublisherController;
 use App\Http\Controllers\Api\RoleController as ApiRoleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
@@ -18,6 +20,7 @@ use App\Http\Controllers\ProfileInformationController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\VkWebhookController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -82,15 +85,16 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:delete pollbunches')->resource('pollbunches', PollbunchController::class)->only('destroy');
 
     Route::prefix('internal')->group(function () {
-        Route::middleware('role:admin')->group(function () {
-            Route::get('/practice/test', [ApiPracticeController::class, 'test']);
-        });
-
         Route::middleware('can:publish practices')->post('/practice/{id}/publish', [ApiPracticeController::class, 'publish'])->name('internal.practice.publish');
         Route::middleware('can:publish pollbunches')->post('/pollbunches/{id}/publish', [ApiPollbunchController::class, 'publish'])->name('internal.pollbunches.publish');
         Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
         Route::middleware('can:assign roles')->post('/roles/assign', [ApiRoleController::class, 'assign'])->name('internal.roles.assign');
         Route::middleware('can:edit points')->post('/posts/points', [ApiPostController::class, 'points'])->name('internal.posts.points');
+        Route::middleware('can:use blocker')->group(function () {
+            Route::post('/blocker/ban', [BlockerController::class, 'ban'])->name('internal.blocker.ban');
+            Route::post('/blocker/unban', [BlockerController::class, 'unban'])->name('internal.blocker.unban');
+        });
+        Route::middleware('can:use republisher')->post('/republisher/publish', [RepublisherController::class, 'publish'])->name('internal.republisher.publish');
     });
 
     Route::middleware('can:assign groups')->get('/groups/assign', [GroupController::class, 'assign'])->name('groups.assign');
@@ -100,4 +104,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:delete groups')->resource('groups', GroupController::class)->only('destroy');
 
     Route::middleware('can:assign roles')->get('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
+    
+    Route::middleware('can:use blocker')->get('/tools/blocker', [ToolsController::class, 'blocker'])->name('tools.blocker');
+    Route::middleware('can:use republisher')->get('/tools/republisher', [ToolsController::class, 'republisher'])->name('tools.republisher');
 });

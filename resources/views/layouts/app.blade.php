@@ -240,14 +240,14 @@
                             <ul class="nav nav-treeview">
                                 @can('use blocker')
                                 <li class="nav-item">
-                                    <a href="pages/UI/icons.html" class="nav-link">
+                                    <a href="{{ route('tools.blocker') }}" class="nav-link">
                                         <p>Blocker</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('use republisher')
                                 <li class="nav-item">
-                                    <a href="pages/UI/general.html" class="nav-link">
+                                    <a href="{{ route('tools.republisher') }}" class="nav-link">
                                         <p>Republisher</p>
                                     </a>
                                 </li>
@@ -380,14 +380,6 @@
                 </div>
             </section>
         </div>
-
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-            All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.1.0
-            </div>
-        </footer>
 
         <aside class="control-sidebar control-sidebar-dark">
         </aside>
