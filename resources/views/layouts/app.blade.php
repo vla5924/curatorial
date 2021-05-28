@@ -134,6 +134,41 @@
                                 </p>
                             </a>
                         </li>
+                        @can('view posts')
+                        <li class="nav-item">
+                            <a href="{{ route('posts.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-layer-group"></i>
+                                <p>
+                                    Posts
+                                </p>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('view profiles')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Community
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('users.show', Auth::user()->id) }}" class="nav-link">
+                                        <p>My profile</p>
+                                    </a>
+                                </li>
+                                @can('view rating')
+                                <li class="nav-item">
+                                    <a href="{{ route('users.rating') }}" class="nav-link">
+                                        <p>Rating</p>
+                                    </a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
                         @can('view practices')
                         <li class="nav-item">
                             <a href="#" class="nav-link">

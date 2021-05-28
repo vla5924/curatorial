@@ -4,8 +4,19 @@
 
 ### Permissions
 
-Profiles:
+Users:
 * view profiles
+* view rating
+
+Posts:
+* view posts
+* delete posts
+
+Points:
+* view points
+* edit points
+* nullify points
+* adjust points
 
 Groups:
 * view groups

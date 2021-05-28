@@ -18,7 +18,7 @@ class VkWebhookController extends Controller
 
     public static function cleanUpText(string $text): string
     {
-        return preg_replace('/[^a-zA-ZА-Яа-я0-9_\.#\s]/', '', $text);
+        return preg_replace('/[^a-zA-ZА-Яа-я0-9_\.#:\/!,\s]/', '', $text);
     }
 
     public function index(Request $request)

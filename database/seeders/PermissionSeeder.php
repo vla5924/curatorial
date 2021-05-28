@@ -19,6 +19,7 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         Permission::create(['name' => 'view profiles']);
+        Permission::create(['name' => 'view rating']);
 
         Permission::create(['name' => 'view groups']);
         Permission::create(['name' => 'create groups']);
@@ -47,10 +48,19 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'view roles']);
         Permission::create(['name' => 'assign roles']);
 
+        Permission::create(['name' => 'view posts']);
+        Permission::create(['name' => 'delete posts']);
+
+        Permission::create(['name' => 'view points']);
+        Permission::create(['name' => 'edit points']);
+        Permission::create(['name' => 'nullify points']);
+        Permission::create(['name' => 'adjust points']);
+
         Role::create(['name' => 'noname']);
 
         Role::create(['name' => 'user'])->givePermissionTo([
             'view profiles',
+            'view rating',
             'view practices',
             'create practices',
             'edit practices',
@@ -61,6 +71,7 @@ class PermissionSeeder extends Seeder
             'edit pollbunches',
             'delete pollbunches',
             'publish pollbunches',
+            'view posts',
             'use blocker',
             'use republisher',
         ]);

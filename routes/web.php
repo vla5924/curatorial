@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\PracticeController as ApiPracticeController;
 use App\Http\Controllers\Api\GroupController as ApiGroupController;
 use App\Http\Controllers\Api\PollbunchController as ApiPollbunchController;
+use App\Http\Controllers\Api\PostController as ApiPostController;
 use App\Http\Controllers\Api\RoleController as ApiRoleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
@@ -11,8 +12,10 @@ use App\Http\Controllers\ExtraTokenController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\PollbunchController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileInformationController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\VkWebhookController;
@@ -42,6 +45,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
+    Route::middleware('can:view rating')->get('/users/rating', [RatingController::class, 'index'])->name('users.rating');
     Route::middleware('can:view profiles')->resource('users', ProfileController::class)->only('show');
 
     Route::prefix('settings')->group(function () {
@@ -56,6 +60,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [HelpController::class, 'index'])->name('help.index');
         Route::get('/about', [HelpController::class, 'about'])->name('help.about');
     });
+
+    Route::middleware('can:view posts')->resource('posts', PostController::class)->only('index');
 
     Route::middleware('can:publish practices')->get('/practice/{id}/publish', [PracticeController::class, 'publish'])->name('practice.publish');
     Route::middleware('can:create practices')->resource('practice', PracticeController::class)->only(['create', 'store']);
@@ -81,12 +87,10 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('can:publish practices')->post('/practice/{id}/publish', [ApiPracticeController::class, 'publish'])->name('internal.practice.publish');
-
         Route::middleware('can:publish pollbunches')->post('/pollbunches/{id}/publish', [ApiPollbunchController::class, 'publish'])->name('internal.pollbunches.publish');
-
         Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
-
         Route::middleware('can:assign roles')->post('/roles/assign', [ApiRoleController::class, 'assign'])->name('internal.roles.assign');
+        Route::middleware('can:edit points')->post('/posts/points', [ApiPostController::class, 'points'])->name('internal.posts.points');
     });
 
     Route::middleware('can:assign groups')->get('/groups/assign', [GroupController::class, 'assign'])->name('groups.assign');
