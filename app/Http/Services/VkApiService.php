@@ -10,6 +10,10 @@ class VkApiService
 {
     const API_VERSION = '5.130';
 
+    const TOKEN_IS_INVALID = 'Token is invalid: no response while checking, please reauthorize';
+    const TOKEN_IS_UNFAMILIAR = 'Token does not belongs to current user, please reauthorize';
+    const EXTRA_TOKEN_IS_NOT_FOUND = 'Extra token is not found, please add it in settings';
+
     protected $token;
     protected $api;
 
@@ -24,9 +28,9 @@ class VkApiService
     public function checkToken()
     {
         $response = $this->api->request('users.get', [])['response'];
-        if(empty($response))
-            throw new VkException('Token is invalid: no response while checking, please reauthorize');
-        if($response[0]['id'] != Auth::user()->vk_id)
-            throw new VkException('Token does not belongs to current user, please reauthorize');
+        if (empty($response))
+            throw new VkException(self::TOKEN_IS_INVALID);
+        if ($response[0]['id'] != Auth::user()->vk_id)
+            throw new VkException(self::TOKEN_IS_UNFAMILIAR);
     }
 }

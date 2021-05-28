@@ -13,7 +13,7 @@ class PollbunchPublishService extends VkApiService
     public function __construct()
     {
         if (!VkTokenService::hasExtraToken())
-            throw new VkException('Extra token is not found, please add it in settings');
+            throw new VkException(self::EXTRA_TOKEN_IS_NOT_FOUND);
         parent::__construct(VkTokenService::getExtraToken());
     }
 

@@ -3,8 +3,6 @@
 namespace App\Http\Services;
 
 use App\Http\Services\VkTokenService;
-use App\Models\Group;
-use App\Models\Practice;
 use ATehnix\VkClient\Exceptions\VkException;
 
 class RepublisherService extends VkApiService
@@ -12,7 +10,7 @@ class RepublisherService extends VkApiService
     public function __construct()
     {
         if (!VkTokenService::hasExtraToken())
-            throw new VkException('Extra token is not found, please add it in settings');
+            throw new VkException(self::EXTRA_TOKEN_IS_NOT_FOUND);
         parent::__construct(VkTokenService::getExtraToken());
     }
 
