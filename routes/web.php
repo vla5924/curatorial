@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileInformationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\VkWebhookController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+Route::post('/vk/webhook', [VkWebhookController::class, 'index']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/vk/redirect', [VKLoginController::class, 'redirect'])->name('login.vk.redirect');
