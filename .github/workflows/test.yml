@@ -20,12 +20,12 @@ jobs:
     - name: Setup environment
       run: |
         php -r "file_exists('.env') || copy('.env.example', '.env');"
-        php artisan key:generate
+        php artisan key:generate --env=testing
         chmod -R 777 storage bootstrap/cache
-        mkdir -p database
-        touch database/database.sqlite
+    - name: Create database
+      run: |
+        touch tests/database.sqlite
+        php artisan migrate --env=testing
+        php artisan db:seed PermissionSeeder --env=testing
     - name: Run tests
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test
+      run: php artisan test --env=testing
