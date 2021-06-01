@@ -91,10 +91,10 @@ let internal = {
                 postattachments = postattachments.join(',');
                 group_info = r.response.groups[0];
                 $('#republisher-post-content').html(`<div class="alert alert-primary">
-<h3><a href="//vk.com/wall' + id + '" target="_blank"><img class="rounded mr-2" height="40"
-    src="' + group_info.photo_50 + '"> ${group_info.name}</a></h3><textarea class="postText"
-    id="field-message" rows="10" style="width:100%"></textarea><br><input type="checkbox" id="field-signed"
-    onclick="signed ^= 1"> <label for="field-signed">Подпись</label>
+<h3><a href="//vk.com/wall${id}" target="_blank"><img class="rounded mr-2" height="40"
+    src="${group_info.photo_50}"> ${group_info.name}</a></h3><textarea class="postText"
+    id="field-message" rows="10" style="width:100%"></textarea><br><input type="checkbox" id="field-signed">
+    <label for="field-signed">Подпись</label>
 <hr>
 <p><b>Прикрепления:</b> <span id="field-attachments">${postattachments.split(',').join(', ')}</span></p>
 </div>`);
