@@ -19,7 +19,7 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>
-                        <select onchange="internal.assignRole(this, {{ $user->id }})">
+                        <select onchange="Internal.assignRole(this, {{ $user->id }})">
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}"
                         @if($user->hasRole($role->name))
@@ -39,7 +39,7 @@
 @endsection
 
 @section('inline-script')
-let internal = {
+let Internal = {
     assignRole: function(select, userId) {
         select.disabled = true;
 
@@ -49,42 +49,18 @@ let internal = {
             user_id: userId,
             role_id: roleId,
         };
-        console.log(request);
-
-        $.post('{{ route('internal.roles.assign') }}', request)
-        .done(function (data) {
-            if (data.ok) {
-                $(document).Toasts('create', {
-                    class: 'bg-success',
-                    title: 'Change saved',
-                    body: `Role ${roleId} assigned to user ${userId} successfully.`,
-                    autohide: true,
-                    delay: 3000,
-                });
-            } else {
-                $(document).Toasts('create', {
-                    class: 'bg-danger',
-                    title: 'Change not saved',
-                    subtitle: 'API error',
-                    body: data.error,
-                    autohide: true,
-                    delay: 3000,
-                });
+        
+        Request.internal('{{ route('internal.roles.assign') }}', request,
+            function (data) {
+                Utils.toast('bg-success', 2000, 'Change saved', `Role ${roleId} assigned to user ${userId} successfully.`);
+            },
+            function (data) {
+                Utils.toast('bg-danger', 5000, 'Change not saved', data.error);
+            },
+            function () {
+                select.disabled = false;
             }
-        })
-        .fail(function (response) {
-            let body = response.responseJSON.message ? response.responseJSON.message : 'Internal server error.';
-            $(document).Toasts('create', {
-                class: 'bg-danger',
-                title: 'Change not saved',
-                subtitle: 'Server error',
-                body: body,
-                autohide: true,
-                delay: 3000,
-            });
-        }).always(function () {
-            select.disabled = false;
-        });
+        );
     }
 }; 
 @endsection

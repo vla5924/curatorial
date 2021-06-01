@@ -25,7 +25,7 @@
                     <td>{{ $user->name }}</td>
                     @foreach ($groups as $group)
                     <td>
-                        <input type="checkbox" onclick="internal.assignGroup(this, {{ $user->id }}, {{ $group->id }})"
+                        <input type="checkbox" onclick="Internal.assignGroup(this, {{ $user->id }}, {{ $group->id }})"
                         @if($user->groups()->find($group->id)))
                             checked
                         @endif
@@ -43,8 +43,8 @@
 @endsection
 
 @section('inline-script')
-let internal = {
-    assignGroup: function(checkbox, userId, groupId) {
+let Internal = {
+    assignGroup: function (checkbox, userId, groupId) {
         let prevState = !checkbox.checked;
         checkbox.disabled = true;
 
@@ -54,45 +54,20 @@ let internal = {
             group_id: groupId,
             assign: Number(checkbox.checked),
         };
-        console.log(request);
 
-        $.post('{{ route('internal.groups.assign') }}', request)
-        .done(function (data) {
-            if (data.ok) {
+        Request.internal('{{ route('internal.groups.assign') }}', request,
+            function (data) {
                 let part = data.assign ? 'assigned to' : 'unassigned from';
-                $(document).Toasts('create', {
-                    class: 'bg-success',
-                    title: 'Change saved',
-                    body: `Group ${groupId} ${part} user ${userId} successfully.`,
-                    autohide: true,
-                    delay: 1000,
-                });
-            } else {
+                Utils.toast('bg-success', 2000, 'Change saved', `Group ${groupId} ${part} user ${userId} successfully.`);
+            },
+            function (data) {
                 checkbox.checked = prevState;
-                $(document).Toasts('create', {
-                    class: 'bg-danger',
-                    title: 'Change not saved',
-                    subtitle: 'API error',
-                    body: data.error,
-                    autohide: true,
-                    delay: 1000,
-                });
+                Utils.toast('bg-danger', 5000, 'Change not saved', 'API error<br>' + data.error);
+            },
+            function () {
+                checkbox.disabled = false;
             }
-        })
-        .fail(function (response) {
-            checkbox.checked = prevState;
-            let body = response.responseJSON.message ? response.responseJSON.message : 'Internal server error.';
-            $(document).Toasts('create', {
-                class: 'bg-danger',
-                title: 'Change not saved',
-                subtitle: 'Server error',
-                body: body,
-                autohide: true,
-                delay: 1000,
-            });
-        }).always(function () {
-            checkbox.disabled = false;
-        });
-    }
-}; 
+        );
+    },
+};
 @endsection

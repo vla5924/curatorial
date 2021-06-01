@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-primary" onclick="internal.fetchPost(this)">Fetch post</button>
+            <button class="btn btn-primary" onclick="Internal.fetchPost(this)">Fetch post</button>
         </div>
     </div>
 </div>
@@ -46,9 +46,11 @@ VK.init({
 apiId: {{ env('VKONTAKTE_CLIENT_ID') }},
 });
 
-let internal = {
-    fetchPost: function (button) {
-        button.disabled = true;
+let Internal = {
+    fetchPost: function (buttonElem) {
+        button = new LoadingButton(buttonElem, 'Fetching', 'Publish post');
+        button.loading();
+
         let id = $('#republisher-post-vk-id').val();
         VK.Api.call('wall.getById', {
             posts: id,
@@ -101,63 +103,42 @@ let internal = {
                 $('#field-message').val(posttext);
                 $('.republisher-step-1').attr('hidden', true);
                 $('.republisher-step-2').attr('hidden', false);
-                $('#start_datetime').datetimepicker({
-                    icons: { time: 'far fa-clock' },
-                    format: 'DD.MM.YYYY HH:mm',
-                    minDate: moment(),
-                    defaultDate: moment(),
-                });
-                button.innerHTML = 'Publish post';
-                button.onclick = function () {
-                    internal.publishPost(button);
+                Utils.timerPicker('start_datetime');
+                button.ready();
+                buttonElem.onclick = function () {
+                    Internal.publishPost(buttonElem);
                 };
             } else {
 
             }
         });
-        button.disabled = false;
     },
 
-    publishPost: function (button) {
-        button.disabled = true;
+    publishPost: function (buttonElem) {
+        button = new LoadingButton(buttonElem, 'Publishing');
+        button.loading();
+
         let ownerId = $('#field-owner-id').val();
         let request = {
             _token: '{{ csrf_token() }}',
             owner_id: ownerId,
-            publish_date: $('#field-publish-date').val(),
-            signed: ($('#field-signed').val() == 'on'),
-            message: $('#field-message').val(),
-            attachments: $('#field-attachments').html(),
+            publish_date: Elem.id('field-publish-date').value,
+            signed: Number(Elem.id('field-signed').checked),
+            message: Elem.id('field-message').value,
+            attachments: Elem.id('field-attachments').innerHTML,
         };
 
-        $.post('{{ route('internal.republisher.publish') }}', request)
-            .done(function (data) {
-                if (data.ok) {
-                    $(document).Toasts('create', {
-                        class: 'bg-success',
-                        title: 'Post published',
-                        body: `<a href="//vk.com/wall${ownerId}_${data.post_id}" target="_blank">View</a>`,
-                    });
-                } else {
-                    $(document).Toasts('create', {
-                        class: 'bg-danger',
-                        title: 'Post not published',
-                        subtitle: 'API error',
-                        body: data.error,
-                    });
-                }
-            })
-            .fail(function (response) {
-                let body = response.responseJSON.message ? response.responseJSON.message : 'Internal server error.';
-                $(document).Toasts('create', {
-                    class: 'bg-danger',
-                    title: 'Post not published',
-                    subtitle: 'Server error',
-                    body: body,
-                });
-            }).always(function () {
-                button.disabled = false;
-            });
+        Request.internal('{{ route('internal.republisher.publish') }}', request,
+            function (data) {
+                Utils.toast('bg-success', 0, 'Post published', `<a href="//vk.com/wall${ownerId}_${data.post_id}" target="_blank">View</a>`);
+            },
+            function (data) {
+                Utils.toast('bg-danger', 0, 'Post not published', data.error);
+            },
+            function () {
+                button.ready();
+            }
+        );
     }
 };
 @endsection

@@ -55,40 +55,30 @@
 
 @section('inline-script')
 $(function () {
-    $('#start_datetime').datetimepicker({
-        icons: { time: 'far fa-clock' },
-        format: 'DD.MM.YYYY HH:mm',
-        minDate: moment(),
-        defaultDate: moment(),
-    });
+    Utils.timerPicker('start_datetime');
 
-    $('#btn-publish').click(function() {
-        $('#btn-publish').html('<i class="fas fa-sync fa-spin"></i> Publishing');
-        $('#btn-publish').attr('disabled', true);
+    $('#btn-publish').on('click', function() {
+        button = new LoadingButton('btn-publish', 'Publishing');
+        button.loading();
 
         let request = {
             _token: '{{ csrf_token() }}',
-            group_id: $('#field-group-id').val(),
-            message: $('#field-message').val(),
-            hashtags: $('#field-hashtags').val(),
-            publish_date: $('#field-publish-date').val(),
-            interval: $('#field-interval').val(),
-            signed: ($('#field-signed').val() == 'on'),
+            group_id: Elem.id('field-group-id').value,
+            message: Elem.id('field-message').value,
+            hashtags: Elem.id('field-hashtags').value,
+            publish_date: Elem.id('field-publish-date').value,
+            interval: Elem.id('field-interval').value,
+            signed: Number(Elem.id('field-signed').checked),
         };
-        console.log(request);
 
-        $.post('{{ route('internal.pollbunches.publish', $pollbunch->id) }}', request)
-        .done(function (data) {
-            if (data.ok) {
+        Request.internal('{{ route('internal.pollbunches.publish', $pollbunch->id) }}', request,
+            function (data) {
                 let body = '';
                 for (let i = 0; i < data.posts.length; i++)
                     body += `<i class="fas fa-check fa-fw"></i> #${i}: Postponed <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
-                $(document).Toasts('create', {
-                    class: 'bg-success',
-                    title: 'Pollbunch published',
-                    body: body,
-                });
-            } else {
+                Utils.toast('bg-success', 0, 'Pollbunch published', body);
+            },
+            function (data) {
                 let body = 'API error';
                 if (data.error) {
                     body = data.error;
@@ -101,26 +91,11 @@ $(function () {
                             body += `<i class="fas fa-times fa-fw"></i> #${i}: ${data.posts[i].error}<br />`;
                     }
                 }
-                $(document).Toasts('create', {
-                    class: 'bg-danger',
-                    title: 'Pollbunch not published',
-                    subtitle: 'API error',
-                    body: body,
-                });
+                Utils.toast('bg-danger', 0, 'Pollbunch not published', body);
+            },
+            function () {
+                button.ready();
             }
-        })
-        .fail(function (response) {
-            let body = response.responseJSON.message ? response.responseJSON.message : 'Internal server error.';
-            $(document).Toasts('create', {
-                class: 'bg-danger',
-                title: 'Pollbunch not published',
-                subtitle: 'Server error',
-                body: body,
-            });
-        }).always(function () {
-            $('#btn-publish').html('Publish');
-            $('#btn-publish').attr('disabled', false);
-        });
-    });
+        );
 });
 @endsection
