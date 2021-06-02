@@ -1,0 +1,19 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: curatorial-production
+    steps:
+    - name: Pull changes
+      env:
+        CURATORIAL_DIR: ${{ secrets.CURATORIAL_DIR }}
+      shell: bash
+      run: |
+        cd $CURATORIAL_DIR
+        git pull

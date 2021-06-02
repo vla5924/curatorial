@@ -1,0 +1,4 @@
+[submodule "public/theme"]
+	path = public/theme
+	url = https://github.com/ColorlibHQ/AdminLTE.git
+	branch = v3
