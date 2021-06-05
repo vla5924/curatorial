@@ -305,6 +305,33 @@
                         </li>
                         @role('admin')
                         <li class="nav-header">ADMINISTRATION</li>
+                        @can('edit points')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-star-half-alt"></i>
+                                <p>
+                                    Points
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @can('adjust points')
+                                <li class="nav-item">
+                                    <a href="{{ route('points.adjust') }}" class="nav-link">
+                                        <p>Adjust points</p>
+                                    </a>
+                                </li>
+                                @endcan
+                                @can('nullify points')
+                                <li class="nav-item">
+                                    <a href="{{ route('points.nullify') }}" class="nav-link">
+                                        <p>Nullify points</p>
+                                    </a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
                         @can('view groups')
                         <li class="nav-item">
                             <a href="#" class="nav-link">

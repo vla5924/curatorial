@@ -15,10 +15,14 @@ class RatingController extends Controller
             return [$user->id => $user];
         });
         $rating = $users->mapWithKeys(function ($user, $key) {
-            $posts = Post::where('signer_id', $user->id)->get();
+            $postsQuery = Post::where('signer_id', $user->id);
+            $lastNullification = $user->pointsNullifications()->orderBy('created_at', 'desc')->first();
+            if ($lastNullification)
+                $postsQuery = $postsQuery->where(['created_at', '>', $lastNullification->created_at]);
+            $posts = $postsQuery->get();
             $points = $posts->reduce(function ($total, $post) {
                 return $total + $post->points;
-            });
+            }, 0);
             return [$user->id => $points];
         });
         return view('pages.users.rating', [

@@ -59,4 +59,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Group::class);
     }
+
+    public function pointsNullifications()
+    {
+        return $this->hasMany(PointsNullification::class);
+    }
+
+    public function pointsAdjustments()
+    {
+        return $this->hasMany(PointsAdjustment::class);
+    }
 }
