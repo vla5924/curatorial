@@ -17,7 +17,9 @@
                 @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
+                    <td>
+                        @include('components.user-link', ['user' => $user])
+                    </td>
                     <td>
                         <select onchange="Internal.assignRole(this, {{ $user->id }})">
                     @foreach ($roles as $role)

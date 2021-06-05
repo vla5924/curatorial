@@ -24,7 +24,9 @@
                         <small>Created at {{ $practice->created_at }}</small>
                     </td>
                     <td>{{ $practice->group->name }}</td>
-                    <td>{{ $practice->user->name }}</td>
+                    <td>
+                        @include('components.user-link', ['user' => $practice->user])
+                    </td>
                     <td class="project-actions text-right">
                         <a class="btn btn-primary btn-sm" href="{{ route('practice.show', $practice->id) }}">
                               <i class="fas fa-folder"></i> View

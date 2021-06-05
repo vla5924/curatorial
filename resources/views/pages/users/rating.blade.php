@@ -19,7 +19,7 @@
                         {{ $i++ }}
                     </td>
                     <td>
-                        {{ $users[$userId]->name }}
+                        @include('components.user-link', ['user' => $users[$userId]])
                     </td>
                     <td>
                         {{ $points }}

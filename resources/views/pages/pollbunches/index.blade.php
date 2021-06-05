@@ -24,7 +24,9 @@
                         <small>Created at {{ $pollbunch->created_at }}</small>
                     </td>
                     <td>{{ $pollbunch->group->name }}</td>
-                    <td>{{ $pollbunch->user->name }}</td>
+                    <td>
+                        @include('components.user-link', ['user' => $pollbunch->user])
+                    </td>
                     <td class="project-actions text-right">
                         <a class="btn btn-primary btn-sm" href="{{ route('pollbunches.show', $pollbunch->id) }}">
                               <i class="fas fa-folder"></i> View

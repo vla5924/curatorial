@@ -52,7 +52,11 @@
                         @endforeach
                     </td>
                     <td>
-                        {{ $post->signer ? $post->signer->name : 'Not signed' }}
+                        @if($post->signer)
+                        @include('components.user-link', ['user' => $post->signer])
+                        @else
+                        Not signed
+                        @endif
                     </td>
                     @can('view points')
                     <td>

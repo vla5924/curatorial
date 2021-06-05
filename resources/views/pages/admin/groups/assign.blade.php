@@ -22,7 +22,9 @@
                 @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
+                    <td>
+                        @include('components.user-link', ['user' => $user])
+                    </td>
                     @foreach ($groups as $group)
                     <td>
                         <input type="checkbox" onclick="Internal.assignGroup(this, {{ $user->id }}, {{ $group->id }})"
