@@ -17,16 +17,16 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>Unique ID</b> <a class="float-right">{{ $user->id }}</a>
+                        <b>Unique ID</b> <span class="float-right">{{ $user->id }}</span>
                     </li>
                     <li class="list-group-item">
                         <b>VK ID</b> <a class="float-right" href="//vk.com/id{{ $user->vk_id }}" target="_blank">{{ $user->vk_id }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>User since</b> <a class="float-right">{{ $user->created_at }}</a>
+                        <b>User since</b> <span class="float-right">{{ $user->created_at }}</span>
                     </li>
                     <li class="list-group-item">
-                        <b>Points</b> <a class="float-right">N/A</a>
+                        <b>Points</b> <span class="float-right">N/A</span>
                     </li>
                 </ul>
 
@@ -48,7 +48,7 @@
 
                 <p>
                     @foreach ($user->groups as $group)
-                    <span class="badge badge-secondary">{{ $group->name }}</span>
+                    <a class="badge badge-secondary" href="//vk.com/public{{ $group->vk_id }}" target="_blank">{{ $group->name }}</a>
                     @endforeach
                 </p>
                 

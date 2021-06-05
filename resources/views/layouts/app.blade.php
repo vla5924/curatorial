@@ -161,7 +161,7 @@
                                 </li>
                                 @can('view rating')
                                 <li class="nav-item">
-                                    <a href="{{ route('users.rating') }}" class="nav-link">
+                                    <a href="{{ route('users.rating.index') }}" class="nav-link">
                                         <p>Rating</p>
                                     </a>
                                 </li>

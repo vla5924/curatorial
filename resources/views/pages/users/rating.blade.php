@@ -1,8 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Rating')
+@section('title', 'Rating (' . ($group ? $group->name : 'Unified') . ')')
 
 @section('content')
+<div class="card">
+    <div class="card-body p-2 row">
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="{{ route('users.rating.index') }}" class="btn btn-primary btn-block btn-sm">Unified</a>
+        </div>
+        @foreach($groups as $group)
+        <div class="col-6 col-md-4 col-lg-2">
+            <a href="{{ route('users.rating.group', $group->id) }}" class="btn btn-primary btn-block btn-sm">{{ $group->name }}</a>
+        </div>
+        @endforeach
+    </div>
+</div>
 <div class="card">
     <div class="card-body p-0">
         <table class="table table-sm">

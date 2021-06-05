@@ -22,7 +22,8 @@
                         @include('components.user-link', ['user' => $user])
                     </td>
                     <td id="last-nullification-{{ $user->id }}">
-                        {{ $last_nullifications[$user->id] ? $last_nullifications[$user->id]->created_at : 'Never' }}
+                        <?php $lastNullification = $user->lastPointsNullification() ?>
+                        {{ $lastNullification ? $lastNullification->created_at : 'Never' }}
                     </td>
                     <td>
                         <button class="btn btn-primary btn-sm" onclick="Internal.nullify(this, {{ $user->id }})">Nullify</button>
