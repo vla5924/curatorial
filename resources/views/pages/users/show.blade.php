@@ -20,11 +20,19 @@
                         <b>Unique ID</b> <a class="float-right">{{ $user->id }}</a>
                     </li>
                     <li class="list-group-item">
+                        <b>VK ID</b> <a class="float-right" href="//vk.com/id{{ $user->vk_id }}" target="_blank">{{ $user->vk_id }}</a>
+                    </li>
+                    <li class="list-group-item">
                         <b>User since</b> <a class="float-right">{{ $user->created_at }}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Points</b> <a class="float-right">N/A</a>
                     </li>
                 </ul>
 
+                @if($user->id == Auth::user()->id)
                 <a href="{{ route('information.index') }}" class="btn btn-primary btn-block"><b>Edit information</b></a>
+                @endif
             </div>
         </div>
     </div>
