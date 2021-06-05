@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Group;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Helpers\GroupHelper;
+use App\Helpers\UserHelper;
 
 class PointsController extends Controller
 {
     public function nullify()
     {
-        $users = User::orderBy('name')->paginate(20);
+        $users = UserHelper::activeOrdered()->paginate(20);
 
         return view('pages.admin.points.nullify', [
             'users' => $users,
@@ -19,8 +18,8 @@ class PointsController extends Controller
 
     public function adjust()
     {
-        $users = User::orderBy('name')->paginate(20);
-        $groups = Group::orderBy('name')->get();
+        $users = UserHelper::activeOrdered()->paginate(20);
+        $groups = GroupHelper::ordered()->get();
 
         return view('pages.admin.points.adjust', [
             'users' => $users,
