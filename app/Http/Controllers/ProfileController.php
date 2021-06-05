@@ -46,8 +46,11 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
+        $points = RatingController::countPoints($user);
+
         return view('pages.users.show', [
             'user' => $user,
+            'points' => $points,
         ]);
     }
 

@@ -85,6 +85,7 @@ class GroupController extends Controller
         $group->name = $request->name;
         $group->vk_id = $request->vk_id;
         $group->alias = $request->alias;
+        $group->vk_confirmation_token = $request->vk_confirmation_token;
         $group->save();
 
         return redirect()->back()->withSuccess('Group updated successfully');

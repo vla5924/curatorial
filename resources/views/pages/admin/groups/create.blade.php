@@ -25,6 +25,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Confirmation token</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="vk_confirmation_token" placeholder="String used for VK webhooks confirmation"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">Alias</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="alias" placeholder="Short symbolic identifier"

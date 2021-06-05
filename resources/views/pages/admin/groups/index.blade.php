@@ -12,6 +12,7 @@
                 <tr>
                     <th>Name</th>
                     <th>VK ID</th>
+                    <th>Confirmation token</th>
                     <th>Alias</th>
                     <th></th>
                 </tr>
@@ -21,6 +22,7 @@
                 <tr>
                     <td>{{ $group->name }}</td>
                     <td>{{ $group->vk_id }}</td>
+                    <td>{{ $group->vk_confirmation_token }}</td>
                     <td>{{ $group->alias }}</td>
                     <td class="project-actions text-right">
                         <a class="btn btn-info btn-sm" href="{{ route('groups.edit', $group->id) }}">

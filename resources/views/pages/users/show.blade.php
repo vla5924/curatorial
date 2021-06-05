@@ -26,7 +26,7 @@
                         <b>User since</b> <span class="float-right">{{ $user->created_at }}</span>
                     </li>
                     <li class="list-group-item">
-                        <b>Points</b> <span class="float-right">N/A</span>
+                        <b>Points</b> <span class="float-right">{{ $points }}</span>
                     </li>
                 </ul>
 

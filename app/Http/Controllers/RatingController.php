@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class RatingController extends Controller
 {
-    protected static function countPoints(User $user, ?Group $group = null)
+    public static function countPoints(User $user, ?Group $group = null)
     {
         $postsQuery = Post::where('signer_id', $user->id);
         if ($group)
