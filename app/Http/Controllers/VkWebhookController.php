@@ -67,9 +67,6 @@ class VkWebhookController extends Controller
                 $attachment->post_id = $post->id;
 
                 if ($type == 'photo') {
-                    if ($attachmentData['photo']['owner_id'] != $postData['owner_id'])
-                        continue;
-
                     $sizes = [];
                     foreach ($attachmentData['photo']['sizes'] as $size)
                         $sizes[$size['type']] = $size['url'];
@@ -84,6 +81,7 @@ class VkWebhookController extends Controller
                     elseif (isset($sizes["s"])) $ssmall = "s";
 
                     $attachment->type = 'photo';
+                    $attachment->vk_owner_id = $attachmentData['photo']['owner_id'];
                     $attachment->vk_id = $attachmentData['photo']['id'];
                     $attachment->meta = [
                         'lg' => $sizes[$sbig],
@@ -95,13 +93,13 @@ class VkWebhookController extends Controller
 
                 if ($type == 'video') {
                     $attachment->type = 'video';
+                    $attachment->vk_owner_id = $attachmentData['video']['owner_id'];
                     $attachment->vk_id = $attachmentData['video']['id'];
                     if (isset($attachmentData['video']['image'][2]))
                         $thumb = $attachmentData['video']['image'][2]['url'];
                     else
                         $thumb = $attachmentData['video']['image'][0]['url'];
                     $attachment->meta = [
-                        'owner_id' => $attachmentData['video']['owner_id'],
                         'thumb' => $thumb,
                         'duration' => $attachmentData['video']['duration'],
                     ];
@@ -111,9 +109,9 @@ class VkWebhookController extends Controller
 
                 if ($type == 'audio') {
                     $attachment->type = 'audio';
+                    $attachment->vk_owner_id = $attachmentData['audio']['owner_id'];
                     $attachment->vk_id = $attachmentData['audio']['id'];
                     $attachment->meta = [
-                        'owner_id' => $attachmentData['audio']['owner_id'],
                         'artist' => $attachmentData['audio']['artist'],
                         'title' => $attachmentData['audio']['title'],
                     ];
@@ -122,14 +120,11 @@ class VkWebhookController extends Controller
                 }
 
                 if ($type == 'poll') {
-                    if ($attachmentData['poll']['owner_id'] != $postData['owner_id'])
-                        continue;
-
                     $attachment->type = 'poll';
+                    $attachment->vk_owner_id = $attachmentData['poll']['owner_id'];
                     $attachment->vk_id = $attachmentData['poll']['id'];
                     $attachment->meta = [
-                        'artist' => $attachmentData['audio']['artist'],
-                        'title' => $attachmentData['audio']['title'],
+                        'question' => $attachmentData['poll']['question'],
                     ];
                     $attachment->save();
                     continue;
@@ -137,9 +132,9 @@ class VkWebhookController extends Controller
 
                 if ($type == 'doc') {
                     $attachment->type = 'doc';
+                    $attachment->vk_owner_id = $attachmentData['doc']['owner_id'];
                     $attachment->vk_id = $attachmentData['doc']['id'];
                     $attachment->meta = [
-                        'owner_id' => $attachmentData['doc']['owner_id'],
                         'title' => $attachmentData['doc']['title'],
                         'size' => $attachmentData['doc']['size'],
                         'type' => $attachmentData['doc']['type'],
@@ -151,6 +146,7 @@ class VkWebhookController extends Controller
 
                 if ($type == 'link') {
                     $attachment->type = 'link';
+                    $attachment->vk_owner_id = null;
                     $attachment->vk_id = null;
                     $attachment->meta = [
                         'title' => $attachmentData['link']['title'],
