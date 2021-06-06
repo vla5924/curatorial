@@ -149,20 +149,20 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
-                                    Community
+                                    @lang('users.community')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('users.show', Auth::user()->id) }}" class="nav-link">
-                                        <p>My profile</p>
+                                        <p>@lang('users.my_profile')</p>
                                     </a>
                                 </li>
                                 @can('view rating')
                                 <li class="nav-item">
                                     <a href="{{ route('users.rating.index') }}" class="nav-link">
-                                        <p>Rating</p>
+                                        <p>@lang('users.rating')</p>
                                     </a>
                                 </li>
                                 @endcan

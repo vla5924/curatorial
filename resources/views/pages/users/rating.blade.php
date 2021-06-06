@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Rating (' . ($group ? $group->name : 'Unified') . ')')
+@section('title', __('users.rating') . ' (' . ($group ? $group->name : __('users.unified')) . ')')
 
 @section('content')
 <div class="card">
     <div class="card-body p-2 row">
         <div class="col-6 col-md-4 col-lg-2">
-            <a href="{{ route('users.rating.index') }}" class="btn btn-primary btn-block btn-sm">Unified</a>
+            <a href="{{ route('users.rating.index') }}" class="btn btn-primary btn-block btn-sm">@lang('users.unified')</a>
         </div>
         @foreach($groups as $group)
         <div class="col-6 col-md-4 col-lg-2">
@@ -19,9 +19,9 @@
     <div class="card-body p-0">
         <table class="table table-sm">
             <thead>
-                <th width="100">Position</th>
-                <th>Name</th>
-                <th>Points</th>
+                <th width="100">@lang('users.position')</th>
+                <th>@lang('users.name')</th>
+                <th>@lang('users.points')</th>
             </thead>
             <tbody>
                 <?php $i = 1 ?>
