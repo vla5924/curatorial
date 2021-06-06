@@ -174,25 +174,25 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    Practices
+                                    @lang('practice.practices')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('practice.index') }}" class="nav-link">
-                                        <p>Recently added</p>
+                                        <p>@lang('practice.recently_added')</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('practice.my') }}" class="nav-link">
-                                        <p>My practices</p>
+                                        <p>@lang('practice.my_practices')</p>
                                     </a>
                                 </li>
                                 @can('create practices')
                                 <li class="nav-item">
                                     <a href="{{ route('practice.create') }}" class="nav-link">
-                                        <p>Create practice</p>
+                                        <p>@lang('practice.create_practice')</p>
                                     </a>
                                 </li>
                                 @endcan

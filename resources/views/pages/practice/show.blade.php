@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Practice ' . $practice->id)
+@section('title', __('practice.practice') . ' ' . $practice->id)
 
 @section('content')
 <div class="card">
@@ -11,7 +11,7 @@
         <div class="col-12 col-sm-4">
             <div class="info-box bg-light">
             <div class="info-box-content">
-                <span class="info-box-text text-center text-muted">Author</span>
+                <span class="info-box-text text-center text-muted">@lang('practice.author')</span>
                 <span class="info-box-number text-center text-muted mb-0">
                     @include('components.user-link', ['user' => $practice->user])
                 </span>
@@ -21,7 +21,7 @@
         <div class="col-12 col-sm-4">
             <div class="info-box bg-light">
             <div class="info-box-content">
-                <span class="info-box-text text-center text-muted">Group</span>
+                <span class="info-box-text text-center text-muted">@lang('practice.group')</span>
                 <span class="info-box-number text-center text-muted mb-0">{{ $practice->group->name }}</span>
             </div>
             </div>
@@ -29,7 +29,7 @@
         <div class="col-12 col-sm-4">
             <div class="info-box bg-light">
             <div class="info-box-content">
-                <span class="info-box-text text-center text-muted">Created at</span>
+                <span class="info-box-text text-center text-muted">@lang('practice.created_at')</span>
                 <span class="info-box-number text-center text-muted mb-0">{{ $practice->created_at }}</span>
             </div>
             </div>
@@ -40,8 +40,8 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th style="width: 10px">Order</th>
-                    <th>Picture</th>
+                    <th style="width: 10px">@lang('practice.order')</th>
+                    <th>@lang('practice.picture')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,13 +63,13 @@
         <h3 class="text-primary"><i class="fas fa-paint-brush"></i> {{ $practice->name }}</h3>
         <div class="mt-3 mb-5">
             <a class="btn btn-primary btn-sm" href="{{ route('practice.publish', $practice->id) }}">
-                <i class="fab fa-vk"></i> Publish
+                <i class="fab fa-vk"></i> @lang('practice.publish')
             </a>
             <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
-                <i class="fas fa-pencil-alt"></i> Edit
+                <i class="fas fa-pencil-alt"></i> @lang('practice.edit')
             </a>
             <button type="submit" class="btn btn-danger btn-sm btn-delete" href="#" form="destroy-{{ $practice->id }}">
-                    <i class="fas fa-trash"></i> Delete
+                    <i class="fas fa-trash"></i> @lang('practice.delete')
             </button>
             <form method="POST" action="{{ route('practice.destroy', $practice->id) }}" id="destroy-{{ $practice->id }}" hidden>
                 @csrf
@@ -78,10 +78,10 @@
         </div>
 
         <div class="text-muted">
-        <p class="text-sm">Unique identifier
+        <p class="text-sm">@lang('practice.unique_identifier')
             <b class="d-block">{{ $practice->id }}</b>
         </p>
-        <p class="text-sm">Pictures count
+        <p class="text-sm">@lang('practice.pictures_count')
             <b class="d-block">{{ count($practice->pictures) }}</b>
         </p>
         </div>

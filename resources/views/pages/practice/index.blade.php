@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Practices')
+@section('title', __('practice.practices'))
 
 @section('content')
 @include('components.form-alert')
@@ -10,9 +10,9 @@
         <table class="table table-striped projects">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Group</th>
-                    <th>Author</th>
+                    <th>@lang('practice.name')</th>
+                    <th>@lang('practice.group')</th>
+                    <th>@lang('practice.author')</th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,7 +21,7 @@
                 <tr>
                     <td>
                         <a>{{ $practice->name }}</a><br />
-                        <small>Created at {{ $practice->created_at }}</small>
+                        <small>@lang('practice.created_at') {{ $practice->created_at }}</small>
                     </td>
                     <td>{{ $practice->group->name }}</td>
                     <td>
@@ -29,13 +29,13 @@
                     </td>
                     <td class="project-actions text-right">
                         <a class="btn btn-primary btn-sm" href="{{ route('practice.show', $practice->id) }}">
-                              <i class="fas fa-folder"></i> View
+                              <i class="fas fa-folder"></i> @lang('practice.view')
                         </a>
                         <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
-                            <i class="fas fa-pencil-alt"></i> Edit
+                            <i class="fas fa-pencil-alt"></i> @lang('practice.edit')
                         </a>
                         <button type="submit" class="btn btn-danger btn-sm btn-delete" href="#" form="destroy-{{ $practice->id }}">
-                                <i class="fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> @lang('practice.delete')
                         </button>
                         <form method="POST" action="{{ route('practice.destroy', $practice->id) }}" id="destroy-{{ $practice->id }}" hidden>
                             @csrf
