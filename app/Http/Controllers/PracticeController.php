@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Practice;
 use ErrorException;
@@ -144,6 +145,7 @@ class PracticeController extends Controller
 
         return view('pages.practice.publish', [
             'practice' => $practice,
+            'has_extra_token' => VkTokenService::hasExtraToken(),
         ]);
     }
 }

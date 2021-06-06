@@ -3,6 +3,8 @@
 @section('title', 'Publish practice')
 
 @section('content')
+@include('components.extra-token')
+
 <div class="card card-primary">
         <div class="card-body">
             <div class="form-group">

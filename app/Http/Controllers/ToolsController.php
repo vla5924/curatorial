@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\RepublisherService;
+use App\Http\Services\VkTokenService;
 use App\Models\User;
 use ATehnix\VkClient\Exceptions\VkException;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class ToolsController extends Controller
 
         return view('pages.tools.blocker', [
             'groups' => $user->groups,
+            'has_extra_token' => VkTokenService::hasExtraToken(),
         ]);
     }
 
@@ -36,6 +38,7 @@ class ToolsController extends Controller
 
         return view('pages.tools.republisher', [
             'groups' => $groups,
+            'has_extra_token' => VkTokenService::hasExtraToken(),
         ]);
     }
 }

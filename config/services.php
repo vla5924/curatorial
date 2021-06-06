@@ -36,4 +36,8 @@ return [
         'redirect' => env('VKONTAKTE_REDIRECT_URI')
     ],
 
+    'vkontakte_extra' => [
+        'client_id' => env('VKONTAKTE_EXTRA_CLIENT_ID'),
+    ],
+
 ];

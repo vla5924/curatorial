@@ -3,6 +3,8 @@
 @section('title', 'Republisher')
 
 @section('content')
+@include('components.extra-token')
+
 <div class="col-12">
     <div class="card card-primary">
         <div class="card-body">

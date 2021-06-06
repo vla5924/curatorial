@@ -3,6 +3,8 @@
 @section('title', 'Blocker')
 
 @section('content')
+@include('components.extra-token')
+
 <div class="my-3 p-3 bg-white rounded box-shadow">
     <h4>Поиск пользователя</h4>
     <div class="row">
