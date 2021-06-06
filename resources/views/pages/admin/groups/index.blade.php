@@ -3,9 +3,9 @@
 @section('title', 'Groups')
 
 @section('content')
-<div class="card">
-    @include('components.form-alert')
+@include('components.form-alert')
 
+<div class="card">
     <div class="card-body p-0" style="display: block;">
         <table class="table table-striped projects">
             <thead>

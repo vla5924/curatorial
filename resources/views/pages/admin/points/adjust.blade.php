@@ -8,7 +8,6 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th style="width: 30px" rowspan="2">ID</th>
                     <th rowspan="2">Name</th>
                     <th colspan="{{ count($groups) }}">Groups</th>
                 </tr>
@@ -21,7 +20,6 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
                     <td>
                         @include('components.user-link', ['user' => $user])
                     </td>

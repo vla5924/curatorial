@@ -3,8 +3,6 @@
 @section('title', 'Practice ' . $practice->id)
 
 @section('content')
-
-<!-- Default box -->
 <div class="card">
 <div class="card-body">
     <div class="row">

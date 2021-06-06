@@ -17,9 +17,6 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>Unique ID</b> <span class="float-right">{{ $user->id }}</span>
-                    </li>
-                    <li class="list-group-item">
                         <b>VK ID</b> <a class="float-right" href="//vk.com/id{{ $user->vk_id }}" target="_blank">{{ $user->vk_id }}</a>
                     </li>
                     <li class="list-group-item">

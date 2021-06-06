@@ -4,6 +4,7 @@
 
 @section('content')
 @include('components.form-alert')
+
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title">Edit profile information</h3>

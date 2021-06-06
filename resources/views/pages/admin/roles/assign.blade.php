@@ -8,7 +8,6 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th style="width: 30px">ID</th>
                     <th>Name</th>
                     <th>Role</th>
                 </tr>
@@ -16,7 +15,6 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
                     <td>
                         @include('components.user-link', ['user' => $user])
                     </td>

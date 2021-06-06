@@ -3,43 +3,50 @@
 @section('title', 'Create pollbunch')
 
 @section('content')
-<div class="col-12">
-    <div class="card card-primary">
-        @include('components.form-alert')
+@include('components.form-alert')
 
-        <form method="POST" enctype="multipart/form-data" action="{{ route('pollbunches.store') }}" id="pollbunch-form">
-            @csrf
+<div class="card card-primary">
 
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Enter pollbunch name briefly describing its theme" required>
+    <form method="POST" enctype="multipart/form-data" action="{{ route('pollbunches.store') }}" id="pollbunch-form">
+        @csrf
+
+        <div class="card-body">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" placeholder="Pollbunch name briefly describing its theme" required>
+            </div>
+            <div class="form-group">
+                <label>Group</label>
+                <select class="form-control" style="width: 100%;" name="group_id" required>
+                    @include('components.user-groups')
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Questions</label>
+                <div id="pollbunch-questions">
                 </div>
-                <div class="form-group">
-                    <label>Group</label>
-                    <select class="form-control" style="width: 100%;" name="group_id" required>
-                        @include('components.user-groups')
-                    </select>
+                <div class="my-4">
+                    <button class="btn btn-block btn-primary" onclick="internal.addQuestion();return false;">Add question</button>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputFile">Questions</label>
-                    <div id="pollbunch-questions">
-                    </div>
-                    <div class="my-4">
-                        <button class="btn btn-block btn-primary" onclick="internal.addQuestion();return false;">Add question</button>
-                    </div>
-                    <div class="callout callout-info">
-                        <h5>Hint about marking</h5>
-                        <p>If poll with the question should be with multiple answers able to choose, type <code>#</code> before its text.</p>
-                        <p>If one or more of the answers should be marked as correct, type <code>#</code> before those answers.</p>
-                    </div>
+                <div class="callout callout-info">
+                    <h5>Hint about marking</h5>
+                    <p>If poll with the question should be with multiple answers able to choose, type <code>#</code> before its text.<br>
+                       If one or more of the answers should be marked as correct, type <code>#</code> before those answers.</p>
+                    <p class="mb-1"><i>Example:</i></p>
+                    <pre class="p-0 m-0">
+#What is 2+2?
+3
+#4
+5
+I don't know
+                    </pre>
                 </div>
             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
 </div>
 @endsection
 
