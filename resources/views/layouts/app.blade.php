@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') | @lang('misc.curatorial')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -64,7 +64,7 @@
                     <div class="navbar-search-block">
                         <form class="form-inline">
                             <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                                <input class="form-control form-control-navbar" type="search" placeholder="@lang('misc.search')"
                                     aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" type="submit">
@@ -79,7 +79,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button" title="@lang('misc.full_screen')">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
@@ -91,7 +91,7 @@
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                      document.getElementById('logout-form').submit();"
-                        class="nav-link">
+                        class="nav-link" title="@lang('misc.logout')">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none" hidden>
@@ -108,7 +108,7 @@
             <a href="{{ route('home') }}" class="brand-link">
                 <img src="/theme/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Curatorial</span>
+                <span class="brand-text font-weight-light">@lang('misc.curatorial')</span>
             </a>
 
             <!-- Sidebar -->
@@ -304,7 +304,7 @@
                             </ul>
                         </li>
                         @role('admin')
-                        <li class="nav-header">ADMINISTRATION</li>
+                        <li class="nav-header">@lang('misc.administration')</li>
                         @can('edit points')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
