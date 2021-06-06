@@ -29,7 +29,7 @@ class RatingController extends Controller
 
     public function index()
     {
-        $users = UserHelper::active();
+        $users = UserHelper::active()->get();
         return self::generateRatingWithView($users);
     }
 
