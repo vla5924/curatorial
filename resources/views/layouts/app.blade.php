@@ -286,19 +286,19 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-question-circle"></i>
                                 <p>
-                                    Help
+                                    @lang('help.help')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('help.index') }}" class="nav-link">
-                                        <p>Manuals and FAQ</p>
+                                        <p>@lang('help.manuals_and_faq')</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('help.about') }}" class="nav-link">
-                                        <p>About</p>
+                                        <p>@lang('help.about')</p>
                                     </a>
                                 </li>
                             </ul>
