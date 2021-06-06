@@ -37,7 +37,13 @@ class UserHelper
         $points = $posts->reduce(function ($total, $post) {
             return $total + $post->points;
         }, 0);
-        $points += $user->pointsAdjustments->sum('points');
+        if ($group) {
+            $adjustment = self::pointsAdjustment($user, $group);
+            if ($adjustment)
+                $points += $adjustment->points;
+        } else {
+            $points += $user->pointsAdjustments->sum('points');
+        }
         return $points;
     }
 
