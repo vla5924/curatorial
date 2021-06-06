@@ -6,6 +6,7 @@ return [
     'assign_groups' => 'Assign groups',
     'add_group' => 'Add group',
     'name' => 'Name',
+    'user_name' => 'Name',
     'group' => 'Group',
     'assigned_to' => 'assigned to',
     'unassigned_from' => 'unassigned from',

@@ -9,5 +9,6 @@ return [
     'logout' => 'Logout',
     'login' => 'Login',
     'login_description' => 'Please log in to proceed into workspace.',
-    'login_with_vk' => 'Log in with VK'
+    'login_with_vk' => 'Log in with VK',
+    'soon' => 'soon',
 ];

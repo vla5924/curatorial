@@ -8,7 +8,7 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th rowspan="2">@lang('groups.name')</th>
+                    <th rowspan="2">@lang('groups.user_name')</th>
                     <th colspan="{{ count($groups) }}">@lang('groups.groups')</th>
                 </tr>
                 <tr>

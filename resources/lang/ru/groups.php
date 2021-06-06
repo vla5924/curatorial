@@ -6,6 +6,7 @@ return [
     'assign_groups' => 'Присвоить группы',
     'add_group' => 'Добавить группу',
     'name' => 'Название',
+    'user_name' => 'Имя',
     'group' => 'Группа',
     'assigned_to' => 'присвоена для',
     'unassigned_from' => 'удалена для',
