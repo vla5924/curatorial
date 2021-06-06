@@ -337,27 +337,27 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user-friends"></i>
                                 <p>
-                                    Groups
+                                    @lang('groups.groups')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('groups.index') }}" class="nav-link">
-                                        <p>All groups</p>
+                                        <p>@lang('groups.all_groups')</p>
                                     </a>
                                 </li>
                                 @can('assign groups')
                                 <li class="nav-item">
                                     <a href="{{ route('groups.assign') }}" class="nav-link">
-                                        <p>Assign groups</p>
+                                        <p>@lang('groups.assign_groups')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('create groups')
                                 <li class="nav-item">
                                     <a href="{{ route('groups.create') }}" class="nav-link">
-                                        <p>Add group</p>
+                                        <p>@lang('groups.add_group')</p>
                                     </a>
                                 </li>
                                 @endcan

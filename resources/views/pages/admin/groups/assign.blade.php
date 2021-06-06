@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Assign groups')
+@section('title', __('groups.assign_groups'))
 
 @section('content')
 <div class="card">
@@ -8,8 +8,8 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th rowspan="2">Name</th>
-                    <th colspan="{{ count($groups) }}">Groups</th>
+                    <th rowspan="2">@lang('groups.name')</th>
+                    <th colspan="{{ count($groups) }}">@lang('groups.groups')</th>
                 </tr>
                 <tr>
                     @foreach ($groups as $group)
@@ -57,12 +57,12 @@ let Internal = {
 
         Request.internal('{{ route('internal.groups.assign') }}', request,
             function (data) {
-                let part = data.assign ? 'assigned to' : 'unassigned from';
-                Utils.toast('bg-success', 2000, 'Change saved', `Group ${groupId} ${part} user ${userId} successfully.`);
+                let part = data.assign ? '@lang('groups.assigned_to')' : '@lang('groups.unassigned_from')';
+                Utils.toast('bg-success', 2000, '@lang('groups.change_saved')', `@lang('groups.group') ${groupId} ${part} @lang('groups.user') ${userId} @lang('groups.successfully').`);
             },
             function (data) {
                 checkbox.checked = prevState;
-                Utils.toast('bg-danger', 5000, 'Change not saved', 'API error<br>' + data.error);
+                Utils.toast('bg-danger', 5000, '@lang('groups.change_not_saved')', '@lang('groups.api_error')<br>' + data.error);
             },
             function () {
                 checkbox.disabled = false;

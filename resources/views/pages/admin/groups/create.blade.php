@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Add group')
+@section('title', __('groups.add_group'))
 
 @section('content')
 @include('components.form-alert')
@@ -12,34 +12,34 @@
 
         <div class="card-body">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Name</label>
+                <label class="col-sm-2 col-form-label">@lang('groups.name')</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="name" placeholder="Full group name" required>
+                    <input type="text" class="form-control" name="name" placeholder="@lang('groups.name_placeholder')" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">VK ID</label>
+                <label class="col-sm-2 col-form-label">@lang('groups.vk_id')</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="vk_id" placeholder="Integer number as community identifier" required>
+                    <input type="text" class="form-control" name="vk_id" placeholder="@lang('groups.vk_id_placeholder')" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Confirmation token</label>
+                <label class="col-sm-2 col-form-label">@lang('groups.confirmation_token')</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="vk_confirmation_token" placeholder="String used for VK webhooks confirmation"
+                    <input type="text" class="form-control" name="vk_confirmation_token" placeholder="@lang('groups.confirmation_token_placeholder')"
                         required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Alias</label>
+                <label class="col-sm-2 col-form-label">@lang('groups.alias')</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="alias" placeholder="Short symbolic identifier"
+                    <input type="text" class="form-control" name="alias" placeholder="@lang('groups.alias_placeholder')"
                         required>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-info">Add</button>
+            <button type="submit" class="btn btn-info">@lang('groups.add')</button>
         </div>
     </form>
 </div>

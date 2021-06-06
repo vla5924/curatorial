@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Groups')
+@section('title', __('groups.groups'))
 
 @section('content')
 @include('components.form-alert')
@@ -10,10 +10,10 @@
         <table class="table table-striped projects">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>VK ID</th>
-                    <th>Confirmation token</th>
-                    <th>Alias</th>
+                    <th>@lang('groups.name')</th>
+                    <th>@lang('groups.vk_id')</th>
+                    <th>@lang('groups.confirmation_token')</th>
+                    <th>@lang('groups.alias')</th>
                     <th></th>
                 </tr>
             </thead>
@@ -26,10 +26,10 @@
                     <td>{{ $group->alias }}</td>
                     <td class="project-actions text-right">
                         <a class="btn btn-info btn-sm" href="{{ route('groups.edit', $group->id) }}">
-                            <i class="fas fa-pencil-alt"></i> Edit
+                            <i class="fas fa-pencil-alt"></i> @lang('groups.edit')
                         </a>
                         <button type="submit" class="btn btn-danger btn-sm" href="#" form="destroy-{{ $group->id }}" onclick="if(!confirm('Delete?')) return false;">
-                                <i class="fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> @lang('groups.delete')
                         </button>
                         <form method="POST" action="{{ route('groups.destroy', $group->id) }}" id="destroy-{{ $group->id }}" hidden>
                             @csrf
