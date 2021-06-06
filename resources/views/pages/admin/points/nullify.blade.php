@@ -22,7 +22,7 @@
                         @include('components.user-link', ['user' => $user])
                     </td>
                     <td id="last-nullification-{{ $user->id }}">
-                        <?php $lastNullification = $user->lastPointsNullification() ?>
+                        <?php $lastNullification = App\Helpers\UserHelper::lastPointsNullification($user) ?>
                         {{ $lastNullification ? $lastNullification->created_at : 'Never' }}
                     </td>
                     <td>

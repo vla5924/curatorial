@@ -3,6 +3,8 @@
 namespace App\Helpers;
 
 use App\Models\Group;
+use App\Models\PointsAdjustment;
+use App\Models\PointsNullification;
 use App\Models\Post;
 use App\Models\User;
 
@@ -37,5 +39,15 @@ class UserHelper
         }, 0);
         $points += $user->pointsAdjustments->sum('points');
         return $points;
+    }
+
+    public static function pointsAdjustment(User $user, Group $group)
+    {
+        return PointsAdjustment::where('user_id', $user->id)->where('group_id', $group->id)->first();
+    }
+
+    public static function lastPointsNullification(User $user)
+    {
+        return PointsNullification::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
     }
 }

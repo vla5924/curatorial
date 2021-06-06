@@ -27,8 +27,8 @@
                     </td>
                     @foreach ($groups as $group)
                     <td>
-                        <?php $lastAdjustment = $user->lastPointsAdjustment($group) ?>
-                        <input class="form-control" type="number" onchange="Internal.adjust(this, {{ $user->id }}, {{ $group->id }})" value="{{ $lastAdjustment ? $lastAdjustment->points : 0 }}" />
+                        <?php $adjustment = App\Helpers\UserHelper::pointsAdjustment($user, $group) ?>
+                        <input class="form-control" type="number" onchange="Internal.adjust(this, {{ $user->id }}, {{ $group->id }})" value="{{ $adjustment ? $adjustment->points : 0 }}" />
                     </td>
                     @endforeach
                 </tr>

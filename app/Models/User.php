@@ -69,14 +69,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(PointsAdjustment::class);
     }
-
-    public function lastPointsNullification()
-    {
-        return $this->pointsNullifications()->orderBy('created_at', 'desc')->first();
-    }
-
-    public function lastPointsAdjustment(Group $group)
-    {
-        return $this->pointsAdjustments()->orderBy('updated_at', 'desc')->where('group_id', $group->id)->first();
-    }
 }

@@ -230,6 +230,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Custom aliases...
+         */
+        'GroupHelper' => App\Helpers\GroupHelper::class,
+        'UserHelper' => App\Helpers\UserHelper::class,
+
     ],
 
 ];
