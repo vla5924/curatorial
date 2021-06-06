@@ -1,65 +1,65 @@
 @extends('layouts.app')
 
-@section('title', 'Publish practice')
+@section('title', __('practice.publish_practice'))
 
 @section('content')
-<div class="col-12">
-    <div class="card card-primary">
-        @include('components.form-alert')
+@include('components.extra-token')
 
-            <div class="card-body">
-                <div class="form-group">
-                    <label>Group</label>
-                    <select class="form-control" style="width: 100%;" id="field-group-id" required>
-                    @include('components.user-groups', ['selected' => $practice->group->id])
-                    </select>
+<div class="card card-primary">
+        <div class="card-body">
+            <div class="form-group">
+                <label>@lang('practice.group')</label>
+                <select class="form-control" style="width: 100%;" id="field-group-id" required>
+                @include('components.user-groups', ['selected' => $practice->group->id])
+                </select>
+            </div>
+            <div class="form-group">
+                <label>@lang('practice.main_contents')</label>
+                <input type="text" class="form-control" id="field-message" value="{{ $practice->name }}" placeholder="@lang('practice.main_contents_placeholder')">
+            </div>
+            <div class="form-group">
+                <label>@lang('practice.hashtags')</label>
+                <input type="text" class="form-control" id="field-hashtags" value="#{{ $practice->group->alias }}_p" placeholder="@lang('practice.hashtags_placeholder')">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <label>@lang('practice.datetime')</label>
+                        <div class="input-group date" id="start_datetime" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" id="field-publish-date" data-target="#start_datetime">
+                            <div class="input-group-append" data-target="#start_datetime" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Main contents</label>
-                    <input type="text" class="form-control" id="field-message" value="{{ $practice->name }}" placeholder="Enter main contents of post here (it should include theme and must not include hashtags)">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>@lang('practice.interval')</label>
+                        <input type="number" min="5" max="30" class="form-control" id="field-interval" value="5" placeholder="Enter interval value between posts publishing (in minutes)">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Hashtags</label>
-                    <input type="text" class="form-control" id="field-hashtags" value="#{{ $practice->group->alias }}_p" placeholder="Enter corresponding hashtags (they will be appended to each post)">
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="field-signed" checked>
+                    <label class="custom-control-label" for="field-signed">@lang('practice.add_signature')</label>
                 </div>
+            </div>
+            <div class="form-group">
+                <label>@lang('practice.pictures_publish')</label>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                        <label>Date and time</label>
-                            <div class="input-group date" id="start_datetime" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" id="field-publish-date" data-target="#start_datetime">
-                                <div class="input-group-append" data-target="#start_datetime" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                                </div>
-                            </div>
+                    @foreach ($practice->pictures as $picture)
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Interval (minutes)</label>
-                            <input type="number" min="5" max="30" class="form-control" id="field-interval" value="5" placeholder="Enter interval value between posts publishing (in minutes)">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Pictures about to plublish</label>
-                    <div class="row">
-                        @foreach ($practice->pictures as $picture)
-                            <div class="col-6 col-md-4 col-lg-3">
-                                <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
-                            </div>
-                        @endforeach
-                    </div>
+                    @endforeach
                 </div>
             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary" id="btn-publish">Publish</button>
-                    <span class="custom-control custom-switch mx-4" style="display: inline-block">
-                      <input type="checkbox" class="custom-control-input" checked id="field-signed">
-                      <label class="custom-control-label" for="field-sign">Add signature</label>
-                    </span>{{ csrf_token() }}
-            </div>
-    </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary" id="btn-publish">@lang('practice.publish')</button>
+        </div>
 </div>
 @endsection
 
@@ -68,7 +68,7 @@ $(function () {
     Utils.timerPicker('start_datetime');
 
     $('#btn-publish').on('click', function() {
-        button = new LoadingButton('btn-publish', 'Publishing');
+        button = new LoadingButton('btn-publish', '@lang('practice.publishing')');
         button.loading();
 
         let request = {
@@ -85,27 +85,28 @@ $(function () {
             function (data) {
                 let body = '';
                 for (let i = 0; i < data.posts.length; i++)
-                    body += `<i class="fas fa-check fa-fw"></i> #${i}: Postponed <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
-                Utils.toast('bg-success', 0, 'Practice published', body);
+                    body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('practice.postponed') <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                Utils.toast('bg-success', 0, '@lang('practice.published')', body);
             },
             function (data) {
-                let body = 'API error';
+                let body = '@lang('practice.api_error')';
                 if (data.error) {
                     body = data.error;
                 } else if (data.posts) {
                     body = '';
                     for (let i = 0; i < data.posts.length; i++) {
                         if (data.posts[i].ok)
-                            body += `<i class="fas fa-check fa-fw"></i> #${i}: Postponed <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                            body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('practice.postponed') <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
                         else
                             body += `<i class="fas fa-times fa-fw"></i> #${i}: ${data.posts[i].error}<br />`;
                     }
                 }
-                Utils.toast('bg-danger', 0, 'Practice not published', body);
+                Utils.toast('bg-danger', 0, '@lang('practice.not_published')', body);
             },
             function () {
                 button.ready();
             }
         );
+    });
 });
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Assign roles')
+@section('title', __('permissions.assign_roles'))
 
 @section('content')
 <div class="card">
@@ -8,16 +8,16 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th style="width: 30px">ID</th>
-                    <th>Name</th>
-                    <th>Role</th>
+                    <th>@lang('permissions.name')</th>
+                    <th>@lang('permissions.role')</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
+                    <td>
+                        @include('components.user-link', ['user' => $user])
+                    </td>
                     <td>
                         <select onchange="Internal.assignRole(this, {{ $user->id }})">
                     @foreach ($roles as $role)
@@ -52,10 +52,10 @@ let Internal = {
         
         Request.internal('{{ route('internal.roles.assign') }}', request,
             function (data) {
-                Utils.toast('bg-success', 2000, 'Change saved', `Role ${roleId} assigned to user ${userId} successfully.`);
+                Utils.toast('bg-success', 2000, '@lang('permissions.change_saved')', `@lang('permissions.role') ${roleId} @lang('permissions.assigned_to_user') ${userId} @lang('permissions.successfully').`);
             },
             function (data) {
-                Utils.toast('bg-danger', 5000, 'Change not saved', data.error);
+                Utils.toast('bg-danger', 5000, '@lang('permissions.change_not_saved')', data.error);
             },
             function () {
                 select.disabled = false;

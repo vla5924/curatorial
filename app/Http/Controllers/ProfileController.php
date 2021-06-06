@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\UserHelper;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -46,8 +47,11 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
+        $points = UserHelper::points($user);
+
         return view('pages.users.show', [
             'user' => $user,
+            'points' => $points,
         ]);
     }
 

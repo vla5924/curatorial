@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GroupHelper;
+use App\Helpers\UserHelper;
 use App\Models\Group;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -15,7 +16,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::orderBy('name')->get();
+        $groups = GroupHelper::ordered()->get();
 
         return view('pages.admin.groups.index', [
             'groups' => $groups,
@@ -85,6 +86,7 @@ class GroupController extends Controller
         $group->name = $request->name;
         $group->vk_id = $request->vk_id;
         $group->alias = $request->alias;
+        $group->vk_confirmation_token = $request->vk_confirmation_token;
         $group->save();
 
         return redirect()->back()->withSuccess('Group updated successfully');
@@ -105,8 +107,8 @@ class GroupController extends Controller
 
     public function assign()
     {
-        $users = User::orderBy('name')->paginate(20);
-        $groups = Group::orderBy('name')->get();
+        $users = UserHelper::activeOrdered()->paginate(20);
+        $groups = GroupHelper::ordered()->get();
 
         return view('pages.admin.groups.assign', [
             'users' => $users,

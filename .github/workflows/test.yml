@@ -19,7 +19,6 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Setup environment
       run: |
-        php -r "file_exists('.env') || copy('.env.example', '.env');"
         php artisan key:generate --env=testing
         chmod -R 777 storage bootstrap/cache
     - name: Create database

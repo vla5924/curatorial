@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BlockerController;
 use App\Http\Controllers\Api\PracticeController as ApiPracticeController;
 use App\Http\Controllers\Api\GroupController as ApiGroupController;
+use App\Http\Controllers\Api\PointsController as ApiPointsController;
 use App\Http\Controllers\Api\PollbunchController as ApiPollbunchController;
 use App\Http\Controllers\Api\PostController as ApiPostController;
 use App\Http\Controllers\Api\RepublisherController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Auth\VKLoginController;
 use App\Http\Controllers\ExtraTokenController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HelpController;
+use App\Http\Controllers\PointsController;
 use App\Http\Controllers\PollbunchController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -48,7 +50,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::middleware('can:view rating')->get('/users/rating', [RatingController::class, 'index'])->name('users.rating');
+    Route::middleware('can:view rating')->get('/users/rating', [RatingController::class, 'index'])->name('users.rating.index');
+    Route::middleware('can:view rating')->get('/users/rating/{id}', [RatingController::class, 'group'])->name('users.rating.group');
     Route::middleware('can:view profiles')->resource('users', ProfileController::class)->only('show');
 
     Route::prefix('settings')->group(function () {
@@ -90,6 +93,8 @@ Route::middleware('auth')->group(function () {
         Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
         Route::middleware('can:assign roles')->post('/roles/assign', [ApiRoleController::class, 'assign'])->name('internal.roles.assign');
         Route::middleware('can:edit points')->post('/posts/points', [ApiPostController::class, 'points'])->name('internal.posts.points');
+        Route::middleware('can:adjust points')->post('/points/adjust', [ApiPointsController::class, 'adjust'])->name('internal.points.adjust');
+        Route::middleware('can:nullify points')->post('/points/nullify', [ApiPointsController::class, 'nullify'])->name('internal.points.nullify');
         Route::middleware('can:use blocker')->group(function () {
             Route::post('/blocker/ban', [BlockerController::class, 'ban'])->name('internal.blocker.ban');
             Route::post('/blocker/unban', [BlockerController::class, 'unban'])->name('internal.blocker.unban');
@@ -104,7 +109,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:delete groups')->resource('groups', GroupController::class)->only('destroy');
 
     Route::middleware('can:assign roles')->get('/roles/assign', [RoleController::class, 'assign'])->name('roles.assign');
-    
+
     Route::middleware('can:use blocker')->get('/tools/blocker', [ToolsController::class, 'blocker'])->name('tools.blocker');
     Route::middleware('can:use republisher')->get('/tools/republisher', [ToolsController::class, 'republisher'])->name('tools.republisher');
+
+    Route::middleware('can:adjust points')->get('/points/adjust', [PointsController::class, 'adjust'])->name('points.adjust');
+    Route::middleware('can:nullify points')->get('/points/nullify', [PointsController::class, 'nullify'])->name('points.nullify');
 });

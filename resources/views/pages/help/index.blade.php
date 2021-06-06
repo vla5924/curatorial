@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Manuals and FAQ')
+@section('title', __('help.manuals_and_faq'))
 
 @section('content')
 

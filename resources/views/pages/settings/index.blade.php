@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Settings')
+@section('title', __('settings.general_settings'))
 
 @section('content')
     

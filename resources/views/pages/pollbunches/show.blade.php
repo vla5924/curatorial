@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Pollbunch ' . $pollbunch->id)
+@section('title', __('pollbunches.pollbunch') . ' ' . $pollbunch->id)
 
 @section('content')
-
-<!-- Default box -->
 <div class="card">
 <div class="card-body">
     <div class="row">
@@ -13,15 +11,17 @@
         <div class="col-12 col-sm-4">
             <div class="info-box bg-light">
             <div class="info-box-content">
-                <span class="info-box-text text-center text-muted">Author</span>
-                <span class="info-box-number text-center text-muted mb-0">{{ $pollbunch->user->name }}</span>
+                <span class="info-box-text text-center text-muted">@lang('pollbunches.author')</span>
+                <span class="info-box-number text-center text-muted mb-0">
+                    @include('components.user-link', ['user' => $pollbunch->user])
+                </span>
             </div>
             </div>
         </div>
         <div class="col-12 col-sm-4">
             <div class="info-box bg-light">
             <div class="info-box-content">
-                <span class="info-box-text text-center text-muted">Group</span>
+                <span class="info-box-text text-center text-muted">@lang('pollbunches.group')</span>
                 <span class="info-box-number text-center text-muted mb-0">{{ $pollbunch->group->name }}</span>
             </div>
             </div>
@@ -29,7 +29,7 @@
         <div class="col-12 col-sm-4">
             <div class="info-box bg-light">
             <div class="info-box-content">
-                <span class="info-box-text text-center text-muted">Created at</span>
+                <span class="info-box-text text-center text-muted">@lang('pollbunches.created_at')</span>
                 <span class="info-box-number text-center text-muted mb-0">{{ $pollbunch->created_at }}</span>
             </div>
             </div>
@@ -40,9 +40,9 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th style="width: 10px">Order</th>
-                    <th>Question</th>
-                    <th>Answers</th>
+                    <th style="width: 10px">@lang('pollbunches.order')</th>
+                    <th>@lang('pollbunches.question')</th>
+                    <th>@lang('pollbunches.answers')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,13 +76,13 @@
         <h3 class="text-primary"><i class="fas fa-paint-brush"></i> {{ $pollbunch->name }}</h3>
         <div class="mt-3 mb-5">
             <a class="btn btn-primary btn-sm" href="{{ route('pollbunches.publish', $pollbunch->id) }}">
-                <i class="fab fa-vk"></i> Publish
+                <i class="fab fa-vk"></i> @lang('pollbunches.publish')
             </a>
             <a class="btn btn-info btn-sm" href="{{ route('pollbunches.edit', $pollbunch->id) }}">
-                <i class="fas fa-pencil-alt"></i> Edit
+                <i class="fas fa-pencil-alt"></i> @lang('pollbunches.edit')
             </a>
             <button type="submit" class="btn btn-danger btn-sm btn-delete" form="destroy-{{ $pollbunch->id }}">
-                    <i class="fas fa-trash"></i> Delete
+                    <i class="fas fa-trash"></i> @lang('pollbunches.delete')
             </button>
             <form method="POST" action="{{ route('pollbunches.destroy', $pollbunch->id) }}" id="destroy-{{ $pollbunch->id }}" hidden>
                 @csrf
@@ -91,10 +91,10 @@
         </div>
 
         <div class="text-muted">
-        <p class="text-sm">Unique identifier
+        <p class="text-sm">@lang('pollbunches.unique_identifier')
             <b class="d-block">{{ $pollbunch->id }}</b>
         </p>
-        <p class="text-sm">Questions count
+        <p class="text-sm">@lang('pollbunches.questions_count')
             <b class="d-block">{{ count($pollbunch->questions) }}</b>
         </p>
         </div>

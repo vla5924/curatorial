@@ -1,20 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Republisher')
+@section('title', __('tools.republisher'))
 
 @section('content')
+@include('components.extra-token')
+
 <div class="col-12">
     <div class="card card-primary">
         <div class="card-body">
             <div class="form-group republisher-step-1">
-                <label for="exampleInputEmail1">Post VK ID</label>
+                <label for="exampleInputEmail1">@lang('tools.post_vk_id')</label>
                 <input type="text" class="form-control" id="republisher-post-vk-id"
-                    placeholder="Example: -10175642_3060902" required>
+                    placeholder="@lang('tools.example'): -10175642_3060902" required>
             </div>
             <div id="republisher-post-content">
             </div>
             <div class="form-group republisher-step-2" hidden>
-                <label>Group</label>
+                <label>@lang('tools.group')</label>
                 <select class="form-control" style="width: 100%;" id="field-owner-id">
                     @foreach ($groups as $group)
                     <option value="{{ -$group['id'] }}">{{ $group['name'] }}</option>
@@ -22,7 +24,7 @@
                 </select>
             </div>
             <div class="form-group republisher-step-2" hidden>
-                <label>Date and time</label>
+                <label>@lang('tools.datetime')</label>
                 <div class="input-group date" id="start_datetime" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" id="field-publish-date"
                         data-target="#start_datetime">
@@ -33,7 +35,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-primary" onclick="Internal.fetchPost(this)">Fetch post</button>
+            <button class="btn btn-primary" onclick="Internal.fetchPost(this)">@lang('tools.fetch_post')</button>
         </div>
     </div>
 </div>
@@ -42,13 +44,11 @@
 @endsection
 
 @section('inline-script')
-VK.init({
-apiId: {{ env('VKONTAKTE_CLIENT_ID') }},
-});
+VK.init({apiId: {{ config('services.vkontakte.client_id') }}});
 
 let Internal = {
     fetchPost: function (buttonElem) {
-        button = new LoadingButton(buttonElem, 'Fetching', 'Publish post');
+        button = new LoadingButton(buttonElem, '@lang('tools.fetching')', '@lang('tools.publish_post')');
         button.loading();
 
         let id = $('#republisher-post-vk-id').val();
@@ -96,9 +96,9 @@ let Internal = {
 <h3><a href="//vk.com/wall${id}" target="_blank"><img class="rounded mr-2" height="40"
     src="${group_info.photo_50}"> ${group_info.name}</a></h3><textarea class="postText"
     id="field-message" rows="10" style="width:100%"></textarea><br><input type="checkbox" id="field-signed">
-    <label for="field-signed">Подпись</label>
+    <label for="field-signed">@lang('tools.signature')</label>
 <hr>
-<p><b>Прикрепления:</b> <span id="field-attachments">${postattachments.split(',').join(', ')}</span></p>
+<p><b>@lang('tools.attachments'):</b> <span id="field-attachments">${postattachments.split(',').join(', ')}</span></p>
 </div>`);
                 $('#field-message').val(posttext);
                 $('.republisher-step-1').attr('hidden', true);
@@ -115,7 +115,7 @@ let Internal = {
     },
 
     publishPost: function (buttonElem) {
-        button = new LoadingButton(buttonElem, 'Publishing');
+        button = new LoadingButton(buttonElem, '@lang('tools.publishing')');
         button.loading();
 
         let ownerId = $('#field-owner-id').val();
@@ -130,10 +130,10 @@ let Internal = {
 
         Request.internal('{{ route('internal.republisher.publish') }}', request,
             function (data) {
-                Utils.toast('bg-success', 0, 'Post published', `<a href="//vk.com/wall${ownerId}_${data.post_id}" target="_blank">View</a>`);
+                Utils.toast('bg-success', 0, '@lang('tools.post_published')', `<a href="//vk.com/wall${ownerId}_${data.post_id}" target="_blank">@lang('tools.view')</a>`);
             },
             function (data) {
-                Utils.toast('bg-danger', 0, 'Post not published', data.error);
+                Utils.toast('bg-danger', 0, '@lang('tools.post_not_published')', data.error);
             },
             function () {
                 button.ready();

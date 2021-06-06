@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') | @lang('misc.curatorial')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -64,7 +64,7 @@
                     <div class="navbar-search-block">
                         <form class="form-inline">
                             <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                                <input class="form-control form-control-navbar" type="search" placeholder="@lang('misc.search')"
                                     aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" type="submit">
@@ -79,7 +79,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button" title="@lang('misc.full_screen')">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
@@ -91,7 +91,7 @@
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                      document.getElementById('logout-form').submit();"
-                        class="nav-link">
+                        class="nav-link" title="@lang('misc.logout')">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none" hidden>
@@ -108,7 +108,7 @@
             <a href="{{ route('home') }}" class="brand-link">
                 <img src="/theme/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Curatorial</span>
+                <span class="brand-text font-weight-light">@lang('misc.curatorial')</span>
             </a>
 
             <!-- Sidebar -->
@@ -130,7 +130,7 @@
                             <a href="{{ route('home') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                    Home
+                                    @lang('home.home')
                                 </p>
                             </a>
                         </li>
@@ -139,7 +139,7 @@
                             <a href="{{ route('posts.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-layer-group"></i>
                                 <p>
-                                    Posts
+                                    @lang('posts.posts')
                                 </p>
                             </a>
                         </li>
@@ -149,20 +149,20 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
-                                    Community
+                                    @lang('users.community')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('users.show', Auth::user()->id) }}" class="nav-link">
-                                        <p>My profile</p>
+                                        <p>@lang('users.my_profile')</p>
                                     </a>
                                 </li>
                                 @can('view rating')
                                 <li class="nav-item">
-                                    <a href="{{ route('users.rating') }}" class="nav-link">
-                                        <p>Rating</p>
+                                    <a href="{{ route('users.rating.index') }}" class="nav-link">
+                                        <p>@lang('users.rating')</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -174,25 +174,25 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    Practices
+                                    @lang('practice.practices')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('practice.index') }}" class="nav-link">
-                                        <p>Recently added</p>
+                                        <p>@lang('practice.recently_added')</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('practice.my') }}" class="nav-link">
-                                        <p>My practices</p>
+                                        <p>@lang('practice.my_practices')</p>
                                     </a>
                                 </li>
                                 @can('create practices')
                                 <li class="nav-item">
                                     <a href="{{ route('practice.create') }}" class="nav-link">
-                                        <p>Create practice</p>
+                                        <p>@lang('practice.create_practice')</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -204,25 +204,25 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tasks"></i>
                                 <p>
-                                    Pollbunches
+                                    @lang('pollbunches.pollbunches')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('pollbunches.index') }}" class="nav-link">
-                                        <p>Recently added</p>
+                                        <p>@lang('pollbunches.recently_added')</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('pollbunches.my') }}" class="nav-link">
-                                        <p>My pollbunches</p>
+                                        <p>@lang('pollbunches.my_pollbunches')</p>
                                     </a>
                                 </li>
                                 @can('create pollbunches')
                                 <li class="nav-item">
                                     <a href="{{ route('pollbunches.create') }}" class="nav-link">
-                                        <p>Create pollbunch</p>
+                                        <p>@lang('pollbunches.create_pollbunch')</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -233,7 +233,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tools"></i>
                                 <p>
-                                    Tools
+                                    @lang('tools.tools')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -241,14 +241,14 @@
                                 @can('use blocker')
                                 <li class="nav-item">
                                     <a href="{{ route('tools.blocker') }}" class="nav-link">
-                                        <p>Blocker</p>
+                                        <p>@lang('tools.blocker')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('use republisher')
                                 <li class="nav-item">
                                     <a href="{{ route('tools.republisher') }}" class="nav-link">
-                                        <p>Republisher</p>
+                                        <p>@lang('tools.republisher')</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -258,26 +258,26 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
-                                    Settings
+                                    @lang('settings.settings')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('settings.index') }}" class="nav-link">
-                                        <p>General settings</p>
+                                        <p>@lang('settings.general_settings')</p>
                                     </a>
                                 </li>
                                 @can('view profiles')
                                 <li class="nav-item">
                                     <a href="{{ route('information.index') }}" class="nav-link">
-                                        <p>Information</p>
+                                        <p>@lang('settings.information')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 <li class="nav-item">
                                     <a href="{{ route('extra-token.index') }}" class="nav-link">
-                                        <p>Extra token</p>
+                                        <p>@lang('settings.extra_token')</p>
                                     </a>
                                 </li>
                             </ul>
@@ -286,51 +286,78 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-question-circle"></i>
                                 <p>
-                                    Help
+                                    @lang('help.help')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('help.index') }}" class="nav-link">
-                                        <p>Manuals and FAQ</p>
+                                        <p>@lang('help.manuals_and_faq')</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('help.about') }}" class="nav-link">
-                                        <p>About</p>
+                                        <p>@lang('help.about')</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         @role('admin')
-                        <li class="nav-header">ADMINISTRATION</li>
+                        <li class="nav-header">@lang('misc.administration')</li>
+                        @can('edit points')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-star-half-alt"></i>
+                                <p>
+                                    @lang('points.points')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @can('adjust points')
+                                <li class="nav-item">
+                                    <a href="{{ route('points.adjust') }}" class="nav-link">
+                                        <p>@lang('points.adjust_points')</p>
+                                    </a>
+                                </li>
+                                @endcan
+                                @can('nullify points')
+                                <li class="nav-item">
+                                    <a href="{{ route('points.nullify') }}" class="nav-link">
+                                        <p>@lang('points.nullify_points')</p>
+                                    </a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
                         @can('view groups')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user-friends"></i>
                                 <p>
-                                    Groups
+                                    @lang('groups.groups')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('groups.index') }}" class="nav-link">
-                                        <p>All groups</p>
+                                        <p>@lang('groups.all_groups')</p>
                                     </a>
                                 </li>
                                 @can('assign groups')
                                 <li class="nav-item">
                                     <a href="{{ route('groups.assign') }}" class="nav-link">
-                                        <p>Assign groups</p>
+                                        <p>@lang('groups.assign_groups')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('create groups')
                                 <li class="nav-item">
                                     <a href="{{ route('groups.create') }}" class="nav-link">
-                                        <p>Add group</p>
+                                        <p>@lang('groups.add_group')</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -342,7 +369,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user-lock"></i>
                                 <p>
-                                    Permissions
+                                    @lang('permissions.permissions')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -350,14 +377,17 @@
                                 @can('assign roles')
                                 <li class="nav-item">
                                     <a href="{{ route('roles.assign') }}" class="nav-link">
-                                        <p>Assign roles</p>
+                                        <p>@lang('permissions.assign_roles')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('assign permissions')
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <p>Assign permissions</p>
+                                        <p>
+                                            @lang('permissions.assign_permissions')
+                                            <span class="right badge badge-danger">@lang('misc.soon')</span>
+                                        </p>
                                     </a>
                                 </li>
                                 @endcan

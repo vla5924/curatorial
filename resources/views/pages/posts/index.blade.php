@@ -1,25 +1,31 @@
 @extends('layouts.app')
 
-@section('title', 'Posts')
+@section('title', __('posts.posts'))
 
 @section('content')
+<style>
+    .attachment-tile {
+        width: 90px;
+        margin: 0;
+    }
+</style>
 <div class="card">
     <div class="card-body p-0">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>
-                        Meta
+                        @lang('posts.meta')
                     </th>
                     <th>
-                        Text
+                        @lang('posts.text')
                     </th>
                     <th>
-                        Author
+                        @lang('posts.author')
                     </th>
                     @can('view points')
                     <th width="100">
-                        Points
+                        @lang('posts.points')
                     </th>
                     @endcan
                 </tr>
@@ -41,18 +47,53 @@
                         @foreach ($post->attachments as $attachment)
                             @switch($attachment->type)
                                 @case('photo')
-                                    <img src="{{ $attachment->meta['sm'] }}" height="60">
+                                    <a href="{{ $attachment->meta['lg'] }}" target="_blank">
+                                        <img src="{{ $attachment->meta['sm'] }}" height="60">
+                                    </a>
                                     @break
                                 @case('video')
-                                    <img src="{{ $attachment->meta['thumb'] }}" height="60">
+                                    <a href="//vk.com/video{{ $attachment->vk_owner_id }}_{{ $attachment->vk_id }}" target="_blank">
+                                        <img src="{{ $attachment->meta['thumb'] }}" height="60">
+                                    </a>
+                                    @break
+                                @case('audio')
+                                    <button class="btn btn-app bg-warning text-truncate attachment-tile">
+                                        <i class="fas fa-music"></i>
+                                        {{ $attachment->meta['title'] }} &mdash; {{ $attachment->meta['artist'] }}
+                                    </button>
+                                    @break
+                                @case('poll')
+                                    <a class="btn btn-app bg-success text-truncate attachment-tile" href="//vk.com/poll{{ $attachment->vk_owner_id }}_{{ $attachment->vk_id }}" target="_blank">
+                                        <i class="fas fa-chart-pie"></i>
+                                        {{ $attachment->meta['question'] }}
+                                    </a>
+                                    @break
+                                @case('doc')
+                                    <a class="btn btn-app bg-primary text-truncate attachment-tile" href="//vk.com/doc{{ $attachment->vk_owner_id }}_{{ $attachment->vk_id }}" target="_blank">
+                                        <i class="far fa-file-alt"></i>
+                                        {{ $attachment->meta['title'] }}
+                                    </a>
+                                    @break
+                                @case('link')
+                                    <a class="btn btn-app bg-secondary text-truncate attachment-tile" href="{{ $attachment->meta['url'] }}" target="_blank">
+                                        <i class="fas fa-link"></i>
+                                        {{ $attachment->meta['title'] }}
+                                    </a>
                                     @break
                                 @default
-                                    {{ $attachment->type }}
+                                    <button class="btn btn-app attachment-tile">
+                                        <i class="fas fa-cube"></i>
+                                        {{ Str::ucfirst($attachment->type) }}
+                                    </button>
                             @endswitch
                         @endforeach
                     </td>
                     <td>
-                        {{ $post->signer ? $post->signer->name : 'Not signed' }}
+                        @if($post->signer)
+                        @include('components.user-link', ['user' => $post->signer])
+                        @else
+                        @lang('posts.not_signed')
+                        @endif
                     </td>
                     @can('view points')
                     <td>
@@ -81,10 +122,10 @@ let Internal = {
 
         Request.internal('{{ route('internal.posts.points') }}', request,
             function (data) {
-                Utils.toast('bg-success', 2000, 'Change saved', `${Number(points.value)} points were assigned to post ${points.dataset.id}`);
+                Utils.toast('bg-success', 2000, '@lang('posts.change_saved')', `${Number(points.value)} @lang('posts.points_were_assigned') ${points.dataset.id}`);
             },
             function (data) {
-                Utils.toast('bg-danger', 5000, 'Change not saved', data.error);
+                Utils.toast('bg-danger', 5000, '@lang('posts.change_not_saved')', data.error);
             },
             function () {
                 points.readonly = false;

@@ -17,7 +17,7 @@ class RepublisherService extends VkApiService
     public function getGroups()
     {
         return $this->api->request('groups.get', [
-            'filter' => 'admin,editor,moder',
+            'filter' => 'admin,editor',
             'extended' => 1,
         ], VkTokenService::getToken())['response']['items'];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\VkTokenService;
 use App\Models\Pollbunch;
 use ErrorException;
 use Illuminate\Http\Request;
@@ -134,6 +135,7 @@ class PollbunchController extends Controller
 
         return view('pages.pollbunches.publish', [
             'pollbunch' => $pollbunch,
+            'has_extra_token' => VkTokenService::hasExtraToken(),
         ]);
     }
 }

@@ -17,14 +17,19 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>Unique ID</b> <a class="float-right">{{ $user->id }}</a>
+                        <b>@lang('users.vk_id')</b> <a class="float-right" href="//vk.com/id{{ $user->vk_id }}" target="_blank">{{ $user->vk_id }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>User since</b> <a class="float-right">{{ $user->created_at }}</a>
+                        <b>@lang('users.user_since')</b> <span class="float-right">{{ $user->created_at }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <b>@lang('users.points')</b> <span class="float-right">{{ $points }}</span>
                     </li>
                 </ul>
 
-                <a href="{{ route('information.index') }}" class="btn btn-primary btn-block"><b>Edit information</b></a>
+                @if($user->id == Auth::user()->id)
+                <a href="{{ route('information.index') }}" class="btn btn-primary btn-block"><b>@lang('users.edit_information')</b></a>
+                @endif
             </div>
         </div>
     </div>
@@ -32,33 +37,33 @@
     <div class="col-12 col-md-8 col-lg-9">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">About Me</h3>
+                <h3 class="card-title">@lang('users.about_me')</h3>
             </div>
             <div class="card-body">
 
-                <strong><i class="fas fa-user-friends mr-1"></i> Groups</strong>
+                <strong><i class="fas fa-user-friends mr-1"></i> @lang('users.groups')</strong>
 
                 <p>
                     @foreach ($user->groups as $group)
-                    <span class="badge badge-secondary">{{ $group->name }}</span>
+                    <a class="badge badge-secondary" href="//vk.com/public{{ $group->vk_id }}" target="_blank">{{ $group->name }}</a>
                     @endforeach
                 </p>
                 
                 @if ($user->education)
                 <hr>
-                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+                <strong><i class="fas fa-book mr-1"></i> @lang('users.education')</strong>
                 <p class="text-muted">{{ $user->education }}</p>
                 @endif
 
                 @if ($user->location)
                 <hr>
-                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> @lang('users.location')</strong>
                 <p class="text-muted">{{ $user->location }}</p>
                 @endif
 
                 @if ($user->notes)
                 <hr>
-                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+                <strong><i class="far fa-file-alt mr-1"></i> @lang('users.notes')</strong>
                 <p class="text-muted">{{ $user->notes }}</p>
                 @endif
             </div>
