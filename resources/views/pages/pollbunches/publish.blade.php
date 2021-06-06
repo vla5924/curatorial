@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Publish pollbunch')
+@section('title', __('pollbunches.publish_pollbunch'))
 
 @section('content')
 @include('components.extra-token')
@@ -8,23 +8,23 @@
 <div class="card card-primary">
         <div class="card-body">
             <div class="form-group">
-                <label>Group</label>
+                <label>@lang('pollbunches.group')</label>
                 <select class="form-control" style="width: 100%;" id="field-group-id" required>
                 @include('components.user-groups', ['selected' => $pollbunch->group->id])
                 </select>
             </div>
             <div class="form-group">
-                <label>Main contents</label>
-                <input type="text" class="form-control" id="field-message" value="{{ $pollbunch->name }}" placeholder="Enter main contents of post here (it should include theme and must not include hashtags)">
+                <label>@lang('pollbunches.main_contents')</label>
+                <input type="text" class="form-control" id="field-message" value="{{ $pollbunch->name }}" placeholder="@lang('pollbunches.main_contents_placeholder')">
             </div>
             <div class="form-group">
-                <label>Hashtags</label>
-                <input type="text" class="form-control" id="field-hashtags" value="#{{ $pollbunch->group->alias }}_p" placeholder="Enter corresponding hashtags (they will be appended to each post)">
+                <label>@lang('pollbunches.hashtags')</label>
+                <input type="text" class="form-control" id="field-hashtags" value="#{{ $pollbunch->group->alias }}_p" placeholder="@lang('pollbunches.hashtags_placeholder')">
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                    <label>Date and time</label>
+                    <label>@lang('pollbunches.datetime')</label>
                         <div class="input-group date" id="start_datetime" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input" id="field-publish-date" data-target="#start_datetime">
                             <div class="input-group-append" data-target="#start_datetime" data-toggle="datetimepicker">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Interval (minutes)</label>
+                        <label>@lang('pollbunches.interval')</label>
                         <input type="number" min="5" max="30" class="form-control" id="field-interval" value="5" placeholder="Enter interval value between posts publishing (in minutes)">
                     </div>
                 </div>
@@ -43,12 +43,12 @@
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="field-signed" checked>
-                    <label class="custom-control-label" for="field-signed">Add signature</label>
+                    <label class="custom-control-label" for="field-signed">@lang('pollbunches.add_signature')</label>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary" id="btn-publish">Publish</button>
+            <button type="submit" class="btn btn-primary" id="btn-publish">@lang('pollbunches.publish')</button>
         </div>
 </div>
 @endsection
@@ -58,7 +58,7 @@ $(function () {
     Utils.timerPicker('start_datetime');
 
     $('#btn-publish').on('click', function() {
-        button = new LoadingButton('btn-publish', 'Publishing');
+        button = new LoadingButton('btn-publish', '@lang('pollbunches.publishing')');
         button.loading();
 
         let request = {
@@ -75,23 +75,23 @@ $(function () {
             function (data) {
                 let body = '';
                 for (let i = 0; i < data.posts.length; i++)
-                    body += `<i class="fas fa-check fa-fw"></i> #${i}: Postponed <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
-                Utils.toast('bg-success', 0, 'Pollbunch published', body);
+                    body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('pollbunches.postponed') <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                Utils.toast('bg-success', 0, '@lang('pollbunches.published')', body);
             },
             function (data) {
-                let body = 'API error';
+                let body = '@lang('pollbunches.api_error')';
                 if (data.error) {
                     body = data.error;
                 } else if (data.posts) {
                     body = '';
                     for (let i = 0; i < data.posts.length; i++) {
                         if (data.posts[i].ok)
-                            body += `<i class="fas fa-check fa-fw"></i> #${i}: Postponed <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                            body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('pollbunches.postponed') <a href="//vk.com/wall${data.posts[i].post_id}" target="_blank" class="fas fa-eye"></a><br />`;
                         else
                             body += `<i class="fas fa-times fa-fw"></i> #${i}: ${data.posts[i].error}<br />`;
                     }
                 }
-                Utils.toast('bg-danger', 0, 'Pollbunch not published', body);
+                Utils.toast('bg-danger', 0, '@lang('pollbunches.not_published')', body);
             },
             function () {
                 button.ready();

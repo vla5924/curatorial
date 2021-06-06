@@ -204,25 +204,25 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tasks"></i>
                                 <p>
-                                    Pollbunches
+                                    @lang('pollbunches.pollbunches')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('pollbunches.index') }}" class="nav-link">
-                                        <p>Recently added</p>
+                                        <p>@lang('pollbunches.recently_added')</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('pollbunches.my') }}" class="nav-link">
-                                        <p>My pollbunches</p>
+                                        <p>@lang('pollbunches.my_pollbunches')</p>
                                     </a>
                                 </li>
                                 @can('create pollbunches')
                                 <li class="nav-item">
                                     <a href="{{ route('pollbunches.create') }}" class="nav-link">
-                                        <p>Create pollbunch</p>
+                                        <p>@lang('pollbunches.create_pollbunch')</p>
                                     </a>
                                 </li>
                                 @endcan
