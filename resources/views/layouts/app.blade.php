@@ -369,7 +369,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user-lock"></i>
                                 <p>
-                                    Permissions
+                                    @lang('permissions.permissions')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -377,14 +377,17 @@
                                 @can('assign roles')
                                 <li class="nav-item">
                                     <a href="{{ route('roles.assign') }}" class="nav-link">
-                                        <p>Assign roles</p>
+                                        <p>@lang('permissions.assign_roles')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('assign permissions')
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <p>Assign permissions</p>
+                                        <p>
+                                            @lang('permissions.assign_permissions')
+                                            <span class="right badge badge-danger">@lang('misc.soon')</span>
+                                        </p>
                                     </a>
                                 </li>
                                 @endcan
