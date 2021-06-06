@@ -233,7 +233,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tools"></i>
                                 <p>
-                                    Tools
+                                    @lang('tools.tools')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -241,14 +241,14 @@
                                 @can('use blocker')
                                 <li class="nav-item">
                                     <a href="{{ route('tools.blocker') }}" class="nav-link">
-                                        <p>Blocker</p>
+                                        <p>@lang('tools.blocker')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('use republisher')
                                 <li class="nav-item">
                                     <a href="{{ route('tools.republisher') }}" class="nav-link">
-                                        <p>Republisher</p>
+                                        <p>@lang('tools.republisher')</p>
                                     </a>
                                 </li>
                                 @endcan
