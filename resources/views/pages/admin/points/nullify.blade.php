@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Nullify points')
+@section('title', __('points.nullify_points'))
 
 @section('content')
 <div class="card">
@@ -8,8 +8,8 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Last nullification</th>
+                    <th>@lang('points.name')</th>
+                    <th>@lang('points.last_nullification')</th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,10 +21,10 @@
                     </td>
                     <td id="last-nullification-{{ $user->id }}">
                         <?php $lastNullification = App\Helpers\UserHelper::lastPointsNullification($user) ?>
-                        {{ $lastNullification ? $lastNullification->created_at : 'Never' }}
+                        {{ $lastNullification ? $lastNullification->created_at : __('points.never') }}
                     </td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="Internal.nullify(this, {{ $user->id }})">Nullify</button>
+                        <button class="btn btn-primary btn-sm" onclick="Internal.nullify(this, {{ $user->id }})">@lang('points.nullify')</button>
                     </td>
                 </tr>
                 @endforeach
@@ -39,7 +39,7 @@
 @section('inline-script')
 let Internal = {
     nullify: function(buttonElem, userId) {
-        button = new LoadingButton(buttonElem, 'Updating');
+        button = new LoadingButton(buttonElem, '@lang('points.updating')');
         button.loading();
 
         let request = {
@@ -49,11 +49,11 @@ let Internal = {
         
         Request.internal('{{ route('internal.points.nullify') }}', request,
             function (data) {
-                Utils.toast('bg-success', 2000, 'Change saved', `Points of user ${userId} were nullified successfully.`);
+                Utils.toast('bg-success', 2000, '@lang('points.change_saved')', `@lang('points.points_of_user') ${userId} @lang('points.were_nullified_successfully').`);
                 Elem.id(`last-nullification-${userId}`).innerHTML = data.last_nullification;
             },
             function (data) {
-                Utils.toast('bg-danger', 5000, 'Change not saved', data.error);
+                Utils.toast('bg-danger', 5000, '@lang('points.change_not_saved')', data.error);
             },
             function () {
                 button.ready();

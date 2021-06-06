@@ -310,7 +310,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-star-half-alt"></i>
                                 <p>
-                                    Points
+                                    @lang('points.points')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -318,14 +318,14 @@
                                 @can('adjust points')
                                 <li class="nav-item">
                                     <a href="{{ route('points.adjust') }}" class="nav-link">
-                                        <p>Adjust points</p>
+                                        <p>@lang('points.adjust_points')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 @can('nullify points')
                                 <li class="nav-item">
                                     <a href="{{ route('points.nullify') }}" class="nav-link">
-                                        <p>Nullify points</p>
+                                        <p>@lang('points.nullify_points')</p>
                                     </a>
                                 </li>
                                 @endcan

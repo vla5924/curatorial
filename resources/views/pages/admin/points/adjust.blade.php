@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Adjust points')
+@section('title', __('points.adjust_points'))
 
 @section('content')
 <div class="card">
@@ -8,8 +8,8 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th rowspan="2">Name</th>
-                    <th colspan="{{ count($groups) }}">Groups</th>
+                    <th rowspan="2">@lang('points.name')</th>
+                    <th colspan="{{ count($groups) }}">@lang('points.groups')</th>
                 </tr>
                 <tr>
                     @foreach ($groups as $group)
@@ -53,10 +53,10 @@ let Internal = {
 
         Request.internal('{{ route('internal.points.adjust') }}', request,
             function (data) {
-                Utils.toast('bg-success', 2000, 'Change saved', `Adjustment of ${data.points} changed for group ${groupId} of user ${userId} successfully.`);
+                Utils.toast('bg-success', 2000, '@lang('points.change_saved')', `@lang('points.adjustment_of') ${data.points} @lang('points.changed_for_group') ${groupId} @lang('points.of_user') ${userId} @lang('points.successfully').`);
             },
             function (data) {
-                Utils.toast('bg-danger', 5000, 'Change not saved', 'API error<br>' + data.error);
+                Utils.toast('bg-danger', 5000, '@lang('points.change_not_saved')', '@lang('points.api_error')<br>' + data.error);
             },
             function () {
                 input.readonly = false;
