@@ -3,6 +3,12 @@
 @section('title', 'Posts')
 
 @section('content')
+<style>
+    .attachment-tile {
+        width: 90px;
+        margin: 0;
+    }
+</style>
 <div class="card">
     <div class="card-body p-0">
         <table class="table table-striped">
@@ -41,13 +47,44 @@
                         @foreach ($post->attachments as $attachment)
                             @switch($attachment->type)
                                 @case('photo')
-                                    <img src="{{ $attachment->meta['sm'] }}" height="60">
+                                    <a href="{{ $attachment->meta['lg'] }}" target="_blank">
+                                        <img src="{{ $attachment->meta['sm'] }}" height="60">
+                                    </a>
                                     @break
                                 @case('video')
-                                    <img src="{{ $attachment->meta['thumb'] }}" height="60">
+                                    <a href="//vk.com/video{{ $attachment->vk_owner_id }}_{{ $attachment->vk_id }}" target="_blank">
+                                        <img src="{{ $attachment->meta['thumb'] }}" height="60">
+                                    </a>
+                                    @break
+                                @case('audio')
+                                    <button class="btn btn-app bg-warning text-truncate attachment-tile">
+                                        <i class="fas fa-music"></i>
+                                        {{ $attachment->meta['title'] }} &mdash; {{ $attachment->meta['artist'] }}
+                                    </button>
+                                    @break
+                                @case('poll')
+                                    <a class="btn btn-app bg-success text-truncate attachment-tile" href="//vk.com/poll{{ $attachment->vk_owner_id }}_{{ $attachment->vk_id }}" target="_blank">
+                                        <i class="fas fa-chart-pie"></i>
+                                        {{ $attachment->meta['question'] }}
+                                    </a>
+                                    @break
+                                @case('doc')
+                                    <a class="btn btn-app bg-primary text-truncate attachment-tile" href="//vk.com/doc{{ $attachment->vk_owner_id }}_{{ $attachment->vk_id }}" target="_blank">
+                                        <i class="far fa-file-alt"></i>
+                                        {{ $attachment->meta['title'] }}
+                                    </a>
+                                    @break
+                                @case('link')
+                                    <a class="btn btn-app bg-secondary text-truncate attachment-tile" href="{{ $attachment->meta['url'] }}" target="_blank">
+                                        <i class="fas fa-link"></i>
+                                        {{ $attachment->meta['title'] }}
+                                    </a>
                                     @break
                                 @default
-                                    {{ $attachment->type }}
+                                    <button class="btn btn-app attachment-tile">
+                                        <i class="fas fa-cube"></i>
+                                        {{ Str::ucfirst($attachment->type) }}
+                                    </button>
                             @endswitch
                         @endforeach
                     </td>
@@ -55,7 +92,7 @@
                         @if($post->signer)
                         @include('components.user-link', ['user' => $post->signer])
                         @else
-                        Not signed
+                        (not signed)
                         @endif
                     </td>
                     @can('view points')
