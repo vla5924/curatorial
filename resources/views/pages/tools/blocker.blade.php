@@ -43,9 +43,7 @@
 @endsection
 
 @section('inline-script')
-VK.init({
-    apiId: {{ env('VKONTAKTE_CLIENT_ID') }},
-});
+VK.init({apiId: {{ config('services.vkontakte.client_id') }}});
 
 var user_to_act;
 
