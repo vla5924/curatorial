@@ -130,7 +130,7 @@
                             <a href="{{ route('home') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                    Home
+                                    @lang('home.home')
                                 </p>
                             </a>
                         </li>

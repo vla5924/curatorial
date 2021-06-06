@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', __('home.home'))
 
 @section('content')
 <!-- Small boxes (Stat box) -->
