@@ -9,11 +9,25 @@ jobs:
   deploy:
     name: Deploy to production
     runs-on: curatorial-production
+    env:
+        CURATORIAL_DIR: ${{ secrets.CURATORIAL_DIR }}
     steps:
     - name: Pull changes
-      env:
-        CURATORIAL_DIR: ${{ secrets.CURATORIAL_DIR }}
       shell: bash
       run: |
         cd $CURATORIAL_DIR
         git pull
+    - name: Update dependencies
+      shell: bash
+      run: |
+        cd $CURATORIAL_DIR
+        php composer.phar install --optimize-autoloader --no-dev
+    - name: Update cache and database
+      shell: bash
+      run: |
+        cd $CURATORIAL_DIR
+        php artisan key:generate
+        php artisan migrate
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
