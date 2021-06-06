@@ -258,26 +258,26 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
-                                    Settings
+                                    @lang('settings.settings')
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('settings.index') }}" class="nav-link">
-                                        <p>General settings</p>
+                                        <p>@lang('settings.general_settings')</p>
                                     </a>
                                 </li>
                                 @can('view profiles')
                                 <li class="nav-item">
                                     <a href="{{ route('information.index') }}" class="nav-link">
-                                        <p>Information</p>
+                                        <p>@lang('settings.information')</p>
                                     </a>
                                 </li>
                                 @endcan
                                 <li class="nav-item">
                                     <a href="{{ route('extra-token.index') }}" class="nav-link">
-                                        <p>Extra token</p>
+                                        <p>@lang('settings.extra_token')</p>
                                     </a>
                                 </li>
                             </ul>
