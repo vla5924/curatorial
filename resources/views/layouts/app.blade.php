@@ -139,7 +139,7 @@
                             <a href="{{ route('posts.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-layer-group"></i>
                                 <p>
-                                    Posts
+                                    @lang('posts.posts')
                                 </p>
                             </a>
                         </li>

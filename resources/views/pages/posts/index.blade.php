@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Posts')
+@section('title', __('posts.posts'))
 
 @section('content')
 <style>
@@ -15,17 +15,17 @@
             <thead>
                 <tr>
                     <th>
-                        Meta
+                        @lang('posts.meta')
                     </th>
                     <th>
-                        Text
+                        @lang('posts.text')
                     </th>
                     <th>
-                        Author
+                        @lang('posts.author')
                     </th>
                     @can('view points')
                     <th width="100">
-                        Points
+                        @lang('posts.points')
                     </th>
                     @endcan
                 </tr>
@@ -92,7 +92,7 @@
                         @if($post->signer)
                         @include('components.user-link', ['user' => $post->signer])
                         @else
-                        (not signed)
+                        @lang('posts.not_signed')
                         @endif
                     </td>
                     @can('view points')
@@ -122,10 +122,10 @@ let Internal = {
 
         Request.internal('{{ route('internal.posts.points') }}', request,
             function (data) {
-                Utils.toast('bg-success', 2000, 'Change saved', `${Number(points.value)} points were assigned to post ${points.dataset.id}`);
+                Utils.toast('bg-success', 2000, '@lang('posts.change_saved')', `${Number(points.value)} @lang('posts.points_were_assigned') ${points.dataset.id}`);
             },
             function (data) {
-                Utils.toast('bg-danger', 5000, 'Change not saved', data.error);
+                Utils.toast('bg-danger', 5000, '@lang('posts.change_not_saved')', data.error);
             },
             function () {
                 points.readonly = false;
