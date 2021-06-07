@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->text('education')->nullable()->default(null);
             $table->text('location')->nullable()->default(null);
             $table->text('notes')->nullable()->default(null);
+            $table->string('locale', 5)->default('ru');
+            $table->text('settings')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });
