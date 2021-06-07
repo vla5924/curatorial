@@ -13,7 +13,7 @@ class PollbunchPublishService extends VkApiService
     public function __construct()
     {
         if (!VkTokenService::hasExtraToken())
-            throw new VkException(self::EXTRA_TOKEN_IS_NOT_FOUND);
+            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
         parent::__construct(VkTokenService::getExtraToken());
     }
 
@@ -58,7 +58,7 @@ class PollbunchPublishService extends VkApiService
             } catch (VkException $e) {
                 $posts[] = [
                     'ok' => false,
-                    'error' => 'Cannot create poll. ' . $e->getMessage(),
+                    'error' => __('pollbunches.cannot_create_poll') . ' ' . $e->getMessage(),
                 ];
                 $ok = false;
                 continue;
@@ -85,7 +85,7 @@ class PollbunchPublishService extends VkApiService
             } catch (VkException $e) {
                 $posts[] = [
                     'ok' => false,
-                    'error' => 'Cannot create post. ' . $e->getMessage() . json_encode($parameters, JSON_UNESCAPED_UNICODE),
+                    'error' => __('pollbunches.cannot_create_post') . ' ' . $e->getMessage(),
                 ];
                 $ok = false;
                 continue;

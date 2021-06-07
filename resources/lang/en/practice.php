@@ -37,4 +37,9 @@ return [
     'picture' => 'Picture',
     'unique_identifier' => 'Unique identifier',
     'pictures_count' => 'Pictures count',
+    'practice_created_successfully' => 'Practice created successfully',
+    'practice_updated_successfully' => 'Practice updated successfully',
+    'practice_deleted_successfully' => 'Practice deleted successfully',
+    'file_format_not_supported' => 'File format ":mime" of file ":file" is not supported',
+    'file_too_large' => 'File ":file" is too large (must be less than :max_size)',
 ];

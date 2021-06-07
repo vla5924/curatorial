@@ -37,4 +37,9 @@ return [
     'picture' => 'Изображение',
     'unique_identifier' => 'Уникальный идентификатор',
     'pictures_count' => 'Количество изображений',
+    'practice_created_successfully' => 'Занятие успешно создано',
+    'practice_updated_successfully' => 'Занятие успешно изменено',
+    'practice_deleted_successfully' => 'Занятие успешно удалено',
+    'file_format_not_supported' => 'Формат ":mime" файла ":file" не поддерживается',
+    'file_too_large' => 'Файл ":file" имеет слишком большой размер (должен быть не более :max_size)',
 ];

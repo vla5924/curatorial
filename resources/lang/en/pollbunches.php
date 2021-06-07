@@ -56,4 +56,10 @@ dog
     'answers' => 'Answers',
     'unique_identifier' => 'Unique identifier',
     'questions_count' => 'Questions count',
+    'pollbunch_created_successfully' => 'Pollbunch created successfully',
+    'pollbunch_updated_successfully' => 'Pollbunch updated successfully',
+    'pollbunch_deleted_successfully' => 'Pollbunch deleted successfully',
+    'invalid_question_data' => 'Invalid question data',
+    'cannot_create_poll' => 'Cannot create poll.',
+    'cannot_create_post' => 'Cannot create post.',
 ];

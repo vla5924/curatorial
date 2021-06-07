@@ -17,4 +17,5 @@ return [
     'location' => 'Местонахождение',
     'notes' => 'Разное',
     'update' => 'Обновить',
+    'information_updated_successfully' => 'Информация в вашем профиле успешно обновлена.',
 ];

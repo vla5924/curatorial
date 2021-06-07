@@ -17,4 +17,5 @@ return [
     'location' => 'Location',
     'notes' => 'Notes',
     'update' => 'Update',
+    'information_updated_successfully' => 'Your profile information updated successfully.',
 ];

@@ -56,4 +56,10 @@ return [
     'answers' => 'Ответы',
     'unique_identifier' => 'Уникальный идентификатор',
     'questions_count' => 'Количество вопросов',
+    'pollbunch_created_successfully' => 'Пятиминутка успешно создана',
+    'pollbunch_updated_successfully' => 'Пятиминутка успешно изменена',
+    'pollbunch_deleted_successfully' => 'Пятиминутка успешно удалена',
+    'invalid_question_data' => 'Некорректные данные вопроса',
+    'cannot_create_poll' => 'Не удалось создать опрос.',
+    'cannot_create_post' => 'Не удалось создать запись.',
 ];

@@ -21,6 +21,6 @@ class ProfileInformationController extends Controller
         $user->notes = $request->notes;
         $user->save();
 
-        return redirect()->back()->withSuccess('Your profile information updated successfully.');
+        return redirect()->back()->withSuccess(__('settings.information_updated_successfully'));
     }
 }
