@@ -42,4 +42,5 @@ return [
     'practice_deleted_successfully' => 'Занятие успешно удалено',
     'file_format_not_supported' => 'Формат ":mime" файла ":file" не поддерживается',
     'file_too_large' => 'Файл ":file" имеет слишком большой размер (должен быть не более :max_size)',
+    'choose_n_files' => 'Необходимо выбрать от :min до :max файлов.',
 ];
