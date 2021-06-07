@@ -29,8 +29,8 @@
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/images/icons/apple-touch-icon-180x180.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
     <link rel="stylesheet" href="/theme/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="/theme/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="/theme/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="/theme/plugins/jqvmap/jqvmap.min.css">
@@ -427,21 +427,17 @@
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <script src="/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- ChartJS -->
     <script src="/theme/plugins/chart.js/Chart.min.js"></script>
-    <!-- jQuery Knob Chart -->
     <script src="/theme/plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- daterangepicker -->
     <script src="/theme/plugins/moment/moment.min.js"></script>
     <script src="/theme/plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
     <script src="/theme/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- overlayScrollbars -->
     <script src="/theme/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 
     <script src="/theme/dist/js/adminlte.js"></script>
     <script src="/theme/dist/js/demo.js"></script>
     <script src="/theme/dist/js/pages/dashboard.js"></script>
+
     <script src="/js/misc.js"></script>
     <script>@yield('inline-script')</script>
 </body>
