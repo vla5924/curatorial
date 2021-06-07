@@ -77,7 +77,7 @@ class PracticeController extends Controller
             return redirect()->back()->with('failure', $e->getMessage());
         }
 
-        return redirect()->back()->withSuccess(__('practice.practice_created_successfully'));
+        return redirect()->route('practice.show', $practice->id)->with('success', __('practice.practice_created_successfully'));
     }
 
     /**
@@ -136,7 +136,7 @@ class PracticeController extends Controller
         }
         $practice->delete();
 
-        return redirect()->back()->withSuccess(__('practice.practice_deleted_successfully'));
+        return redirect()->route('practice.index')->with('success', __('practice.practice_deleted_successfully'));
     }
 
     public function publish(int $id)

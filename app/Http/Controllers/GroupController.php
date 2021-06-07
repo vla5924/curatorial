@@ -47,7 +47,7 @@ class GroupController extends Controller
         $group->alias = $request->alias;
         $group->save();
 
-        return redirect()->back()->withSuccess(__('groups.group_added_successfully'));
+        return redirect()->route('groups.index')->with('success', __('groups.group_added_successfully'));
     }
 
     /**

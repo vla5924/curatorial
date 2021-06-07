@@ -3,6 +3,8 @@
 @section('title', __('pollbunches.pollbunch') . ' ' . $pollbunch->id)
 
 @section('content')
+@include('components.form-alert')
+
 <div class="card">
 <div class="card-body">
     <div class="row">
