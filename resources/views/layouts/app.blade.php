@@ -10,37 +10,43 @@
 
     <title>@yield('title') | @lang('misc.curatorial')</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
+    <link rel="shortcut icon" href="/images/icons/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/png" sizes="57x57" href="/images/icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="/images/icons/apple-touch-icon-57x57.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="/images/icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="/images/icons/apple-touch-icon-72x72.png">
+    <link rel="icon" type="image/png" sizes="76x76" href="/images/icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="/images/icons/apple-touch-icon-76x76.png">
+    <link rel="icon" type="image/png" sizes="114x114" href="/images/icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="/images/icons/apple-touch-icon-114x114.png">
+    <link rel="icon" type="image/png" sizes="120x120" href="/images/icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="/images/icons/apple-touch-icon-120x120.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="/images/icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="/images/icons/apple-touch-icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="152x152" href="/images/icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="/images/icons/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="/images/icons/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/images/icons/apple-touch-icon-180x180.png">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="/theme/plugins/fontawesome-free/css/all.min.css">
-    <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="/theme/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-    <!-- iCheck -->
     <link rel="stylesheet" href="/theme/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- JQVMap -->
     <link rel="stylesheet" href="/theme/plugins/jqvmap/jqvmap.min.css">
-    <!-- Theme style -->
     <link rel="stylesheet" href="/theme/dist/css/adminlte.min.css">
-    <!-- overlayScrollbars -->
     <link rel="stylesheet" href="/theme/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <!-- Daterange picker -->
     <link rel="stylesheet" href="/theme/plugins/daterangepicker/daterangepicker.css">
-    <!-- summernote -->
-    <link rel="stylesheet" href="/theme/plugins/summernote/summernote-bs4.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         <!-- Preloader -->
-        <!--div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="/theme/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="/images/icons/apple-touch-icon.png" alt="Logo" height="60"
                 width="60">
-        </div-->
+        </div>
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -83,11 +89,11 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!--li class="nav-item">
                     <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
-                </li>
+                </li-->
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                      document.getElementById('logout-form').submit();"
@@ -106,7 +112,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('home') }}" class="brand-link">
-                <img src="/theme/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+                <img src="/images/icons/apple-touch-icon.png" alt="Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">@lang('misc.curatorial')</span>
             </a>
