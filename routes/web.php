@@ -56,6 +56,7 @@ Route::middleware(['auth', 'language'])->group(function () {
 
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
+        Route::post('/', [SettingsController::class, 'store'])->name('settings.store');
         Route::get('/extra-token', [ExtraTokenController::class, 'index'])->name('extra-token.index');
         Route::post('/extra-token', [ExtraTokenController::class, 'store'])->name('extra-token.store');
         Route::get('/information', [ProfileInformationController::class, 'index'])->name('information.index');

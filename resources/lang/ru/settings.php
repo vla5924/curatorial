@@ -18,4 +18,6 @@ return [
     'notes' => 'Разное',
     'update' => 'Обновить',
     'information_updated_successfully' => 'Информация в вашем профиле успешно обновлена.',
+    'application_language' => 'Язык приложения',
+    'settings_saved' => 'Настройки сохранены',
 ];
