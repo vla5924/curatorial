@@ -10,8 +10,8 @@
         <table class="table table-striped projects">
             <thead>
                 <tr>
+                    <th width="50"></th>
                     <th>@lang('practice.name')</th>
-                    <th>@lang('practice.group')</th>
                     <th>@lang('practice.author')</th>
                     <th></th>
                 </tr>
@@ -20,12 +20,15 @@
                 @foreach ($practices as $practice)
                 <tr>
                     <td>
-                        <a>{{ $practice->name }}</a><br />
-                        <small>@lang('practice.created_at') {{ $practice->created_at }}</small>
+                        {!! \App\Helpers\GroupHelper::imageTag($practice->group, 40) !!}
                     </td>
-                    <td>{{ $practice->group->name }}</td>
                     <td>
-                        @include('components.user-link', ['user' => $practice->user])
+                        <b>{{ $practice->name }}</b><br />
+                        <small>{{ $practice->group->name }}</small>
+                    </td>
+                    <td>
+                        @include('components.user-link', ['user' => $practice->user]) <br />
+                        <small>@lang('practice.created_at') {{ $practice->created_at }}</small>
                     </td>
                     <td class="project-actions text-right">
                         <a class="btn btn-primary btn-sm" href="{{ route('practice.show', $practice->id) }}">

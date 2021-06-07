@@ -10,6 +10,7 @@
         <table class="table table-striped projects">
             <thead>
                 <tr>
+                    <th width="50"></th>
                     <th>@lang('groups.name')</th>
                     <th>@lang('groups.vk_id')</th>
                     <th>@lang('groups.confirmation_token')</th>
@@ -20,7 +21,12 @@
             <tbody>
                 @foreach ($groups as $group)
                 <tr>
-                    <td>{{ $group->name }}</td>
+                    <td>
+                        {!! \App\Helpers\GroupHelper::imageTag($group, 30) !!}
+                    </td>
+                    <td>
+                        {{ $group->name }}
+                    </td>
                     <td>{{ $group->vk_id }}</td>
                     <td>{{ $group->vk_confirmation_token }}</td>
                     <td>{{ $group->alias }}</td>

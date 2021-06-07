@@ -10,8 +10,8 @@
         <table class="table table-striped projects">
             <thead>
                 <tr>
+                    <th width="50"></th>
                     <th>@lang('pollbunches.name')</th>
-                    <th>@lang('pollbunches.group')</th>
                     <th>@lang('pollbunches.author')</th>
                     <th></th>
                 </tr>
@@ -20,12 +20,15 @@
                 @foreach ($pollbunches as $pollbunch)
                 <tr>
                     <td>
-                        <a>{{ $pollbunch->name }}</a><br />
-                        <small>@lang('pollbunches.created_at') {{ $pollbunch->created_at }}</small>
+                        {!! \App\Helpers\GroupHelper::imageTag($pollbunch->group, 40) !!}
                     </td>
-                    <td>{{ $pollbunch->group->name }}</td>
                     <td>
-                        @include('components.user-link', ['user' => $pollbunch->user])
+                        <b>{{ $pollbunch->name }}</b><br />
+                        <small>{{ $pollbunch->group->name }}</small>
+                    </td>
+                    <td>
+                        @include('components.user-link', ['user' => $pollbunch->user]) <br />
+                        <small>@lang('pollbunches.created_at') {{ $pollbunch->created_at }}</small>
                     </td>
                     <td class="project-actions text-right">
                         <a class="btn btn-primary btn-sm" href="{{ route('pollbunches.show', $pollbunch->id) }}">
