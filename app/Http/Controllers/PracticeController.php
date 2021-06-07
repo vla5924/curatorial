@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PracticeHelper;
 use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Practice;
@@ -133,11 +134,7 @@ class PracticeController extends Controller
      */
     public function destroy(Practice $practice)
     {
-        foreach ($practice->pictures as $picture) {
-            Storage::delete($picture->path);
-            $picture->delete();
-        }
-        $practice->delete();
+        PracticeHelper::deepDestroy($practice);
 
         return redirect()->route('practice.index')->with('success', __('practice.practice_deleted_successfully'));
     }
