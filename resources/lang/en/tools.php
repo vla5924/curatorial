@@ -22,10 +22,12 @@ return [
     'fetch_post' => 'Fetch post',
     'fetching' => 'Fetching',
     'publish_post' => 'Publish post',
-    'signature' => 'Signature',
+    'add_signature' => 'Add signature',
     'attachments' => 'Attachments',
     'publishing' => 'Publishing',
     'post_published' => 'Post published',
     'post_not_published' => 'Post not published',
     'view' => 'View',
+    'post_origin' => 'Post origin',
+    'post_content' => 'Post content',
 ];

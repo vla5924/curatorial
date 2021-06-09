@@ -9,11 +9,27 @@
     <div class="card card-primary">
         <div class="card-body">
             <div class="form-group republisher-step-1">
-                <label for="exampleInputEmail1">@lang('tools.post_vk_id')</label>
+                <label>@lang('tools.post_vk_id')</label>
                 <input type="text" class="form-control" id="republisher-post-vk-id"
                     placeholder="@lang('tools.example'): -10175642_3060902" required>
             </div>
-            <div id="republisher-post-content">
+            <div class="form-group republisher-step-2" hidden>
+                <label>@lang('tools.post_origin')</label>
+                <br/>
+                <div class="user-block">
+                    <img class="img-circle img-bordered-sm" id="post-image">
+                    <a href="#" class="username" id="post-origin"></a>
+                    <span class="description" id="post-date"></span>
+                </div>
+                <br/><br/>
+            </div>
+            <div class="form-group republisher-step-2" hidden>
+                <label>@lang('tools.post_content')</label>
+                <textarea class="form-control" rows="10" id="field-message"></textarea>
+            </div>
+            <div class="form-group republisher-step-2" hidden>
+                <label>@lang('tools.attachments')</label>
+                <input type="text" class="form-control" id="field-attachments" readonly>
             </div>
             <div class="form-group republisher-step-2" hidden>
                 <label>@lang('tools.group')</label>
@@ -33,6 +49,12 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group republisher-step-2" hidden>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="field-signed" checked>
+                    <label class="custom-control-label" for="field-signed">@lang('tools.add_signature')</label>
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <button class="btn btn-primary" onclick="Internal.fetchPost(this)">@lang('tools.fetch_post')</button>
@@ -47,6 +69,17 @@
 VK.init({apiId: {{ config('services.vkontakte.client_id') }}});
 
 let Internal = {
+    convertDate: function (timestamp) {
+        let date = new Date(timestamp*1000);
+        let year = date.getFullYear();
+        let month = "0" + (date.getMonth() + 1);
+        let day = "0" + date.getDate();
+        let hours = "0" + date.getHours().toString();
+        let minutes = "0" + date.getMinutes().toString();
+        let seconds = "0" + date.getSeconds().toString();
+        return `${year}-${month.substr(-2)}-${day.substr(-2)} ${hours.substr(-2)}:${minutes.substr(-2)}:${seconds.substr(-2)}`
+    },
+
     fetchPost: function (buttonElem) {
         button = new LoadingButton(buttonElem, '@lang('tools.fetching')', '@lang('tools.publish_post')');
         button.loading();
@@ -90,17 +123,14 @@ let Internal = {
                             break;
                     }
                 });
-                postattachments = postattachments.join(',');
                 group_info = r.response.groups[0];
-                $('#republisher-post-content').html(`<div class="alert alert-primary">
-<h3><a href="//vk.com/wall${id}" target="_blank"><img class="rounded mr-2" height="40"
-    src="${group_info.photo_50}"> ${group_info.name}</a></h3><textarea class="postText"
-    id="field-message" rows="10" style="width:100%"></textarea><br><input type="checkbox" id="field-signed">
-    <label for="field-signed">@lang('tools.signature')</label>
-<hr>
-<p><b>@lang('tools.attachments'):</b> <span id="field-attachments">${postattachments.split(',').join(', ')}</span></p>
-</div>`);
-                $('#field-message').val(posttext);
+                Elem.id('field-message').value = posttext;
+                Elem.id('field-attachments').value = postattachments.join(',');
+                Elem.id('post-image').src = group_info.photo_50;
+                Elem.id('post-origin').innerHTML = group_info.name;
+                Elem.id('post-origin').href = `//vk.com/wall${postid}`;
+                Elem.id('post-date').innerHTML = Internal.convertDate(r.response.items[0].date);
+                $('#post-origin').val(posttext);
                 $('.republisher-step-1').attr('hidden', true);
                 $('.republisher-step-2').attr('hidden', false);
                 Utils.timerPicker('start_datetime');
