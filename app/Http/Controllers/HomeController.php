@@ -37,7 +37,7 @@ class HomeController extends Controller
     {
         $highligts = [
             'active_users' => UserHelper::active()->count(),
-            'posts_published' => Post::where('created_at', '>=', date('d-m-Y H:i:s', self::currentSeasonStart()))->count(),
+            'posts_published' => Post::where('created_at', '>=', date('Y-m-d H:i:s', self::currentSeasonStart()))->count(),
             'practices_created' => Practice::count(),
             'pollbunches_created' => Pollbunch::count(),
         ];
