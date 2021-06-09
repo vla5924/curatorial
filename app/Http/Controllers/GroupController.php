@@ -47,7 +47,7 @@ class GroupController extends Controller
         $group->alias = $request->alias;
         $group->save();
 
-        return redirect()->back()->withSuccess('Group added successfully');
+        return redirect()->route('groups.index')->with('success', __('groups.group_added_successfully'));
     }
 
     /**
@@ -89,7 +89,7 @@ class GroupController extends Controller
         $group->vk_confirmation_token = $request->vk_confirmation_token;
         $group->save();
 
-        return redirect()->back()->withSuccess('Group updated successfully');
+        return redirect()->back()->withSuccess(__('groups.group_updated_successfully'));
     }
 
     /**
@@ -102,7 +102,7 @@ class GroupController extends Controller
     {
         $group->delete();
 
-        return redirect()->back()->withSuccess('Group deleted successfully');
+        return redirect()->back()->withSuccess(__('groups.group_deleted_successfully'));
     }
 
     public function assign()

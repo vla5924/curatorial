@@ -9,14 +9,14 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{ $highlights['active_users'] }}</h3>
 
-                <p>New Orders</p>
+                <p>{{ trans_choice('home.active_users', $highlights['active_users'] % 10) }}</p>
             </div>
             <div class="icon">
-                <i class="ion ion-bag"></i>
+                <i class="fas fa-users"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i
+            <a href="{{ route('users.rating.index') }}" class="small-box-footer">@lang('home.view_rating') <i
                     class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
@@ -25,14 +25,14 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{ $highlights['posts_published'] }}</h3>
 
-                <p>Bounce Rate</p>
+                <p>{{ trans_choice('home.posts_published', $highlights['posts_published'] % 10) }}</p>
             </div>
             <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="fas fa-layer-group"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i
+            <a href="{{ route('posts.index') }}" class="small-box-footer">@lang('home.view_posts') <i
                     class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
@@ -41,14 +41,14 @@
         <!-- small box -->
         <div class="small-box bg-warning">
             <div class="inner">
-                <h3>44</h3>
+                <h3>{{ $highlights['practices_created'] }}</h3>
 
-                <p>User Registrations</p>
+                <p>{{ trans_choice('home.practices_created', $highlights['practices_created'] % 10) }}</p>
             </div>
             <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <i class="fas fa-book"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i
+            <a href="{{ route('practice.index') }}" class="small-box-footer">@lang('home.view_practices') <i
                     class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
@@ -57,18 +57,46 @@
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>65</h3>
+                <h3>{{ $highlights['pollbunches_created'] }}</h3>
 
-                <p>Unique Visitors</p>
+                <p>{{ trans_choice('home.pollbunches_created', $highlights['pollbunches_created'] % 10) }}</p>
             </div>
             <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="fas fa-tasks"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i
+            <a href="{{ route('pollbunches.index') }}" class="small-box-footer">@lang('home.view_pollbunches') <i
                     class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
 </div>
 <!-- /.row -->
+
+<div class="card card-secondary">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-magic"></i> @lang('home.get_started')</h3>
+    </div>
+    <div class="card-body pt-3 pb-2 px-1">
+        <a class="btn btn-app bg-primary" href="{{ route('practice.create') }}">
+            <i class="fas fa-book"></i>
+            @lang('home.create_practice')
+        </a>
+        <a class="btn btn-app bg-primary" href="{{ route('pollbunches.create') }}">
+            <i class="fas fa-tasks"></i>
+            @lang('home.create_pollbunch')
+        </a>
+        <a class="btn btn-app bg-primary" href="{{ route('tools.republisher') }}">
+            <i class="fas fa-share-square"></i>
+            @lang('home.republish_post')
+        </a>
+        <a class="btn btn-app bg-primary" href="{{ route('help.index') }}">
+            <i class="fas fa-question-circle"></i>
+            @lang('home.visit_help')
+        </a>
+        <a class="btn btn-app bg-primary" href="https://youtu.be/eji444UPb6M" target="_blank">
+            <i class="fab fa-youtube"></i>
+            @lang('home.view_teaser')
+        </a>
+    </div>
+</div>
 @endsection

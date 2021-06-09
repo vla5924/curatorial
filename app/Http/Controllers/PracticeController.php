@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PracticeHelper;
 use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Practice;
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Storage;
 
 class PracticeController extends Controller
 {
+    const FILES_COUNT_MIN = 1;
+    const FILES_COUNT_MAX = 12;
+
     /**
      * Display a listing of the resource.
      *
@@ -63,7 +67,7 @@ class PracticeController extends Controller
         if ($files instanceof UploadedFile)
             $files = [$files];
         if (count($files) > 12 or empty($files)) {
-            return redirect()->back()->with('failure', 'You must choose from 1 to 12 files.');
+            return redirect()->back()->with('failure', __('practice.choose_n_files', ['min' => self::FILES_COUNT_MIN, 'max' => self::FILES_COUNT_MAX]));
         }
 
         $practice->save();
@@ -77,7 +81,7 @@ class PracticeController extends Controller
             return redirect()->back()->with('failure', $e->getMessage());
         }
 
-        return redirect()->back()->withSuccess('Practice created successfully');
+        return redirect()->route('practice.show', $practice->id)->with('success', __('practice.practice_created_successfully'));
     }
 
     /**
@@ -119,7 +123,7 @@ class PracticeController extends Controller
         $practice->group_id = $request->group_id;
         $practice->save();
 
-        return redirect()->back()->withSuccess('Practice updated successfully');
+        return redirect()->back()->withSuccess(__('practice.practice_updated_successfully'));
     }
 
     /**
@@ -130,13 +134,9 @@ class PracticeController extends Controller
      */
     public function destroy(Practice $practice)
     {
-        foreach ($practice->pictures as $picture) {
-            Storage::delete($picture->path);
-            $picture->delete();
-        }
-        $practice->delete();
+        PracticeHelper::deepDestroy($practice);
 
-        return redirect()->back()->withSuccess('Practice deleted successfully');
+        return redirect()->route('practice.index')->with('success', __('practice.practice_deleted_successfully'));
     }
 
     public function publish(int $id)

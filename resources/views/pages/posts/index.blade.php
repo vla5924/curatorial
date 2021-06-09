@@ -3,6 +3,40 @@
 @section('title', __('posts.posts'))
 
 @section('content')
+<form method="GET" action="{{ route('posts.index') }}">
+    <div class="card">
+        <div class="card-body py-1 px-3 row">
+            <div class="col-12 col-md-6 col-lg-3 p-1">
+                <select class="form-control" name="creator_id">
+                    <option value="0" {{ $filters['creator_id'] == 0 ? 'selected' : '' }}>@lang('posts.all_creators')</option>
+                    @foreach($users as $user)
+                    <option value="{{ $user->id }}" {{ $filters['creator_id'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 p-1">
+                <select class="form-control" name="signer_id">
+                    <option value="0" {{ $filters['signer_id'] == 0 ? 'selected' : '' }}>@lang('posts.all_signers')</option>
+                    @foreach($users as $user)
+                    <option value="{{ $user->id }}" {{ $filters['signer_id'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 p-1">
+                <select class="form-control" name="group_id">
+                    <option value="0" {{ $filters['group_id'] == 0 ? 'selected' : '' }}>@lang('posts.all_groups')</option>
+                    @foreach($groups as $group)
+                    <option value="{{ $group->id }}" {{ $filters['group_id'] == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 p-1">
+                <button class="btn btn-primary btn-block" type="submit">@lang('posts.search')</button>
+            </div>
+        </div>
+    </div>
+</form>
+
 <style>
     .attachment-tile {
         width: 90px;

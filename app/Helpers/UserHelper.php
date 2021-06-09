@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\CachedPoints;
 use App\Models\Group;
 use App\Models\PointsAdjustment;
 use App\Models\PointsNullification;
@@ -55,5 +56,30 @@ class UserHelper
     public static function lastPointsNullification(User $user)
     {
         return PointsNullification::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+    }
+
+    public static function cachePoints(User $user, ?Group $group = null, int $points = 0)
+    {
+        $groupId = $group ? $group->id : null;
+        $cached = CachedPoints::where('user_id', $user->id)->where('group_id', $groupId)->first();
+        if (!$cached) {
+            $cached = new CachedPoints;
+            $cached->user_id = $user->id;
+            $cached->group_id = $groupId;
+        }
+        $cached->points = $points;
+        $cached->save();
+    }
+
+    public static function cachedPoints(User $user, ?Group $group = null)
+    {
+        $groupId = $group ? $group->id : null;
+        $cached = CachedPoints::where('user_id', $user->id)->where('group_id', $groupId)->first();
+        if ($cached)
+            return $cached->points;
+
+        $points = self::points($user, $group);
+        self::cachePoints($user, $group, $points);
+        return $points;
     }
 }

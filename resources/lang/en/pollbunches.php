@@ -12,7 +12,7 @@ return [
     'add_question' => 'Add question',
     'question' => 'Question',
     'question_placeholder' => 'Enter question data here...',
-    'hint' => '<h5>Hint about marking</h5>
+    'hint' => '<h5><i class="fas fa-exclamation-circle"></i> Hint about marking</h5>
 <p>If poll with the question should be with multiple answers able to choose, type <code>#</code> before its text.<br>
     If one or more of the answers should be marked as correct, type <code>#</code> before those answers.</p>
 <p class="mb-1"><i>Example:</i></p>
@@ -56,4 +56,10 @@ dog
     'answers' => 'Answers',
     'unique_identifier' => 'Unique identifier',
     'questions_count' => 'Questions count',
+    'pollbunch_created_successfully' => 'Pollbunch created successfully',
+    'pollbunch_updated_successfully' => 'Pollbunch updated successfully',
+    'pollbunch_deleted_successfully' => 'Pollbunch deleted successfully',
+    'invalid_question_data' => 'Invalid question data',
+    'cannot_create_poll' => 'Cannot create poll.',
+    'cannot_create_post' => 'Cannot create post.',
 ];

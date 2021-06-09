@@ -18,7 +18,11 @@ class VkWebhookController extends Controller
 
     public static function cleanUpText(string $text): string
     {
-        return preg_replace('/[^a-zA-ZА-Яа-я0-9_\.#:\/!,\(\)\s]/', '', $text);
+        // This is a temporary workaround for not to break russian symbols
+        return $text;
+
+        // This regular expression should be fixed to fully support russian symbols
+        // return preg_replace('/[^a-zA-ZА-Яа-я0-9_\.#:\/!,\(\)\s]/', '', $text);
     }
 
     public function index(Request $request)

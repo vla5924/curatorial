@@ -31,7 +31,7 @@ class PointsController extends Controller
 
         return [
             'ok' => true,
-            'last_nullification' => $nullification->created_at,
+            'last_nullification' => date('Y-m-d H:i:s', strtotime($nullification->created_at)),
         ];
     }
 

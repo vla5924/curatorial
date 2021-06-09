@@ -26,26 +26,27 @@
             @endif
         </div>
     </div>
+</div>
 
-    <div class="col-12">
-        <div class="card card-info">
-
-            <form class="form-horizontal" method="POST" action="{{ route('extra-token.store') }}">
-                @csrf
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">@lang('settings.extra_token')</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="extra_token"
-                                placeholder="@lang('settings.extra_token_placeholder')" required>
-                        </div>
-                    </div>
+<div class="card card-info">
+    <form class="form-horizontal" method="POST" action="{{ route('extra-token.store') }}">
+        @csrf
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">@lang('settings.extra_token')</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="extra_token"
+                        placeholder="@lang('settings.extra_token_placeholder')" required>
                 </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-info">@lang('settings.save')</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info">@lang('settings.save')</button>
+        </div>
+    </form>
+</div>
+
+<div class="callout callout-warning">
+    @lang('settings.extra_token_hint')
 </div>
 @endsection

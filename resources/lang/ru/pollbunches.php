@@ -12,7 +12,7 @@ return [
     'add_question' => 'Добавить вопрос',
     'question' => 'Вопрос',
     'question_placeholder' => 'Введите данные вопроса здесь...',
-    'hint' => '<h5>Подсказка о разметке</h5>
+    'hint' => '<h5><i class="fas fa-exclamation-circle"></i> Подсказка о разметке</h5>
 <p>Если опрос с вопросом должен иметь возможность выбора нескольких вариантов ответа, поставьте <code>#</code> перед текстом вопроса.<br>
    Также поставьте <code>#</code> перед текстом правильного варианта ответа (если их несколько, то перед каждым).</p>
 <p class="mb-1"><i>Пример:</i></p>
@@ -56,4 +56,10 @@ return [
     'answers' => 'Ответы',
     'unique_identifier' => 'Уникальный идентификатор',
     'questions_count' => 'Количество вопросов',
+    'pollbunch_created_successfully' => 'Пятиминутка успешно создана',
+    'pollbunch_updated_successfully' => 'Пятиминутка успешно изменена',
+    'pollbunch_deleted_successfully' => 'Пятиминутка успешно удалена',
+    'invalid_question_data' => 'Некорректные данные вопроса',
+    'cannot_create_poll' => 'Не удалось создать опрос.',
+    'cannot_create_post' => 'Не удалось создать запись.',
 ];

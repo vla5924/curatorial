@@ -10,7 +10,7 @@ class BlockerService extends VkApiService
     public function __construct()
     {
         if (!VkTokenService::hasExtraToken())
-            throw new VkException(self::EXTRA_TOKEN_IS_NOT_FOUND);
+            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
         parent::__construct(VkTokenService::getExtraToken());
     }
 

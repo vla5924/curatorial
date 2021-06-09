@@ -22,10 +22,12 @@ return [
     'fetch_post' => 'Извлечь запись',
     'fetching' => 'Извлечение',
     'publish_post' => 'Опубликовать запись',
-    'signature' => 'Подпись',
+    'add_signature' => 'Добавить подпись',
     'attachments' => 'Прикрепления',
     'publishing' => 'Публикация',
     'post_published' => 'Запись опубликована',
     'post_not_published' => 'Запись не опубликована',
     'view' => 'Посмотреть',
+    'post_origin' => 'Источник записи',
+    'post_content' => 'Текст записи',
 ];

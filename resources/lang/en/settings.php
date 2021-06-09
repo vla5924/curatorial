@@ -17,4 +17,13 @@ return [
     'location' => 'Location',
     'notes' => 'Notes',
     'update' => 'Update',
+    'information_updated_successfully' => 'Your profile information updated successfully.',
+    'application_language' => 'Application language',
+    'settings_saved' => 'Settings saved',
+    'extra_token_hint' => '<h5><i class="fas fa-exclamation-circle"></i> Hint</h5>
+<p>After clicking on the "Authorize and get extra token" link and authorizing in VK, the blank page opens. Its URL address will look like this:<br />
+<code>https://oauth.vk.com/blank.html#access_token=<b>24787&shy;9113e&shy;3bf1c&shy;43dde&shy;18ae9&shy;af06e&shy;ef247&shy;87911&shy;3e3bf&shy;1c43d&shy;de18a&shy;e9af0&shy;6eef</b>&expires_in=0&user_id=167790499&state=1</code>.<br />
+This way, the extra token is <code>24787&shy;9113e&shy;3bf1c&shy;43dde&shy;18ae9&shy;af06e&shy;ef247&shy;87911&shy;3e3bf&shy;1c43d&shy;de18a&shy;e9af0&shy;6eef</code>.<br/>
+Similarly, you need to find the access token in the address bar of the page opened on your device.
+</p>',
 ];

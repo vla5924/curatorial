@@ -27,4 +27,7 @@ return [
     'save' => 'Save',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'group_added_successfully' => 'Group added successfully',
+    'group_updated_successfully' => 'Group updated successfully',
+    'group_deleted_successfully' => 'Group deleted successfully',
 ];

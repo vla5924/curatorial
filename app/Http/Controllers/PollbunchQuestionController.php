@@ -17,7 +17,7 @@ class PollbunchQuestionController extends Controller
     {
         $arr = explode(PHP_EOL, $questionData);
         if (count($arr) < 2) {
-            throw new ErrorException('Invalid question data');
+            throw new ErrorException(__('pollbunches.invalid_question_data'));
         }
 
         $text = array_shift($arr);

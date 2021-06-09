@@ -47,7 +47,7 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        $points = UserHelper::points($user);
+        $points = UserHelper::cachedPoints($user);
 
         return view('pages.users.show', [
             'user' => $user,

@@ -66,7 +66,7 @@ class PollbunchController extends Controller
             return redirect()->back()->with('failure', $e->getMessage());
         }
 
-        return redirect()->back()->withSuccess('Practice created successfully');
+        return redirect()->route('pollbunches.show', $pollbunch->id)->with('success', __('pollbunches.pollbunch_created_successfully'));
     }
 
     /**
@@ -108,7 +108,7 @@ class PollbunchController extends Controller
         $pollbunch->group_id = $request->group_id;
         $pollbunch->save();
 
-        return redirect()->back()->withSuccess('Pollbunch updated successfully');
+        return redirect()->back()->withSuccess(__('pollbunches.pollbunch_updated_successfully'));
     }
 
     /**
@@ -126,7 +126,7 @@ class PollbunchController extends Controller
         }
         $pollbunch->delete();
 
-        return redirect()->back()->withSuccess('Pollbunch deleted successfully');
+        return redirect()->route('pollbunches.index')->with('success', __('pollbunches.pollbunch_deleted_successfully'));
     }
 
     public function publish(int $id)

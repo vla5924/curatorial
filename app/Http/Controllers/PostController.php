@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GroupHelper;
+use App\Helpers\UserHelper;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -12,12 +14,31 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        $filters = [
+            'creator_id' => $request->has('creator_id') ? (int)$request->creator_id : 0,
+            'signer_id' => $request->has('signer_id') ? (int)$request->signer_id : 0,
+            'group_id' => $request->has('group_id') ? (int)$request->group_id : 0,
+        ];
+
+        $postsQuery = Post::orderBy('created_at', 'desc');
+        if ($filters['creator_id'] > 0)
+            $postsQuery = $postsQuery->where('creator_id', $filters['creator_id']);
+        if ($filters['signer_id'] > 0)
+            $postsQuery = $postsQuery->where('signer_id', $filters['signer_id']);
+        if ($filters['group_id'] > 0)
+            $postsQuery = $postsQuery->where('group_id', $filters['group_id']);
+        $posts = $postsQuery->paginate(20);
+
+        $users = UserHelper::activeOrdered()->get();
+        $groups = GroupHelper::ordered()->get();
 
         return view('pages.posts.index', [
             'posts' => $posts,
+            'users' => $users,
+            'groups' => $groups,
+            'filters' => $filters,
         ]);
     }
 

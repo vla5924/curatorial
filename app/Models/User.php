@@ -43,6 +43,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'settings' => AsArrayObject::class,
     ];
 
     public function practices()
@@ -68,5 +69,10 @@ class User extends Authenticatable
     public function pointsAdjustments()
     {
         return $this->hasMany(PointsAdjustment::class);
+    }
+
+    public function cachedPoints()
+    {
+        return $this->hasMany(CachedPoints::class);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\DestroyOldPractices;
+use App\Jobs\UpdateCachedPoints;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->job(new DestroyOldPractices)->dailyAt('00:00');
+        $schedule->job(new UpdateCachedPoints)->twiceDaily(6, 18);
     }
 
     /**
@@ -34,7 +37,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

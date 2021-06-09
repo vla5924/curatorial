@@ -27,4 +27,7 @@ return [
     'save' => 'Сохранить',
     'edit' => 'Редактировать',
     'delete' => 'Удалить',
+    'group_added_successfully' => 'Группа успешно добавлена',
+    'group_updated_successfully' => 'Группа успешно обновлена',
+    'group_deleted_successfully' => 'Группа успешно удалена',
 ];
