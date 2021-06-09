@@ -60,11 +60,12 @@ class UserHelper
 
     public static function cachePoints(User $user, ?Group $group = null, int $points = 0)
     {
-        $cached = CachedPoints::where('user_id', $user->id)->where('group_id', $group ? $group->id : null);
+        $groupId = $group ? $group->id : null;
+        $cached = CachedPoints::where('user_id', $user->id)->where('group_id', $groupId)->first();
         if (!$cached) {
             $cached = new CachedPoints;
             $cached->user_id = $user->id;
-            $cached->group_id = $group->id;
+            $cached->group_id = $groupId;
         }
         $cached->points = $points;
         $cached->save();
@@ -72,7 +73,8 @@ class UserHelper
 
     public static function cachedPoints(User $user, ?Group $group = null)
     {
-        $cached = CachedPoints::where('user_id', $user->id)->where('group_id', $group ? $group->id : null);
+        $groupId = $group ? $group->id : null;
+        $cached = CachedPoints::where('user_id', $user->id)->where('group_id', $groupId)->first();
         if ($cached)
             return $cached->points;
 

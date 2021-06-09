@@ -16,7 +16,7 @@ class CreateCachedPointsTable extends Migration
         Schema::create('cached_points', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('group_id')->unsigned();
+            $table->bigInteger('group_id')->unsigned()->nullable()->default(null);
             $table->integer('points')->default(0);
             $table->timestamps();
         });

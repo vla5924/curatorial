@@ -15,7 +15,7 @@ class RatingController extends Controller
             return [$user->id => $user];
         });
         $rating = $users->mapWithKeys(function ($user, $key) use ($group) {
-            $points = UserHelper::points($user, $group);
+            $points = UserHelper::cachedPoints($user, $group);
             return [$user->id => $points];
         });
 
