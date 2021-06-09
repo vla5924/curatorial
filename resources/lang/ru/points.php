@@ -6,6 +6,7 @@ return [
     'nullify_points' => 'Обнулить баллы',
     'name' => 'Имя',
     'groups' => 'Группы',
+    'group' => 'Группа',
     'change_saved' => 'Изменения сохранены',
     'change_not_saved' => 'Изменения не сохранены',
     'adjustment_of' => 'Изменение в',

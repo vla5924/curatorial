@@ -6,6 +6,7 @@ return [
     'nullify_points' => 'Nullify points',
     'name' => 'Name',
     'groups' => 'Groups',
+    'group' => 'Group',
     'change_saved' => 'Change saved',
     'change_not_saved' => 'Change not saved',
     'adjustment_of' => 'Adjustment of',
