@@ -28,15 +28,16 @@
                 <div class="my-4">
                     <button class="btn btn-block btn-primary" onclick="internal.addQuestion();return false;">@lang('pollbunches.add_question')</button>
                 </div>
-                <div class="callout callout-info">
-                    @lang('pollbunches.hint')
-                </div>
             </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">@lang('pollbunches.create')</button>
         </div>
     </form>
+</div>
+
+<div class="callout callout-warning">
+    @lang('pollbunches.hint')
 </div>
 @endsection
 
