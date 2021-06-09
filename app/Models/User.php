@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PointsAdjustment::class);
     }
+
+    public function cachedPoints()
+    {
+        return $this->hasMany(CachedPoints::class);
+    }
 }
