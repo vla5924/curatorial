@@ -85,6 +85,10 @@
             <i class="fas fa-tasks"></i>
             @lang('home.create_pollbunch')
         </a>
+        <a class="btn btn-app bg-primary" href="{{ route('tools.republisher') }}">
+            <i class="fas fa-share-square"></i>
+            @lang('home.republish_post')
+        </a>
         <a class="btn btn-app bg-primary" href="{{ route('help.index') }}">
             <i class="fas fa-question-circle"></i>
             @lang('home.visit_help')
