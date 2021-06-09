@@ -4,12 +4,12 @@
 
 @section('content')
 <div class="card">
-    <div class="card-body p-2 row">
-        <div class="col-6 col-md-4 col-lg-2">
+    <div class="card-body px-2 pt-2 pb-0 row">
+        <div class="col-6 col-md-4 col-lg-2 pb-2">
             <a href="{{ route('users.rating.index') }}" class="btn btn-primary btn-block btn-sm">@lang('users.unified')</a>
         </div>
         @foreach($groups as $group)
-        <div class="col-6 col-md-4 col-lg-2">
+        <div class="col-6 col-md-4 col-lg-2 pb-2">
             <a href="{{ route('users.rating.group', $group->id) }}" class="btn btn-primary btn-block btn-sm">{{ $group->name }}</a>
         </div>
         @endforeach
