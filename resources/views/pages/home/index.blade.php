@@ -93,6 +93,10 @@
             <i class="fas fa-question-circle"></i>
             @lang('home.visit_help')
         </a>
+        <a class="btn btn-app bg-primary" href="https://youtu.be/eji444UPb6M" target="_blank">
+            <i class="fab fa-youtube"></i>
+            @lang('home.view_teaser')
+        </a>
     </div>
 </div>
 @endsection

@@ -15,4 +15,5 @@ return [
     'create_pollbunch' => 'Создать пятиминутку',
     'republish_post' => 'Переопубликовать запись',
     'visit_help' => 'Посетить Справку',
+    'view_teaser' => 'Посмотреть тизер',
 ];

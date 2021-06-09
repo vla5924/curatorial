@@ -15,4 +15,5 @@ return [
     'create_pollbunch' => 'Create pollbunch',
     'republish_post' => 'Republish a post',
     'visit_help' => 'Visit Help',
+    'view_teaser' => 'View the teaser',
 ];
