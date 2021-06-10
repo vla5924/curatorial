@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\GroupHelper;
 use App\Helpers\UserHelper;
 use App\Models\Post;
+use App\Models\UnansweredPost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -106,5 +108,14 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function unanswered()
+    {
+        $posts = UnansweredPost::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(36);
+
+        return view('pages.posts.unanswered', [
+            'posts' => $posts,
+        ]);
     }
 }

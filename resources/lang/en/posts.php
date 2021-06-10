@@ -14,4 +14,6 @@ return [
     'all_signers' => 'All signers',
     'all_groups' => 'All groups',
     'search' => 'Search',
+    'unanswered_posts' => 'Unanswered posts',
+    'open' => 'Open',
 ];

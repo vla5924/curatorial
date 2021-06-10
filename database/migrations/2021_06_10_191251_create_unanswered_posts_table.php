@@ -16,6 +16,7 @@ class CreateUnansweredPostsTable extends Migration
         Schema::create('unanswered_posts', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('post_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -14,4 +14,6 @@ return [
     'all_signers' => 'Подпись: кто угодно',
     'all_groups' => 'Все группы',
     'search' => 'Поиск',
+    'unanswered_posts' => 'Записи без ответов',
+    'open' => 'Открыть',
 ];
