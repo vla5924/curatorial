@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\Post;
 use App\Models\PostAttachment;
+use App\Models\UnansweredPost;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,13 +17,23 @@ class VkWebhookController extends Controller
 
     const ATTACHMENT_TYPES = ['photo', 'video', 'audio', 'poll', 'doc', 'link'];
 
-    public static function cleanUpText(string $text): string
+    protected static function cleanUpText(string $text): string
     {
         // This is a temporary workaround for not to break russian symbols
         return $text;
 
         // This regular expression should be fixed to fully support russian symbols
         // return preg_replace('/[^a-zA-ZА-Яа-я0-9_\.#:\/!,\(\)\s]/', '', $text);
+    }
+
+    protected static function isPracticeText(string $text): bool
+    {
+        return (bool)preg_match('/#[a-z]+_p/', $text);
+    }
+
+    protected static function isAnswerText(string $text): bool
+    {
+        return mb_stripos($text, 'ответ') !== false;
     }
 
     public function index(Request $request)
@@ -47,7 +58,7 @@ class VkWebhookController extends Controller
 
             $group = Group::where('vk_id', -$postData['owner_id'])->first();
             if (!$group)
-                return self::FALLBACK_TEXT;
+                return self::SUCCESS_TEXT;
             $post->group_id = $group->id;
 
             $creator = User::where('vk_id', $postData['created_by'])->first();
@@ -58,6 +69,12 @@ class VkWebhookController extends Controller
             $post->text = self::cleanUpText($postData['text']);
             $post->vk_id = $postData['id'];
             $post->save();
+
+            if (self::isPracticeText($post->text)) {
+                $unansweredPost = new UnansweredPost;
+                $unansweredPost->post_id = $post->id;
+                $unansweredPost->save();
+            }
 
             if (!isset($postData['attachments']))
                 return self::SUCCESS_TEXT;
@@ -161,6 +178,34 @@ class VkWebhookController extends Controller
                 }
             }
 
+            return self::SUCCESS_TEXT;
+        }
+
+        if ($request->type == 'wall_reply_new') {
+            $commentData = $request->object;
+
+            $postOwnerId = (int)$commentData['post_owner_id'];
+            if ($postOwnerId >= 0)
+                return self::SUCCESS_TEXT;
+
+            if (self::isAnswerText($commentData['text']))
+                return self::SUCCESS_TEXT;
+
+            $group = Group::where('vk_id', -$postOwnerId)->first();
+            if (!$group)
+                return self::SUCCESS_TEXT;
+            if ($group->vk_id != -$commentData['from_id'])
+                return self::SUCCESS_TEXT;
+
+            $post = Post::where('group_id', $group->id)->where('vk_id', $commentData['post_id'])->first();
+            if (!$post)
+                return self::SUCCESS_TEXT;
+
+            $unansweredPost = UnansweredPost::where('post_id', $post->id);
+            if (!$unansweredPost)
+                return self::SUCCESS_TEXT;
+
+            $unansweredPost->delete();
             return self::SUCCESS_TEXT;
         }
 
