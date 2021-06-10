@@ -52,8 +52,8 @@
                 @endforeach
             </tbody>
         </table>
-
-        {{ $pollbunches->links() }}
     </div>
 </div>
+
+{{ $pollbunches->links() }}
 @endsection
