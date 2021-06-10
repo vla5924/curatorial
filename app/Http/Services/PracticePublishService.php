@@ -81,13 +81,6 @@ class PracticePublishService extends VkApiService
             $ownerId = $response[0]['owner_id'];
             $attachments = 'photo' . $ownerId . '_' . $response[0]['id'];
 
-            $publishedPicture = new PublishedPracticePicture;
-            $publishedPicture->practice_picture_id = $picture->id;
-            $publishedPicture->user_id = Auth::user()->id;
-            $publishedPicture->group_id = $group->id;
-            $publishedPicture->vk_id = (int)$response[0]['id'];
-            $publishedPicture->save();
-
             try {
                 $response = $this->api->request('wall.post', [
                     'owner_id'       => -$group->vk_id,
@@ -107,9 +100,23 @@ class PracticePublishService extends VkApiService
                 continue;
             }
 
+            $postId = (-$group->vk_id) . '_' . $response['post_id'];
+            try {
+                $response = $this->api->request('wall.getById', ['posts' => $postId], VkTokenService::getToken())['response'];
+                if (isset($response[0], $response[0]['attachments'])) {
+                    $publishedPicture = new PublishedPracticePicture;
+                    $publishedPicture->practice_picture_id = $picture->id;
+                    $publishedPicture->user_id = Auth::user()->id;
+                    $publishedPicture->group_id = $group->id;
+                    $publishedPicture->vk_id = (int)$response[0]['attachments'][0]['photo']['id'];
+                    $publishedPicture->save();
+                }
+            } catch (VkException $e) {
+            }
+
             $results[] = [
                 'ok' => true,
-                'post_id' => (-$group->vk_id) . '_' . $response['post_id'],
+                'post_id' => $postId,
             ];
         }
 
