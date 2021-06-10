@@ -18,7 +18,7 @@ class AuthorizationTest extends TestCase
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/');
-        $response->dump();
+
         $response->assertStatus(200);
     }
 }
