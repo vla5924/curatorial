@@ -6,7 +6,10 @@ use App\Helpers\UserHelper;
 use App\Models\Pollbunch;
 use App\Models\Post;
 use App\Models\Practice;
+use App\Models\UnansweredPost;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -35,11 +38,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = User::where('id', Auth::user()->id)->first();
+
         $highligts = [
-            'active_users' => UserHelper::active()->count(),
-            'posts_published' => Post::where('created_at', '>=', date('Y-m-d H:i:s', self::currentSeasonStart()))->count(),
-            'practices_created' => Practice::count(),
-            'pollbunches_created' => Pollbunch::count(),
+            'points_earned' => UserHelper::cachedPoints($user),
+            'posts_unanswered' => UnansweredPost::where('user_id', $user->id)->count(),
         ];
 
         return view('pages.home.index', [

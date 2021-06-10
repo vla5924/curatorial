@@ -9,12 +9,12 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>{{ $highlights['active_users'] }}</h3>
+                <h3>{{ $highlights['points_earned'] }}</h3>
 
-                <p>{{ trans_choice('home.active_users', $highlights['active_users'] % 10) }}</p>
+                <p>{{ trans_choice('home.points_earned', $highlights['points_earned'] % 10) }}</p>
             </div>
             <div class="icon">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-star-half-alt"></i>
             </div>
             <a href="{{ route('users.rating.index') }}" class="small-box-footer">@lang('home.view_rating') <i
                     class="fas fa-arrow-circle-right"></i></a>
@@ -23,48 +23,16 @@
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-success">
+        <div class="small-box {{ $highlights['posts_unanswered'] == 0 ? 'bg-success' : 'bg-danger' }}">
             <div class="inner">
-                <h3>{{ $highlights['posts_published'] }}</h3>
+                <h3>{{ $highlights['posts_unanswered'] }}</h3>
 
-                <p>{{ trans_choice('home.posts_published', $highlights['posts_published'] % 10) }}</p>
+                <p>{{ trans_choice('home.posts_unanswered', $highlights['posts_unanswered'] % 10) }}</p>
             </div>
             <div class="icon">
                 <i class="fas fa-layer-group"></i>
             </div>
-            <a href="{{ route('posts.index') }}" class="small-box-footer">@lang('home.view_posts') <i
-                    class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-warning">
-            <div class="inner">
-                <h3>{{ $highlights['practices_created'] }}</h3>
-
-                <p>{{ trans_choice('home.practices_created', $highlights['practices_created'] % 10) }}</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-book"></i>
-            </div>
-            <a href="{{ route('practice.index') }}" class="small-box-footer">@lang('home.view_practices') <i
-                    class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
-            <div class="inner">
-                <h3>{{ $highlights['pollbunches_created'] }}</h3>
-
-                <p>{{ trans_choice('home.pollbunches_created', $highlights['pollbunches_created'] % 10) }}</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-tasks"></i>
-            </div>
-            <a href="{{ route('pollbunches.index') }}" class="small-box-footer">@lang('home.view_pollbunches') <i
+            <a href="{{ route('posts.unanswered') }}" class="small-box-footer">@lang('home.view_posts') <i
                     class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
