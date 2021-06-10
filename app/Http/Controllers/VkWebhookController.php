@@ -185,24 +185,25 @@ class VkWebhookController extends Controller
         if ($request->type == 'wall_reply_new') {
             $commentData = $request->object;
 
+            if ($commentData['post_owner_id'] != $commentData['from_id'])
+                return self::SUCCESS_TEXT;
+
             $postOwnerId = (int)$commentData['post_owner_id'];
             if ($postOwnerId >= 0)
                 return self::SUCCESS_TEXT;
 
-            if (self::isAnswerText($commentData['text']))
+            if (!self::isAnswerText($commentData['text']))
                 return self::SUCCESS_TEXT;
 
             $group = Group::where('vk_id', -$postOwnerId)->first();
             if (!$group)
-                return self::SUCCESS_TEXT;
-            if ($group->vk_id != -$commentData['from_id'])
                 return self::SUCCESS_TEXT;
 
             $post = Post::where('group_id', $group->id)->where('vk_id', $commentData['post_id'])->first();
             if (!$post)
                 return self::SUCCESS_TEXT;
 
-            $unansweredPost = UnansweredPost::where('post_id', $post->id);
+            $unansweredPost = UnansweredPost::where('post_id', $post->id)->first();
             if (!$unansweredPost)
                 return self::SUCCESS_TEXT;
 
