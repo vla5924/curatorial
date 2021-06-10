@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupsTable extends Migration
+class CreatePublishedPollbunchQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('published_pollbunch_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->bigInteger('pollbunch_question_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('group_id')->unsigned();
             $table->bigInteger('vk_id')->unsigned();
-            $table->string('alias', 10)->unique();
-            $table->string('vk_confirmation_token')->nullable()->default(null);
-            $table->text('timetable_url')->nullable()->default(null);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('published_pollbunch_questions');
     }
 }

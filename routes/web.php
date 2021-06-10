@@ -68,6 +68,7 @@ Route::middleware(['auth', 'language'])->group(function () {
         Route::get('/about', [HelpController::class, 'about'])->name('help.about');
     });
 
+    Route::middleware('can:view posts')->get('/posts/unanswered', [PostController::class, 'unanswered'])->name('posts.unanswered');
     Route::middleware('can:view posts')->resource('posts', PostController::class)->only('index');
 
     Route::middleware('can:publish practices')->get('/practice/{id}/publish', [PracticeController::class, 'publish'])->name('practice.publish');

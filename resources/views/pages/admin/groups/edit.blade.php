@@ -24,17 +24,21 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">@lang('groups.confirmation_token')</label>
+                <label class="col-sm-2 col-form-label">@lang('groups.alias')</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" value="{{ $group->vk_confirmation_token }}" name="vk_confirmation_token" placeholder="@lang('groups.confirmation_token_placeholder')"
-                        required>
+                    <input type="text" class="form-control" value="{{ $group->alias }}" name="alias" placeholder="@lang('groups.alias_placeholder')" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">@lang('groups.alias')</label>
+                <label class="col-sm-2 col-form-label">@lang('groups.timetable_url')</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" value="{{ $group->alias }}" name="alias" placeholder="@lang('groups.alias_placeholder')"
-                        required>
+                    <input type="text" class="form-control" value="{{ $group->timetable_url }}" name="timetable_url" placeholder="@lang('groups.timetable_url_placeholder')">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">@lang('groups.confirmation_token')</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ $group->vk_confirmation_token }}" name="vk_confirmation_token" placeholder="@lang('groups.confirmation_token_placeholder')">
                 </div>
             </div>
         </div>

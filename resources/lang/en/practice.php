@@ -27,7 +27,7 @@ return [
     'add_signature' => 'Add signature',
     'pictures_publish' => 'Pictures about to plublish',
     'publish' => 'Publish',
-    'publishihg' => 'Publishing',
+    'publishing' => 'Publishing',
     'postponed' => 'Postponed',
     'published' => 'Practice published',
     'api_error' => 'API error',

@@ -30,4 +30,8 @@ return [
     'group_added_successfully' => 'Group added successfully',
     'group_updated_successfully' => 'Group updated successfully',
     'group_deleted_successfully' => 'Group deleted successfully',
+    'timetable_url' => 'Timetable URL',
+    'timetable' => 'Timetable',
+    'timetable_url_placeholder' => 'URL to Google spreadsheet with group timetable',
+    'open' => 'Open',
 ];

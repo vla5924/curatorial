@@ -12,7 +12,7 @@ class VkApiService
 
     const TOKEN_IS_INVALID = 'misc.token_is_invalid';
     const TOKEN_IS_UNFAMILIAR = 'misc.token_is_unfamiliar';
-    const EXTRA_TOKEN_IS_NOT_FOUND = 'misc.extra_token_not_foundF';
+    const EXTRA_TOKEN_IS_NOT_FOUND = 'misc.extra_token_not_found';
 
     protected $token;
     protected $api;

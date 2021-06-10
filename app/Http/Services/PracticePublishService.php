@@ -6,7 +6,9 @@ use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Practice;
 use App\Models\PracticePicture;
+use App\Models\PublishedPracticePicture;
 use ATehnix\VkClient\Exceptions\VkException;
+use Illuminate\Support\Facades\Auth;
 
 class PracticePublishService extends VkApiService
 {
@@ -98,9 +100,23 @@ class PracticePublishService extends VkApiService
                 continue;
             }
 
+            $postId = (-$group->vk_id) . '_' . $response['post_id'];
+            try {
+                $response = $this->api->request('wall.getById', ['posts' => $postId], VkTokenService::getToken())['response'];
+                if (isset($response[0], $response[0]['attachments'])) {
+                    $publishedPicture = new PublishedPracticePicture;
+                    $publishedPicture->practice_picture_id = $picture->id;
+                    $publishedPicture->user_id = Auth::user()->id;
+                    $publishedPicture->group_id = $group->id;
+                    $publishedPicture->vk_id = (int)$response[0]['attachments'][0]['photo']['id'];
+                    $publishedPicture->save();
+                }
+            } catch (VkException $e) {
+            }
+
             $results[] = [
                 'ok' => true,
-                'post_id' => (-$group->vk_id) . '_' . $response['post_id'],
+                'post_id' => $postId,
             ];
         }
 

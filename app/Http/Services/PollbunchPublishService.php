@@ -6,7 +6,9 @@ use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Pollbunch;
 use App\Models\PollbunchQuestion;
+use App\Models\PublishedPollbunchQuestion;
 use ATehnix\VkClient\Exceptions\VkException;
+use Illuminate\Support\Facades\Auth;
 
 class PollbunchPublishService extends VkApiService
 {
@@ -68,8 +70,12 @@ class PollbunchPublishService extends VkApiService
             $pollId = $response['owner_id'] . '_' . $response['id'];
             $attachments = 'poll' . $pollId;
 
-            $question->vk_poll_id = $pollId;
-            $question->save();
+            $publishedQuestion = new PublishedPollbunchQuestion;
+            $publishedQuestion->pollbunch_question_id = $question->id;
+            $publishedQuestion->user_id = Auth::user()->id;
+            $publishedQuestion->group_id = $group->id;
+            $publishedQuestion->vk_id = (int)$response['id'];
+            $publishedQuestion->save();
 
             try {
                 $parameters = [

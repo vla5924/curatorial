@@ -44,7 +44,10 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->name;
         $group->vk_id = $request->vk_id;
-        $group->alias = $request->alias;
+        if ($request->has('alias'))
+            $group->alias = $request->alias;
+        if ($request->has('timetable_url'))
+            $group->timetable_url = $request->timetable_url;
         $group->save();
 
         return redirect()->route('groups.index')->with('success', __('groups.group_added_successfully'));
@@ -85,8 +88,10 @@ class GroupController extends Controller
     {
         $group->name = $request->name;
         $group->vk_id = $request->vk_id;
-        $group->alias = $request->alias;
-        $group->vk_confirmation_token = $request->vk_confirmation_token;
+        if ($request->has('alias'))
+            $group->alias = $request->alias;
+        if ($request->has('timetable_url'))
+            $group->timetable_url = $request->timetable_url;
         $group->save();
 
         return redirect()->back()->withSuccess(__('groups.group_updated_successfully'));

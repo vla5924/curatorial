@@ -155,7 +155,7 @@ let Internal = {
             publish_date: Elem.id('field-publish-date').value,
             signed: Number(Elem.id('field-signed').checked),
             message: Elem.id('field-message').value,
-            attachments: Elem.id('field-attachments').innerHTML,
+            attachments: Elem.id('field-attachments').value,
         };
 
         Request.internal('{{ route('internal.republisher.publish') }}', request,

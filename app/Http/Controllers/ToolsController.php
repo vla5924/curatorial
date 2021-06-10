@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\RepublisherService;
+use App\Http\Services\UserService;
 use App\Http\Services\VkTokenService;
 use App\Models\User;
 use ATehnix\VkClient\Exceptions\VkException;
@@ -28,9 +28,9 @@ class ToolsController extends Controller
 
     public function republisher()
     {
-        $service = new RepublisherService;
         $groups = [];
         try {
+            $service = new UserService;
             $groups = $service->getGroups();
         } catch (VkException $e) {
             return $e->getMessage();

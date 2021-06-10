@@ -27,7 +27,7 @@ return [
     'add_signature' => 'Добавить подпись',
     'pictures_publish' => 'Изображения для публикации',
     'publish' => 'Опубликовать',
-    'publishihg' => 'Публикация',
+    'publishing' => 'Публикация',
     'postponed' => 'Отложено',
     'published' => 'Занятие опубликовано',
     'api_error' => 'Ошибка API',
