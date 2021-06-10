@@ -73,6 +73,7 @@ class VkWebhookController extends Controller
             if (self::isPracticeText($post->text)) {
                 $unansweredPost = new UnansweredPost;
                 $unansweredPost->post_id = $post->id;
+                $unansweredPost->user_id = $post->signer_id;
                 $unansweredPost->save();
             }
 
