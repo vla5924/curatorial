@@ -18,11 +18,11 @@ class CachedPoints extends Model
 
     public function user()
     {
-        $this->hasOne(User::class);
+        $this->belongsTo(User::class);
     }
 
     public function group()
     {
-        $this->hasOne(Group::class);
+        $this->belongsTo(Group::class);
     }
 }

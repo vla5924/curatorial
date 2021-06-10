@@ -11,16 +11,16 @@ class PointsAdjustment extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function group()
     {
-        return $this->hasOne(Group::class);
+        return $this->belongsTo(Group::class);
     }
 
     public function pioneer()
     {
-        return $this->hasOne(User::class, 'pioneer_id');
+        return $this->belongsTo(User::class, 'pioneer_id');
     }
 }

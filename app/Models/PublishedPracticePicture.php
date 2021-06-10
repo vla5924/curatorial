@@ -11,16 +11,16 @@ class PublishedPracticePicture extends Model
 
     public function group()
     {
-        return $this->hasOne(Group::class);
+        return $this->belongsTo(Group::class);
     }
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function picture()
     {
-        return $this->hasOne(PracticePicture::class);
+        return $this->belongsTo(PracticePicture::class);
     }
 }

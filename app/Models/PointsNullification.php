@@ -11,11 +11,11 @@ class PointsNullification extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function pioneer()
     {
-        return $this->hasOne(User::class, 'pioneer_id');
+        return $this->belongsTo(User::class, 'pioneer_id');
     }
 }
