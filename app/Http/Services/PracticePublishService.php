@@ -6,7 +6,9 @@ use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Practice;
 use App\Models\PracticePicture;
+use App\Models\PublishedPracticePicture;
 use ATehnix\VkClient\Exceptions\VkException;
+use Illuminate\Support\Facades\Auth;
 
 class PracticePublishService extends VkApiService
 {
@@ -78,6 +80,13 @@ class PracticePublishService extends VkApiService
 
             $ownerId = $response[0]['owner_id'];
             $attachments = 'photo' . $ownerId . '_' . $response[0]['id'];
+
+            $publishedPicture = new PublishedPracticePicture;
+            $publishedPicture->practice_picture_id = $picture->id;
+            $publishedPicture->user_id = Auth::user()->id;
+            $publishedPicture->group_id = $group->id;
+            $publishedPicture->vk_id = (int)$response[0]['id'];
+            $publishedPicture->save();
 
             try {
                 $response = $this->api->request('wall.post', [
