@@ -18,4 +18,9 @@ return [
     'view_teaser' => 'View the teaser',
     'points_earned' => 'Point earned|Points earned',
     'posts_unanswered' => 'Post unanswered|Posts unanswered',
+    'groups' => 'Groups',
+    'rating' => 'Rating',
+    'timetable' => 'Timetable',
+    'comments' => 'Comments',
+    'open' => 'Open',
 ];

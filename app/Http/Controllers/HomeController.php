@@ -39,6 +39,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = User::where('id', Auth::user()->id)->first();
+        $groups = $user->groups()->orderBy('name')->get();
 
         $highligts = [
             'points_earned' => UserHelper::cachedPoints($user),
@@ -47,6 +48,7 @@ class HomeController extends Controller
 
         return view('pages.home.index', [
             'highlights' => $highligts,
+            'groups' => $groups,
         ]);
     }
 }
