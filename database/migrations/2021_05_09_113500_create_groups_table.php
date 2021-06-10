@@ -19,6 +19,7 @@ class CreateGroupsTable extends Migration
             $table->bigInteger('vk_id')->unsigned();
             $table->string('alias', 10)->unique();
             $table->string('vk_confirmation_token')->nullable()->default(null);
+            $table->text('timetable_url')->nullable()->default(null);
             $table->timestamps();
         });
     }
