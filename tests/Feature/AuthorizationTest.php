@@ -16,9 +16,9 @@ class AuthorizationTest extends TestCase
 
     public function test_no_redirect_if_authorized()
     {
-        $user = User::factory()->make(['id' => 1]);
+        $user = User::factory()->create();
         $response = $this->actingAs($user)->get('/');
-
+        $response->dump();
         $response->assertStatus(200);
     }
 }
