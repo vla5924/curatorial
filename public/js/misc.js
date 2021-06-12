@@ -18,6 +18,15 @@ let Elem = {
     qAll: function (selector) {
         return document.querySelectorAll(selector);
     },
+
+    name: function (elementName) {
+        let nodes = document.getElementsByName(elementName);
+        return nodes.length > 0 ? nodes[0] : null;
+    },
+
+    nameAll: function (elementName) {
+        return document.getElementsByName(elementName);
+    },
 };
 
 let LoadingButton = function (button, ...strings) {
@@ -59,6 +68,29 @@ let Utils = {
             delay: timeout,
         });
     },
+
+    validate: function (...inputs) {
+        let invalid = [];
+        inputs.forEach(input => {
+            let value = input.value;
+            if (!value)
+                invalid[invalid.length] = input.name;
+        });
+        if (invalid.length != 0) {
+            let toastBody = `These fields cannot be empty: ${invalid.join(', ')}`;
+            this.toast('bg-warning', 0, 'Form is not completed', toastBody);
+            return false;
+        }
+        return true;
+    },
+
+    elementsByName: function (...names) {
+        let elements = {}
+        names.forEach(name => {
+            elements[name] = Elem.name(name);
+        });
+        return elements;
+    }
 };
 
 let Request = {
