@@ -58,6 +58,12 @@ class PracticeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'group_id' => 'required',
+            'pictures' => 'required',
+        ]);
+
         $practice = new Practice;
         $practice->name = $request->name;
         $practice->group_id = $request->group_id;
@@ -119,6 +125,11 @@ class PracticeController extends Controller
      */
     public function update(Request $request, Practice $practice)
     {
+        $request->validate([
+            'name' => 'required',
+            'group_id' => 'required',
+        ]);
+
         $practice->name = $request->name;
         $practice->group_id = $request->group_id;
         $practice->save();

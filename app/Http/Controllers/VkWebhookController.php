@@ -12,8 +12,7 @@ use Illuminate\Http\Request;
 class VkWebhookController extends Controller
 {
     const SECRET_KEY = 'icur27801';
-    const SUCCESS_TEXT = 'ok';
-    const FALLBACK_TEXT = 'error';
+    const RETURN_TEXT = 'ok';
 
     const ATTACHMENT_TYPES = ['photo', 'video', 'audio', 'poll', 'doc', 'link'];
 
@@ -38,27 +37,30 @@ class VkWebhookController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->secret != self::SECRET_KEY)
-            return self::FALLBACK_TEXT;
+        if (!$request->has(['type', 'secret']) or $request->secret != self::SECRET_KEY)
+            return self::RETURN_TEXT;
 
         if ($request->type == 'confirmation') {
             $group = Group::where('vk_id', $request->group_id)->first();
             if (!$group)
-                return self::FALLBACK_TEXT;
+                return self::RETURN_TEXT;
             return $group->vk_confirmation_token;
         }
 
         if ($request->type == 'wall_post_new') {
+            if (!$request->has('object'))
+                return self::RETURN_TEXT;
+
             $postData = $request->object;
 
             if ($postData['marked_as_ads'] || $postData['post_type'] != 'post')
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             $post = new Post;
 
             $group = Group::where('vk_id', -$postData['owner_id'])->first();
             if (!$group)
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
             $post->group_id = $group->id;
 
             $creator = User::where('vk_id', $postData['created_by'])->first();
@@ -78,7 +80,7 @@ class VkWebhookController extends Controller
             }
 
             if (!isset($postData['attachments']))
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             foreach ($postData['attachments'] as $attachmentData) {
                 $type = $attachmentData['type'];
@@ -179,38 +181,41 @@ class VkWebhookController extends Controller
                 }
             }
 
-            return self::SUCCESS_TEXT;
+            return self::RETURN_TEXT;
         }
 
         if ($request->type == 'wall_reply_new') {
+            if (!$request->has('object'))
+                return self::RETURN_TEXT;
+
             $commentData = $request->object;
 
             if ($commentData['post_owner_id'] != $commentData['from_id'])
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             $postOwnerId = (int)$commentData['post_owner_id'];
             if ($postOwnerId >= 0)
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             if (!self::isAnswerText($commentData['text']))
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             $group = Group::where('vk_id', -$postOwnerId)->first();
             if (!$group)
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             $post = Post::where('group_id', $group->id)->where('vk_id', $commentData['post_id'])->first();
             if (!$post)
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             $unansweredPost = UnansweredPost::where('post_id', $post->id)->first();
             if (!$unansweredPost)
-                return self::SUCCESS_TEXT;
+                return self::RETURN_TEXT;
 
             $unansweredPost->delete();
-            return self::SUCCESS_TEXT;
+            return self::RETURN_TEXT;
         }
 
-        return self::FALLBACK_TEXT;
+        return self::RETURN_TEXT;
     }
 }

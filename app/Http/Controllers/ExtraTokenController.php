@@ -34,6 +34,10 @@ class ExtraTokenController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'extra_token' => 'required',
+        ]);
+
         $token = $request->extra_token;
         VkTokenService::setExtraToken($token);
 

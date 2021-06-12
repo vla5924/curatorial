@@ -16,9 +16,9 @@ class ProfileInformationController extends Controller
     public function store(Request $request)
     {
         $user = User::where('id', Auth::user()->id)->first();
-        $user->education = $request->education;
-        $user->location = $request->location;
-        $user->notes = $request->notes;
+        $user->education = $request->has('education') ? $request->education : null;
+        $user->location = $request->has('location') ? $request->location : null;
+        $user->notes = $request->has('notes') ? $request->notes : null;
         $user->save();
 
         return redirect()->back()->withSuccess(__('settings.information_updated_successfully'));
