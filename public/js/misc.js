@@ -36,6 +36,7 @@ let LoadingButton = function (button, ...strings) {
 
         loadingText: strings[0],
         readyText: strings.length == 1 ? buttonElem.innerHTML : strings[1],
+        fallbackText: buttonElem.innerHTML,
 
         loading: function () {
             this._el.disabled = true;
@@ -46,6 +47,11 @@ let LoadingButton = function (button, ...strings) {
             this._el.disabled = false;
             this._el.innerHTML = this.readyText;
         },
+
+        fallback: function () {
+            this._el.disabled = false;
+            this._el.innerHTML = this.fallbackText;
+        }
     };
 };
 
@@ -73,8 +79,12 @@ let Utils = {
         let invalid = [];
         inputs.forEach(input => {
             let value = input.value;
-            if (!value)
+            if (!value) {
+                input.classList.add('is-invalid');
                 invalid[invalid.length] = input.name;
+            } else {
+                input.classList.remove('is-invalid');
+            }
         });
         if (invalid.length != 0) {
             let toastBody = `These fields cannot be empty: ${invalid.join(', ')}`;

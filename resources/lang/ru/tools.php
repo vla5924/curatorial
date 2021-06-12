@@ -30,4 +30,6 @@ return [
     'view' => 'Посмотреть',
     'post_origin' => 'Источник записи',
     'post_content' => 'Текст записи',
+    'fetching_finished_with_error' => 'Ошибка во время извлечения',
+    'post_not_found' => 'Запись не найдена',
 ];

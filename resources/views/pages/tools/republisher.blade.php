@@ -71,14 +71,15 @@ let Fields = Utils.elementsByName('vk_post_id', 'message', 'attachments', 'publi
 
 let Internal = {
     convertDate: function (timestamp) {
-        let date = new Date(timestamp*1000);
+        let date = new Date(timestamp * 1000);
+
         let year = date.getFullYear();
         let month = "0" + (date.getMonth() + 1);
         let day = "0" + date.getDate();
         let hours = "0" + date.getHours().toString();
         let minutes = "0" + date.getMinutes().toString();
-        let seconds = "0" + date.getSeconds().toString();
-        return `${year}-${month.substr(-2)}-${day.substr(-2)} ${hours.substr(-2)}:${minutes.substr(-2)}:${seconds.substr(-2)}`
+
+        return `${year}-${month.substr(-2)}-${day.substr(-2)} ${hours.substr(-2)}:${minutes.substr(-2)}`
     },
 
     fetchPost: function (buttonElem) {
@@ -96,6 +97,11 @@ let Internal = {
             v: "5.122"
         }, function (r) {
             if (r.response) {
+                if (r.response.items.length < 1) {
+                    Utils.toast('bg-danger', 0, '@lang('tools.fetching_finished_with_error')', '@lang('tools.post_not_found')');
+                    button.fallback();
+                    return false;
+                }
                 postid = id;
                 posttext = r.response.items[0].text;
                 postattachments = []
@@ -142,7 +148,9 @@ let Internal = {
                     Internal.publishPost(buttonElem);
                 };
             } else {
-
+                Utils.toast('bg-danger', 0, '@lang('tools.fetching_finished_with_error')', '@lang('tools.post_not_found')');
+                button.fallback();
+                return false;
             }
         });
     },
