@@ -21,30 +21,39 @@ class PracticeAnswersPublishService extends VkApiService
         parent::__construct(VkTokenService::getExtraToken());
     }
 
-    public function publish(Practice $practice)
+    public function collectAnswers(Practice $practice): array
     {
-        /*try {
+        $answers = [];
+        foreach ($practice->pictures as $picture) {
+            if (!$picture->answer)
+                continue;
+            $answers[$picture->id] = $picture->answer;
+        }
+        return $answers;
+    }
+
+    public function publishAnswers(Practice $practice)
+    {
+        try {
             $this->checkToken();
         } catch (VkException $e) {
             return [
                 'ok' => false,
                 'error' => $e->getMessage(),
             ];
-        }*/
+        }
+
+        $answers = $this->collectAnswers($practice);
+        if (count($answers) != $practice->pictures()->count()) {
+            return [
+                'ok' => false,
+                'error' => __('practice.some_pictures_have_no_answer'),
+            ];
+        }
 
         $ok = true;
         $results = [];
-        $i = 0;
         foreach ($practice->pictures as $picture) {
-            if (!$picture->answer) {
-                $results[] = [
-                    'ok' => false,
-                    'error' => __('practice.picture_has_no_answer'),
-                ];
-                $ok = false;
-                continue;
-            }
-
             $published = PublishedPracticePicture::where('practice_picture_id', $picture->id)->orderBy('created_at', 'desc')->first();
             if (!$published) {
                 $results[] = [
@@ -71,7 +80,7 @@ class PracticeAnswersPublishService extends VkApiService
                     'owner_id' => -$post->group->vk_id,
                     'post_id' => $post->vk_id,
                     'from_group' => $post->group->vk_id,
-                    'message' => sprintf(self::TEXT_ANSWER_FORMATTED, $picture->answer),
+                    'message' => sprintf(self::TEXT_ANSWER_FORMATTED, $answers[$picture->id]),
                 ])['response'];
             } catch (VkException $e) {
                 $results[] = [

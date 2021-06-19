@@ -49,7 +49,7 @@ return [
     'answers_published' => 'Ответы опубликованы',
     'answers_not_published' => 'Ответы не опубликованы',
     'you_are_not_creator' => 'Вы не являетесь создателем этого занятия',
-    'picture_has_no_answer' => 'К изображению с заданием не добавлен ответ',
+    'some_pictures_have_no_answer' => 'К некоторым изображениям с заданиями не добавлен ответ',
     'picture_has_never_been_published' => 'Изображение не было опубликовано',
     'picture_attachment_not_found' => 'Изображение не найдено в качестве одного из прикреплений записей',
     'comment_created' => 'Комментарий создан',

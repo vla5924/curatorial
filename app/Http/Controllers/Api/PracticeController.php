@@ -66,7 +66,7 @@ class PracticeController extends Controller
 
         try {
             $service = new PracticeAnswersPublishService;
-            return $service->publish($practice);
+            return $service->publishAnswers($practice);
         } catch (VkException $e) {
             return [
                 'ok' => false,

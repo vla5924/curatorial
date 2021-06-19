@@ -49,7 +49,7 @@ return [
     'answers_published' => 'Answers published',
     'answers_not_published' => 'Answers not published',
     'you_are_not_creator' => 'You was not the one who created this practice',
-    'picture_has_no_answer' => 'Task picture has no answer',
+    'some_pictures_have_no_answer' => 'Some task picture have no answer',
     'picture_has_never_been_published' => 'Picture has never been published',
     'picture_attachment_not_found' => 'Picture was not found as one of post attachments',
     'comment_created' => 'Comment created',
