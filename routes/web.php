@@ -116,6 +116,8 @@ Route::middleware(['auth', 'language'])->group(function () {
 
     Route::middleware('can:use blocker')->get('/tools/blocker', [ToolsController::class, 'blocker'])->name('tools.blocker');
     Route::middleware('can:use republisher')->get('/tools/republisher', [ToolsController::class, 'republisher'])->name('tools.republisher');
+    Route::middleware('can:use pdf-generator')->get('/tools/pdf-generator', [ToolsController::class, 'pdfGenerator'])->name('tools.pdf-generator');
+    Route::middleware('can:use pdf-generator')->post('/tools/pdf-generator', [ToolsController::class, 'generatePdf'])->name('tools.pdf-generator.generate');
 
     Route::middleware('can:adjust points')->get('/points/adjust', [PointsController::class, 'adjust'])->name('points.adjust');
     Route::middleware('can:nullify points')->get('/points/nullify', [PointsController::class, 'nullify'])->name('points.nullify');

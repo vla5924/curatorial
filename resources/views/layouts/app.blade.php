@@ -258,6 +258,13 @@
                                     </a>
                                 </li>
                                 @endcan
+                                @can('use pdf-generator')
+                                <li class="nav-item">
+                                    <a href="{{ route('tools.pdf-generator') }}" class="nav-link">
+                                        <p>@lang('tools.pdf_generator')</p>
+                                    </a>
+                                </li>
+                                @endcan
                             </ul>
                         </li>
                         <li class="nav-item">

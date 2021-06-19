@@ -41,6 +41,7 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name' => 'use blocker']);
         Permission::create(['name' => 'use republisher']);
+        Permission::create(['name' => 'use pdf-generator']);
 
         Permission::create(['name' => 'view permissions']);
         Permission::create(['name' => 'assign permissions']);
@@ -74,6 +75,7 @@ class PermissionSeeder extends Seeder
             'view posts',
             'use blocker',
             'use republisher',
+            'use pdf-generator',
         ]);
 
         Role::create(['name' => 'admin'])->givePermissionTo(Permission::all());
