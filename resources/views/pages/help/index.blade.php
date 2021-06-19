@@ -9,13 +9,13 @@
             <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
                 <div class="card-header">
                     <h4 class="card-title w-100">
-                        1. Lorem ipsum dolor sit amet
+                        1. @lang('help.old_points_displayed')
                     </h4>
                 </div>
             </a>
             <div id="collapseOne" class="collapse show" data-parent="#accordion">
                 <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                    @lang('help.old_points_displayed_answer')
                 </div>
             </div>
         </div>
@@ -23,13 +23,13 @@
             <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
                 <div class="card-header">
                     <h4 class="card-title w-100">
-                        2. Donec pede justo
+                        2. @lang('help.old_practices_disappear')
                     </h4>
                 </div>
             </a>
             <div id="collapseFour" class="collapse" data-parent="#accordion">
                 <div class="card-body">
-                    Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+                    @lang('help.old_practices_disappear_answer')
                 </div>
             </div>
         </div>
@@ -37,13 +37,19 @@
             <a class="d-block w-100" data-toggle="collapse" href="#collapseSeven">
                 <div class="card-header">
                     <h4 class="card-title w-100">
-                        3. Aenean leo ligula
+                        3. @lang('help.n_posts_unanswered_warning')
                     </h4>
                 </div>
             </a>
             <div id="collapseSeven" class="collapse" data-parent="#accordion">
                 <div class="card-body">
-                    Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+                    @lang('help.n_posts_unanswered_warning_answer')
+                    <br>
+                    <ul class="my-0 pt-2 pb-0">
+                        @foreach ($answer_markers as $marker)
+                        <li>{{ $marker }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>

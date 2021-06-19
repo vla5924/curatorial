@@ -8,7 +8,11 @@ class HelpController extends Controller
 {
     public function index()
     {
-        return view('pages.help.index');
+        $answerMarkers = VkWebhookController::ANSWER_TEXT_MARKERS;
+
+        return view('pages.help.index', [
+            'answer_markers' => $answerMarkers,
+        ]);
     }
 
     public function about()
