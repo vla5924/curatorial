@@ -159,6 +159,9 @@ let Internal = {
         if (!Utils.validate(Fields.message, Fields.publish_date, Fields.vk_owner_id))
             return false;
 
+        if (!confirm())
+            return false;
+
         button = new LoadingButton(buttonElem, '@lang('tools.publishing')');
         button.loading();
 

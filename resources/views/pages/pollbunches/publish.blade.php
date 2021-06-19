@@ -63,6 +63,9 @@ $(function () {
         if (!Utils.validate(Fields.message, Fields.hashtags, Fields.publish_date, Fields.interval))
             return false;
 
+        if (!confirm())
+            return false;
+
         button = new LoadingButton('btn-publish', '@lang('pollbunches.publishing')');
         button.loading();
 
