@@ -44,6 +44,7 @@
                 <tr>
                     <th style="width: 10px">@lang('practice.order')</th>
                     <th>@lang('practice.picture')</th>
+                    <th>@lang('practice.answer')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,6 +55,7 @@
                         <td>
                             <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
                         </td>
+                        <td>{{ $picture->answer }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -67,11 +69,14 @@
             <a class="btn btn-primary btn-sm" href="{{ route('practice.publish', $practice->id) }}">
                 <i class="fab fa-vk"></i> @lang('practice.publish')
             </a>
+            <button class="btn btn-secondary btn-sm" onclick="Internal.publishAnswers(this)">
+                <i class="fas fa-comment-dots"></i> @lang('practice.publish_answers')
+            </button>
             <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
                 <i class="fas fa-pencil-alt"></i> @lang('practice.edit')
             </a>
-            <button type="submit" class="btn btn-danger btn-sm btn-delete" href="#" form="destroy-{{ $practice->id }}">
-                    <i class="fas fa-trash"></i> @lang('practice.delete')
+            <button type="submit" class="btn btn-danger btn-sm btn-delete" form="destroy-{{ $practice->id }}">
+                <i class="fas fa-trash"></i> @lang('practice.delete')
             </button>
             <form method="POST" action="{{ route('practice.destroy', $practice->id) }}" id="destroy-{{ $practice->id }}" hidden>
                 @csrf
@@ -94,4 +99,47 @@
 </div>
 <!-- /.card -->
 
+@endsection
+
+@section('inline-script')
+let Internal = {
+    publishAnswers: function (buttonElem) {
+        if (!confirm())
+            return false;
+
+        let button = new LoadingButton(buttonElem, '@lang('practice.publishing')');
+        button.loading();
+
+        let request = {
+            _token: '{{ csrf_token() }}',
+        };
+
+        Request.internal('{{ route('internal.practice.publish-answers', $practice->id) }}', request,
+            function (data) {
+                let body = '';
+                for (let i = 0; i < data.posts.length; i++)
+                    body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('practice.comment_created') <a href="//vk.com/wall${data.posts[i].post_id}?reply=${data.posts[i].comment_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                Utils.toast('bg-success', 0, '@lang('practice.answers_published')', body);
+            },
+            function (data) {
+                let body = '@lang('practice.api_error')';
+                if (data.error) {
+                    body = data.error;
+                } else if (data.posts) {
+                    body = '';
+                    for (let i = 0; i < data.posts.length; i++) {
+                        if (data.posts[i].ok)
+                            body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('practice.comment_created') <a href="//vk.com/wall${data.posts[i].post_id}?reply=${data.posts[i].comment_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                        else
+                            body += `<i class="fas fa-times fa-fw"></i> #${i}: ${data.posts[i].error}<br />`;
+                    }
+                }
+                Utils.toast('bg-danger', 0, '@lang('practice.answers_not_published')', body);
+            },
+            function () {
+                button.ready();
+            }
+        );
+    }
+};
 @endsection

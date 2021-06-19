@@ -91,6 +91,7 @@ Route::middleware(['auth', 'language'])->group(function () {
 
     Route::prefix('internal')->group(function () {
         Route::middleware('can:publish practices')->post('/practice/{id}/publish', [ApiPracticeController::class, 'publish'])->name('internal.practice.publish');
+        Route::middleware('can:publish practices')->post('/practice/{id}/publish-answers', [ApiPracticeController::class, 'publishAnswers'])->name('internal.practice.publish-answers');
         Route::middleware('can:publish pollbunches')->post('/pollbunches/{id}/publish', [ApiPollbunchController::class, 'publish'])->name('internal.pollbunches.publish');
         Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
         Route::middleware('can:assign roles')->post('/roles/assign', [ApiRoleController::class, 'assign'])->name('internal.roles.assign');
