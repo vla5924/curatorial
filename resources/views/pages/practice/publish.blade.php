@@ -36,7 +36,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>@lang('practice.interval')</label>
-                        <input type="number" min="5" max="30" class="form-control" name="interval" value="5" placeholder="Enter interval value between posts publishing (in minutes)">
+                        <input type="number" min="5" max="30" class="form-control" name="interval" value="5" placeholder="@lang('practice.interval_placeholder')">
                     </div>
                 </div>
             </div>

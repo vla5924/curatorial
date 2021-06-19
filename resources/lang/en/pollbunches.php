@@ -44,6 +44,7 @@ dog
     'hashtags_placeholder' => 'Enter corresponding hashtags (they will be appended to each post)',
     'datetime' => 'Date and time (MSK)',
     'interval' => 'Interval (minutes)',
+    'interval_placeholder' => 'Enter interval value between posts publishing (in minutes)',
     'add_signature' => 'Add signature',
     'publish' => 'Publish',
     'publishihg' => 'Publishing',
