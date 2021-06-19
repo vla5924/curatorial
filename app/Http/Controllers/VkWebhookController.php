@@ -16,6 +16,9 @@ class VkWebhookController extends Controller
 
     const ATTACHMENT_TYPES = ['photo', 'video', 'audio', 'poll', 'doc', 'link'];
 
+    const ANSWER_TEXT_MARKERS = ['answer', 'ответ'];
+
+
     protected static function cleanUpText(string $text): string
     {
         // This is a temporary workaround for not to break russian symbols
@@ -32,7 +35,10 @@ class VkWebhookController extends Controller
 
     protected static function isAnswerText(string $text): bool
     {
-        return mb_stripos($text, 'ответ') !== false;
+        foreach (self::ANSWER_TEXT_MARKERS as $marker)
+            if (mb_stripos($text, $marker) !== false)
+                return true;
+        return false;
     }
 
     public function index(Request $request)
