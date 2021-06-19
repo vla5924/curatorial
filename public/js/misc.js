@@ -56,6 +56,15 @@ let LoadingButton = function (button, ...strings) {
 };
 
 let Utils = {
+    _i18n: {
+        'fields_cannot_be_empty': 'These fields cannot be empty:',
+        'form_is_not_completed': 'Form is not completed',
+    },
+
+    i18n: function (strings) {
+        this._i18n = {...this._i18n, ...strings};
+    },
+
     timerPicker: function (elementId) {
         $('#' + elementId).datetimepicker({
             icons: { time: 'far fa-clock' },
@@ -87,8 +96,8 @@ let Utils = {
             }
         });
         if (invalid.length != 0) {
-            let toastBody = `These fields cannot be empty: ${invalid.join(', ')}`;
-            this.toast('bg-warning', 0, 'Form is not completed', toastBody);
+            let toastBody = `${this._i18n.fields_cannot_be_empty} ${invalid.join(', ')}`;
+            this.toast('bg-warning', 0, this._i18n.form_is_not_completed, toastBody);
             return false;
         }
         return true;

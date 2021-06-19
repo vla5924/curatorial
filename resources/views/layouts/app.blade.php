@@ -439,6 +439,12 @@
     <script src="/theme/dist/js/pages/dashboard.js"></script>
 
     <script src="/js/misc.js"></script>
+    <script>
+        Utils.i18n({
+            'fields_cannot_be_empty': '@lang('misc.fields_cannot_be_empty')',
+            'form_is_not_completed': '@lang('misc.form_is_not_completed')',
+        });
+    </script>
     <script>@yield('inline-script')</script>
 </body>
 

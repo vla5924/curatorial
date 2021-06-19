@@ -14,4 +14,6 @@ return [
     'token_is_invalid' => 'Token is invalid: no response while checking, please reauthorize',
     'token_is_unfamiliar' => 'Token does not belongs to current user, please reauthorize',
     'extra_token_not_found' => 'Extra token is not found, please add it in settings',
+    'fields_cannot_be_empty' => 'These fields cannot be empty:',
+    'form_is_not_completed' => 'Form is not completed',
 ];
