@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\PracticeAnswersPublishService;
 use App\Http\Services\PracticePublishService;
 use App\Models\Group;
 use App\Models\Practice;
 use ATehnix\VkClient\Exceptions\VkException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PracticeController extends Controller
 {
@@ -41,6 +43,30 @@ class PracticeController extends Controller
                 (int)$request->interval,
                 (bool)$request->signed
             );
+        } catch (VkException $e) {
+            return [
+                'ok' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function publishAnswers(int $practiceId, Request $request)
+    {
+        $practice = Practice::where('id', $practiceId)->first();
+        if (!$practice)
+            return ['ok' => false];
+
+        if ($practice->user->id != Auth::user()->id) {
+            return [
+                'ok' => false,
+                'error' => __('practice.you_are_not_creator')
+            ];
+        }
+
+        try {
+            $service = new PracticeAnswersPublishService;
+            return $service->publishAnswers($practice);
         } catch (VkException $e) {
             return [
                 'ok' => false,

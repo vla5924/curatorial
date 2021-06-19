@@ -51,6 +51,12 @@ class PollbunchController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'group_id' => 'required',
+            'questions' => 'required',
+        ]);
+
         $pollbunch = new Pollbunch;
         $pollbunch->name = $request->name;
         $pollbunch->group_id = $request->group_id;
@@ -104,6 +110,11 @@ class PollbunchController extends Controller
      */
     public function update(Request $request, Pollbunch $pollbunch)
     {
+        $request->validate([
+            'name' => 'required',
+            'group_id' => 'required',
+        ]);
+
         $pollbunch->name = $request->name;
         $pollbunch->group_id = $request->group_id;
         $pollbunch->save();

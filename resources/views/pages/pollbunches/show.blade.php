@@ -80,6 +80,9 @@
             <a class="btn btn-primary btn-sm" href="{{ route('pollbunches.publish', $pollbunch->id) }}">
                 <i class="fab fa-vk"></i> @lang('pollbunches.publish')
             </a>
+            <button class="btn btn-secondary btn-sm" onclick="Internal.publishAnswers(this)">
+                <i class="fas fa-comment-dots"></i> @lang('pollbunches.publish_answers')
+            </button>
             <a class="btn btn-info btn-sm" href="{{ route('pollbunches.edit', $pollbunch->id) }}">
                 <i class="fas fa-pencil-alt"></i> @lang('pollbunches.edit')
             </a>
@@ -107,4 +110,47 @@
 </div>
 <!-- /.card -->
 
+@endsection
+
+@section('inline-script')
+let Internal = {
+    publishAnswers: function (buttonElem) {
+        if (!confirm())
+            return false;
+
+        let button = new LoadingButton(buttonElem, '@lang('pollbunches.publishing')');
+        button.loading();
+
+        let request = {
+            _token: '{{ csrf_token() }}',
+        };
+
+        Request.internal('{{ route('internal.pollbunches.publish-answers', $pollbunch->id) }}', request,
+            function (data) {
+                let body = '';
+                for (let i = 0; i < data.posts.length; i++)
+                    body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('pollbunches.comment_created') <a href="//vk.com/wall${data.posts[i].post_id}?reply=${data.posts[i].comment_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                Utils.toast('bg-success', 0, '@lang('pollbunches.answers_published')', body);
+            },
+            function (data) {
+                let body = '@lang('pollbunches.api_error')';
+                if (data.error) {
+                    body = data.error;
+                } else if (data.posts) {
+                    body = '';
+                    for (let i = 0; i < data.posts.length; i++) {
+                        if (data.posts[i].ok)
+                            body += `<i class="fas fa-check fa-fw"></i> #${i}: @lang('pollbunches.comment_created') <a href="//vk.com/wall${data.posts[i].post_id}?reply=${data.posts[i].comment_id}" target="_blank" class="fas fa-eye"></a><br />`;
+                        else
+                            body += `<i class="fas fa-times fa-fw"></i> #${i}: ${data.posts[i].error}<br />`;
+                    }
+                }
+                Utils.toast('bg-danger', 0, '@lang('pollbunches.answers_not_published')', body);
+            },
+            function () {
+                button.ready();
+            }
+        );
+    }
+};
 @endsection

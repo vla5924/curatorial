@@ -41,13 +41,20 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        $group = new Group();
+        $request->validate([
+            'name' => 'required',
+            'vk_id' => 'required',
+            'alias' => 'required',
+        ]);
+
+        $group = new Group;
         $group->name = $request->name;
         $group->vk_id = $request->vk_id;
-        if ($request->has('alias'))
-            $group->alias = $request->alias;
+        $group->alias = $request->alias;
         if ($request->has('timetable_url'))
             $group->timetable_url = $request->timetable_url;
+        if ($request->has('vk_confirmation_token'))
+            $group->vk_confirmation_token = $request->vk_confirmation_token;
         $group->save();
 
         return redirect()->route('groups.index')->with('success', __('groups.group_added_successfully'));
@@ -86,12 +93,19 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
+        $request->validate([
+            'name' => 'required',
+            'vk_id' => 'required',
+            'alias' => 'required',
+        ]);
+
         $group->name = $request->name;
         $group->vk_id = $request->vk_id;
-        if ($request->has('alias'))
-            $group->alias = $request->alias;
+        $group->alias = $request->alias;
         if ($request->has('timetable_url'))
             $group->timetable_url = $request->timetable_url;
+        if ($request->has('vk_confirmation_token'))
+            $group->vk_confirmation_token = $request->vk_confirmation_token;
         $group->save();
 
         return redirect()->back()->withSuccess(__('groups.group_updated_successfully'));

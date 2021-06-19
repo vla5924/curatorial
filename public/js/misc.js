@@ -18,6 +18,15 @@ let Elem = {
     qAll: function (selector) {
         return document.querySelectorAll(selector);
     },
+
+    name: function (elementName) {
+        let nodes = document.getElementsByName(elementName);
+        return nodes.length > 0 ? nodes[0] : null;
+    },
+
+    nameAll: function (elementName) {
+        return document.getElementsByName(elementName);
+    },
 };
 
 let LoadingButton = function (button, ...strings) {
@@ -27,6 +36,7 @@ let LoadingButton = function (button, ...strings) {
 
         loadingText: strings[0],
         readyText: strings.length == 1 ? buttonElem.innerHTML : strings[1],
+        fallbackText: buttonElem.innerHTML,
 
         loading: function () {
             this._el.disabled = true;
@@ -37,10 +47,24 @@ let LoadingButton = function (button, ...strings) {
             this._el.disabled = false;
             this._el.innerHTML = this.readyText;
         },
+
+        fallback: function () {
+            this._el.disabled = false;
+            this._el.innerHTML = this.fallbackText;
+        }
     };
 };
 
 let Utils = {
+    _i18n: {
+        'fields_cannot_be_empty': 'These fields cannot be empty:',
+        'form_is_not_completed': 'Form is not completed',
+    },
+
+    i18n: function (strings) {
+        this._i18n = {...this._i18n, ...strings};
+    },
+
     timerPicker: function (elementId) {
         $('#' + elementId).datetimepicker({
             icons: { time: 'far fa-clock' },
@@ -59,6 +83,33 @@ let Utils = {
             delay: timeout,
         });
     },
+
+    validate: function (...inputs) {
+        let invalid = [];
+        inputs.forEach(input => {
+            let value = input.value;
+            if (!value) {
+                input.classList.add('is-invalid');
+                invalid[invalid.length] = input.name;
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+        if (invalid.length != 0) {
+            let toastBody = `${this._i18n.fields_cannot_be_empty} ${invalid.join(', ')}`;
+            this.toast('bg-warning', 0, this._i18n.form_is_not_completed, toastBody);
+            return false;
+        }
+        return true;
+    },
+
+    elementsByName: function (...names) {
+        let elements = {}
+        names.forEach(name => {
+            elements[name] = Elem.name(name);
+        });
+        return elements;
+    }
 };
 
 let Request = {

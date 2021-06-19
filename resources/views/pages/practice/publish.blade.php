@@ -9,25 +9,25 @@
         <div class="card-body">
             <div class="form-group">
                 <label>@lang('practice.group')</label>
-                <select class="form-control" style="width: 100%;" id="field-group-id" required>
+                <select class="form-control" style="width: 100%;" name="group_id">
                 @include('components.user-groups', ['selected' => $practice->group->id])
                 </select>
             </div>
             <div class="form-group">
                 <label>@lang('practice.main_contents')</label>
-                <input type="text" class="form-control" id="field-message" value="{{ $practice->name }}" placeholder="@lang('practice.main_contents_placeholder')">
+                <input type="text" class="form-control" name="message" value="{{ $practice->name }}" placeholder="@lang('practice.main_contents_placeholder')">
             </div>
             <div class="form-group">
                 <label>@lang('practice.hashtags')</label>
-                <input type="text" class="form-control" id="field-hashtags" value="#{{ $practice->group->alias }}_p" placeholder="@lang('practice.hashtags_placeholder')">
+                <input type="text" class="form-control" name="hashtags" value="#{{ $practice->group->alias }}_p" placeholder="@lang('practice.hashtags_placeholder')">
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                     <label>@lang('practice.datetime')</label>
-                        <div class="input-group date" id="start_datetime" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" id="field-publish-date" data-target="#start_datetime">
-                            <div class="input-group-append" data-target="#start_datetime" data-toggle="datetimepicker">
+                        <div class="input-group date" id="field-publish_date" data-target-input="nearest">
+                            <input type="text" name="publish_date" class="form-control datetimepicker-input" data-target="#field-publish_date">
+                            <div class="input-group-append" data-target="#field-publish_date" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                             </div>
                         </div>
@@ -36,13 +36,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>@lang('practice.interval')</label>
-                        <input type="number" min="5" max="30" class="form-control" id="field-interval" value="5" placeholder="Enter interval value between posts publishing (in minutes)">
+                        <input type="number" min="5" max="30" class="form-control" name="interval" value="5" placeholder="@lang('practice.interval_placeholder')">
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="field-signed" checked>
+                    <input type="checkbox" class="custom-control-input" name="signed" id="field-signed" checked>
                     <label class="custom-control-label" for="field-signed">@lang('practice.add_signature')</label>
                 </div>
             </div>
@@ -50,8 +50,10 @@
                 <label>@lang('practice.pictures_publish')</label>
                 <div class="row">
                     @foreach ($practice->pictures as $picture)
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
+                        <div class="col-6 col-md-4 col-lg-3 pb-2">
+                            <a href="{{ Storage::url($picture->path) }}" target="_blank">
+                                <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
+                            </a>
                         </div>
                     @endforeach
                 </div>
@@ -64,21 +66,29 @@
 @endsection
 
 @section('inline-script')
+let Fields = Utils.elementsByName('group_id', 'message', 'hashtags', 'publish_date', 'interval', 'signed');
+
 $(function () {
-    Utils.timerPicker('start_datetime');
+    Utils.timerPicker('field-publish_date');
 
     $('#btn-publish').on('click', function() {
+        if (!Utils.validate(Fields.message, Fields.hashtags, Fields.publish_date, Fields.interval))
+            return false;
+
+        if (!confirm())
+            return false;
+
         button = new LoadingButton('btn-publish', '@lang('practice.publishing')');
         button.loading();
 
         let request = {
             _token: '{{ csrf_token() }}',
-            group_id: Elem.id('field-group-id').value,
-            message: Elem.id('field-message').value,
-            hashtags: Elem.id('field-hashtags').value,
-            publish_date: Elem.id('field-publish-date').value,
-            interval: Elem.id('field-interval').value,
-            signed: Number(Elem.id('field-signed').checked),
+            group_id: Fields.group_id.value,
+            message: Fields.message.value,
+            hashtags: Fields.hashtags.value,
+            publish_date: Fields.publish_date.value,
+            interval: Fields.interval.value,
+            signed: Number(Fields.signed.checked),
         };
 
         Request.internal('{{ route('internal.practice.publish', $practice->id) }}', request,

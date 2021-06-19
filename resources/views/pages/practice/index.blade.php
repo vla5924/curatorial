@@ -52,8 +52,8 @@
                 @endforeach
             </tbody>
         </table>
-
-        {{ $practices->links() }}
     </div>
 </div>
+
+{{ $practices->links() }}
 @endsection

@@ -91,7 +91,9 @@ Route::middleware(['auth', 'language'])->group(function () {
 
     Route::prefix('internal')->group(function () {
         Route::middleware('can:publish practices')->post('/practice/{id}/publish', [ApiPracticeController::class, 'publish'])->name('internal.practice.publish');
+        Route::middleware('can:publish practices')->post('/practice/{id}/publish-answers', [ApiPracticeController::class, 'publishAnswers'])->name('internal.practice.publish-answers');
         Route::middleware('can:publish pollbunches')->post('/pollbunches/{id}/publish', [ApiPollbunchController::class, 'publish'])->name('internal.pollbunches.publish');
+        Route::middleware('can:publish pollbunches')->post('/pollbunches/{id}/publish-answers', [ApiPollbunchController::class, 'publishAnswers'])->name('internal.pollbunches.publish-answers');
         Route::middleware('can:assign groups')->post('/groups/assign', [ApiGroupController::class, 'assign'])->name('internal.groups.assign');
         Route::middleware('can:assign roles')->post('/roles/assign', [ApiRoleController::class, 'assign'])->name('internal.roles.assign');
         Route::middleware('can:edit points')->post('/posts/points', [ApiPostController::class, 'points'])->name('internal.posts.points');
@@ -114,6 +116,8 @@ Route::middleware(['auth', 'language'])->group(function () {
 
     Route::middleware('can:use blocker')->get('/tools/blocker', [ToolsController::class, 'blocker'])->name('tools.blocker');
     Route::middleware('can:use republisher')->get('/tools/republisher', [ToolsController::class, 'republisher'])->name('tools.republisher');
+    Route::middleware('can:use pdf-generator')->get('/tools/pdf-generator', [ToolsController::class, 'pdfGenerator'])->name('tools.pdf-generator');
+    Route::middleware('can:use pdf-generator')->post('/tools/pdf-generator', [ToolsController::class, 'generatePdf'])->name('tools.pdf-generator.generate');
 
     Route::middleware('can:adjust points')->get('/points/adjust', [PointsController::class, 'adjust'])->name('points.adjust');
     Route::middleware('can:nullify points')->get('/points/nullify', [PointsController::class, 'nullify'])->name('points.nullify');

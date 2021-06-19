@@ -30,4 +30,8 @@ return [
     'view' => 'View',
     'post_origin' => 'Post origin',
     'post_content' => 'Post content',
+    'fetching_finished_with_error' => 'Fetching finished with error',
+    'post_not_found' => 'Post not found',
+    'pdf_generator' => 'PDF generator',
+    'generate' => 'Generate',
 ];

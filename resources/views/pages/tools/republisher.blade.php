@@ -10,7 +10,7 @@
         <div class="card-body">
             <div class="form-group republisher-step-1">
                 <label>@lang('tools.post_vk_id')</label>
-                <input type="text" class="form-control" id="republisher-post-vk-id"
+                <input type="text" class="form-control" name="vk_post_id"
                     placeholder="@lang('tools.example'): -10175642_3060902" required>
             </div>
             <div class="form-group republisher-step-2" hidden>
@@ -25,15 +25,15 @@
             </div>
             <div class="form-group republisher-step-2" hidden>
                 <label>@lang('tools.post_content')</label>
-                <textarea class="form-control" rows="10" id="field-message"></textarea>
+                <textarea class="form-control" rows="10" name="message"></textarea>
             </div>
             <div class="form-group republisher-step-2" hidden>
                 <label>@lang('tools.attachments')</label>
-                <input type="text" class="form-control" id="field-attachments" readonly>
+                <input type="text" class="form-control" name="attachments" readonly>
             </div>
             <div class="form-group republisher-step-2" hidden>
                 <label>@lang('tools.group')</label>
-                <select class="form-control" style="width: 100%;" id="field-owner-id">
+                <select class="form-control" style="width: 100%;" name="vk_owner_id">
                     @foreach ($groups as $group)
                     <option value="{{ -$group['id'] }}">{{ $group['name'] }}</option>
                     @endforeach
@@ -41,17 +41,16 @@
             </div>
             <div class="form-group republisher-step-2" hidden>
                 <label>@lang('tools.datetime')</label>
-                <div class="input-group date" id="start_datetime" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" id="field-publish-date"
-                        data-target="#start_datetime">
-                    <div class="input-group-append" data-target="#start_datetime" data-toggle="datetimepicker">
+                <div class="input-group date" id="field-publish_date" data-target-input="nearest">
+                    <input type="text" name="publish_date" class="form-control datetimepicker-input" data-target="#field-publish_date">
+                    <div class="input-group-append" data-target="#field-publish_date" data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                     </div>
                 </div>
             </div>
             <div class="form-group republisher-step-2" hidden>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="field-signed" checked>
+                    <input type="checkbox" class="custom-control-input" name="signed" id="field-signed" checked>
                     <label class="custom-control-label" for="field-signed">@lang('tools.add_signature')</label>
                 </div>
             </div>
@@ -68,23 +67,29 @@
 @section('inline-script')
 VK.init({apiId: {{ config('services.vkontakte.client_id') }}});
 
+let Fields = Utils.elementsByName('vk_post_id', 'message', 'attachments', 'publish_date', 'vk_owner_id', 'signed');
+
 let Internal = {
     convertDate: function (timestamp) {
-        let date = new Date(timestamp*1000);
+        let date = new Date(timestamp * 1000);
+
         let year = date.getFullYear();
         let month = "0" + (date.getMonth() + 1);
         let day = "0" + date.getDate();
         let hours = "0" + date.getHours().toString();
         let minutes = "0" + date.getMinutes().toString();
-        let seconds = "0" + date.getSeconds().toString();
-        return `${year}-${month.substr(-2)}-${day.substr(-2)} ${hours.substr(-2)}:${minutes.substr(-2)}:${seconds.substr(-2)}`
+
+        return `${year}-${month.substr(-2)}-${day.substr(-2)} ${hours.substr(-2)}:${minutes.substr(-2)}`
     },
 
     fetchPost: function (buttonElem) {
+        if (!Utils.validate(Fields.vk_post_id))
+            return false;
+
         button = new LoadingButton(buttonElem, '@lang('tools.fetching')', '@lang('tools.publish_post')');
         button.loading();
 
-        let id = $('#republisher-post-vk-id').val();
+        let id = Fields.vk_post_id.value;
         VK.Api.call('wall.getById', {
             posts: id,
             extended: 1,
@@ -92,6 +97,11 @@ let Internal = {
             v: "5.122"
         }, function (r) {
             if (r.response) {
+                if (r.response.items.length < 1) {
+                    Utils.toast('bg-danger', 0, '@lang('tools.fetching_finished_with_error')', '@lang('tools.post_not_found')');
+                    button.fallback();
+                    return false;
+                }
                 postid = id;
                 posttext = r.response.items[0].text;
                 postattachments = []
@@ -124,38 +134,45 @@ let Internal = {
                     }
                 });
                 group_info = r.response.groups[0];
-                Elem.id('field-message').value = posttext;
-                Elem.id('field-attachments').value = postattachments.join(',');
+                Fields.message.value = posttext;
+                Fields.attachments.value = postattachments.join(',');
                 Elem.id('post-image').src = group_info.photo_50;
                 Elem.id('post-origin').innerHTML = group_info.name;
                 Elem.id('post-origin').href = `//vk.com/wall${postid}`;
                 Elem.id('post-date').innerHTML = Internal.convertDate(r.response.items[0].date);
-                $('#post-origin').val(posttext);
                 $('.republisher-step-1').attr('hidden', true);
                 $('.republisher-step-2').attr('hidden', false);
-                Utils.timerPicker('start_datetime');
+                Utils.timerPicker('field-publish_date');
                 button.ready();
                 buttonElem.onclick = function () {
                     Internal.publishPost(buttonElem);
                 };
             } else {
-
+                Utils.toast('bg-danger', 0, '@lang('tools.fetching_finished_with_error')', '@lang('tools.post_not_found')');
+                button.fallback();
+                return false;
             }
         });
     },
 
     publishPost: function (buttonElem) {
+        if (!Utils.validate(Fields.message, Fields.publish_date, Fields.vk_owner_id))
+            return false;
+
+        if (!confirm())
+            return false;
+
         button = new LoadingButton(buttonElem, '@lang('tools.publishing')');
         button.loading();
 
-        let ownerId = $('#field-owner-id').val();
+        let ownerId = Fields.vk_owner_id.value;
         let request = {
             _token: '{{ csrf_token() }}',
             owner_id: ownerId,
-            publish_date: Elem.id('field-publish-date').value,
-            signed: Number(Elem.id('field-signed').checked),
-            message: Elem.id('field-message').value,
-            attachments: Elem.id('field-attachments').value,
+            publish_date: Fields.publish_date.value,
+            signed: Number(Fields.signed.checked),
+            message: Fields.message.value,
+            attachments: Fields.attachments.value,
         };
 
         Request.internal('{{ route('internal.republisher.publish') }}', request,

@@ -17,6 +17,7 @@ class CreatePracticePicturesTable extends Migration
             $table->id();
             $table->bigInteger('practice_id')->unsigned();
             $table->string('path');
+            $table->string('answer')->nullable()->default(null);
             $table->timestamps();
         });
     }

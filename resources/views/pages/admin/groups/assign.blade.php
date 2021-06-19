@@ -36,10 +36,10 @@
                 @endforeach
             </tbody>
         </table>
-
-        {{ $users->links() }}
     </div>
 </div>
+
+{{ $users->links() }}
 @endsection
 
 @section('inline-script')

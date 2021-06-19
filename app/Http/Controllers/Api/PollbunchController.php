@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\PollbunchAnswersPublishService;
 use App\Http\Services\PollbunchPublishService;
 use App\Models\Group;
 use App\Models\Pollbunch;
 use ATehnix\VkClient\Exceptions\VkException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PollbunchController extends Controller
 {
@@ -36,6 +38,30 @@ class PollbunchController extends Controller
                 (int)$request->interval,
                 (bool)$request->signed
             );
+        } catch (VkException $e) {
+            return [
+                'ok' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function publishAnswers(int $pollbunchId, Request $request)
+    {
+        $pollbunch = Pollbunch::where('id', $pollbunchId)->first();
+        if (!$pollbunch)
+            return ['ok' => false];
+
+        if ($pollbunch->user->id != Auth::user()->id) {
+            return [
+                'ok' => false,
+                'error' => __('pollbunches.you_are_not_creator')
+            ];
+        }
+
+        try {
+            $service = new PollbunchAnswersPublishService;
+            return $service->publishAnswers($pollbunch);
         } catch (VkException $e) {
             return [
                 'ok' => false,
