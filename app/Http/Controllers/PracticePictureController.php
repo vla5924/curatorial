@@ -31,4 +31,13 @@ class PracticePictureController extends Controller
         $picture->path = $path;
         $picture->save();
     }
+
+    public function setAnswer(int $pictureId, ?string $answer = null)
+    {
+        $picture = PracticePicture::where('id', $pictureId)->first();
+        if ($picture) {
+            $picture->answer = $answer;
+            $picture->save();
+        }
+    }
 }

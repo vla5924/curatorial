@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Helpers\PracticeHelper;
 use App\Http\Services\VkTokenService;
-use App\Models\Group;
 use App\Models\Practice;
 use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PracticeController extends Controller
 {
@@ -133,6 +132,19 @@ class PracticeController extends Controller
         $practice->name = $request->name;
         $practice->group_id = $request->group_id;
         $practice->save();
+
+        if ($request->has('picture_ids')) {
+            $idsCount = count($request->picture_ids);
+            if ($idsCount > 0) {
+                $controller = new PracticePictureController;
+                for ($i = 0; $i < $idsCount; $i++) {
+                    $pictureId = (int)$request->picture_ids[$i];
+                    $answerField = 'picture_' . $pictureId . '_answer';
+                    $answer = $request->has($answerField) ? Str::limit($request->get($answerField), 255, '') : null;
+                    $controller->setAnswer($pictureId, $answer);
+                }
+            }
+        }
 
         return redirect()->back()->withSuccess(__('practice.practice_updated_successfully'));
     }
