@@ -3,10 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Tests\RefreshDatabaseOnce;
 use Tests\TestCase;
 
 class AuthorizationTest extends TestCase
 {
+    use RefreshDatabaseOnce;
+
     public function test_redirects_to_login_if_unauthorized()
     {
         $response = $this->get('/');

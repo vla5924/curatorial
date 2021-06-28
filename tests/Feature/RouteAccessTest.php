@@ -3,10 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Tests\RefreshDatabaseOnce;
 use Tests\TestCase;
 
 class RouteAccessTest extends TestCase
 {
+    use RefreshDatabaseOnce;
+
     protected $user;
 
     protected function setUp(): void
