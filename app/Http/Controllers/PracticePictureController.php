@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Practice;
 use App\Models\PracticePicture;
 use ErrorException;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 class PracticePictureController extends Controller

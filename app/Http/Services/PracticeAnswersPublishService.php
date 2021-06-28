@@ -2,11 +2,8 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\VkTokenService;
-use App\Models\Group;
 use App\Models\PostAttachment;
 use App\Models\Practice;
-use App\Models\PracticePicture;
 use App\Models\PublishedPracticePicture;
 use ATehnix\VkClient\Exceptions\VkException;
 

@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\UserHelper;
-use App\Models\Pollbunch;
-use App\Models\Post;
-use App\Models\Practice;
 use App\Models\UnansweredPost;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

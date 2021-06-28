@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\VkTokenService;
 use App\Models\Pollbunch;
 use App\Models\PostAttachment;
 use App\Models\PublishedPollbunchQuestion;

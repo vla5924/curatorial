@@ -2,9 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\VkTokenService;
-use ATehnix\VkClient\Exceptions\VkException;
-
 class RepublisherService extends VkApiService
 {
     public function __construct()

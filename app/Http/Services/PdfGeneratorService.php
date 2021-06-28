@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\VkTokenService;
 use Codedge\Fpdf\Facades\Fpdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
