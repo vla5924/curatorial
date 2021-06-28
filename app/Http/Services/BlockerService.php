@@ -9,14 +9,13 @@ class BlockerService extends VkApiService
 {
     public function __construct()
     {
-        if (!VkTokenService::hasExtraToken())
-            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
-        parent::__construct(VkTokenService::getExtraToken());
+        parent::__construct();
+        $this->requireExtraToken();
     }
 
     public function ban(int $userId, int $groupId)
     {
-        $this->api->request('groups.ban', [
+        $this->callExtra('groups.ban', [
             'owner_id' => $userId,
             'group_id' => $groupId,
             'reason' => 1,
@@ -26,7 +25,7 @@ class BlockerService extends VkApiService
 
     public function unban(int $userId, int $groupId)
     {
-        $this->api->request('groups.unban', [
+        $this->callExtra('groups.unban', [
             'owner_id' => $userId,
             'group_id' => $groupId,
         ]);

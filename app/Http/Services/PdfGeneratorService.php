@@ -18,15 +18,15 @@ class PdfGeneratorService extends VkApiService
 
     public function __construct()
     {
-        parent::__construct(VkTokenService::getToken());
+        parent::__construct();
     }
 
     public function fetchPosts(string $postIds)
     {
         $this->checkToken();
-        return $this->api->request('wall.getById', [
+        return $this->callForResponse('wall.getById', [
             'posts' => $postIds,
-        ])['response'];
+        ]);
     }
 
     public function generate(string $postIds)

@@ -14,9 +14,8 @@ class PollbunchAnswersPublishService extends VkApiService
 
     public function __construct()
     {
-        if (!VkTokenService::hasExtraToken())
-            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
-        parent::__construct(VkTokenService::getExtraToken());
+        parent::__construct();
+        $this->requireExtraToken();
     }
 
     public function collectAnswers(Pollbunch $pollbunch): array
@@ -37,7 +36,7 @@ class PollbunchAnswersPublishService extends VkApiService
     public function publishAnswers(Pollbunch $pollbunch)
     {
         try {
-            $this->checkToken();
+            $this->checkExtraToken();
         } catch (VkException $e) {
             return [
                 'ok' => false,
@@ -78,12 +77,12 @@ class PollbunchAnswersPublishService extends VkApiService
 
             $post = $attachment->post;
             try {
-                $response = $this->api->request('wall.createComment', [
+                $response = $this->callExtraForResponse('wall.createComment', [
                     'owner_id' => -$post->group->vk_id,
                     'post_id' => $post->vk_id,
                     'from_group' => $post->group->vk_id,
                     'message' => sprintf(self::TEXT_ANSWER_FORMATTED, implode(', ', $answers[$question->id])),
-                ])['response'];
+                ]);
             } catch (VkException $e) {
                 $results[] = [
                     'ok' => false,

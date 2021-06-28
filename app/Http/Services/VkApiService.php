@@ -15,22 +15,61 @@ class VkApiService
     const EXTRA_TOKEN_IS_NOT_FOUND = 'misc.extra_token_not_found';
 
     protected $token;
+    protected $extraToken;
     protected $api;
 
-    public function __construct(string $token)
+    protected function __construct()
     {
-        $this->token = $token;
+        $this->token = VkTokenService::getToken();
 
         $this->api = new VkClient(static::API_VERSION);
         $this->api->setDefaultToken($this->token);
     }
 
-    public function checkToken()
+    protected function requireExtraToken()
     {
-        $response = $this->api->request('users.get', [])['response'];
+        if (!VkTokenService::hasExtraToken())
+            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
+
+        $this->extraToken = VkTokenService::getExtraToken();
+    }
+
+
+    protected function call(string $method, $parameters = [])
+    {
+        return $this->api->request($method, $parameters);
+    }
+
+    protected function callForResponse(string $method, $parameters = [])
+    {
+        return $this->call($method, $parameters)['response'];
+    }
+
+    protected function callExtra(string $method, $parameters = [])
+    {
+        return $this->api->request($method, $parameters, $this->extraToken);
+    }
+
+    protected function callExtraForResponse(string $method, $parameters = [])
+    {
+        return $this->callExtra($method, $parameters)['response'];
+    }
+
+
+    private function checkTokenResponse($response)
+    {
         if (empty($response))
             throw new VkException(__(self::TOKEN_IS_INVALID));
         if ($response[0]['id'] != Auth::user()->vk_id)
             throw new VkException(__(self::TOKEN_IS_UNFAMILIAR));
+    }
+    protected function checkToken()
+    {
+        $this->checkTokenResponse($this->callForResponse('users.get'));
+    }
+
+    protected function checkExtraToken()
+    {
+        $this->checkTokenResponse($this->callExtraForResponse('users.get'));
     }
 }
