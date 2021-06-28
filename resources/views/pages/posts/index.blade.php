@@ -140,7 +140,7 @@
         </table>
     </div>
 </div>
-{{ $posts->links('vendor.pagination.bootstrap-4') }}
+{{ $posts->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
 @endsection
 
 @section('inline-script')
