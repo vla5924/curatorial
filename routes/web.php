@@ -47,7 +47,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/vk/callback', [VkLoginController::class, 'callback'])->name('login.vk.callback');
 });
 
-Route::middleware(['auth', 'language'])->group(function () {
+Route::middleware(['auth', 'language', 'role:user|admin'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::middleware('can:view rating')->get('/users/rating', [RatingController::class, 'index'])->name('users.rating.index');
