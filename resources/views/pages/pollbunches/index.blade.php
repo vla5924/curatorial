@@ -55,5 +55,5 @@
     </div>
 </div>
 
-{{ $pollbunches->links() }}
+{{ $pollbunches->links('vendor.pagination.bootstrap-4') }}
 @endsection

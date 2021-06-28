@@ -55,5 +55,5 @@
     </div>
 </div>
 
-{{ $practices->links() }}
+{{ $practices->links('vendor.pagination.bootstrap-4') }}
 @endsection
