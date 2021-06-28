@@ -16,6 +16,8 @@ class PracticeController extends Controller
     const FILES_COUNT_MIN = 1;
     const FILES_COUNT_MAX = 12;
 
+    const PER_PAGE = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +25,7 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        $practices = Practice::orderBy('created_at', 'desc')->paginate(5);
+        $practices = Practice::orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
         return view('pages.practice.index', [
             'practices' => $practices,
@@ -32,7 +34,7 @@ class PracticeController extends Controller
 
     public function my()
     {
-        $practices = Practice::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
+        $practices = Practice::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
         return view('pages.practice.index', [
             'practices' => $practices,

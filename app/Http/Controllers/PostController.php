@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    const PER_PAGE = 24;
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +33,7 @@ class PostController extends Controller
             $postsQuery = $postsQuery->where('signer_id', $filters['signer_id']);
         if ($filters['group_id'] > 0)
             $postsQuery = $postsQuery->where('group_id', $filters['group_id']);
-        $posts = $postsQuery->paginate(20);
+        $posts = $postsQuery->paginate(self::PER_PAGE);
 
         $users = UserHelper::activeOrdered()->get();
         $groups = GroupHelper::ordered()->get();
@@ -112,7 +114,7 @@ class PostController extends Controller
 
     public function unanswered()
     {
-        $posts = UnansweredPost::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(36);
+        $posts = UnansweredPost::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
         return view('pages.posts.unanswered', [
             'posts' => $posts,

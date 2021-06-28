@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PollbunchController extends Controller
 {
+    const PER_PAGE = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +19,7 @@ class PollbunchController extends Controller
      */
     public function index()
     {
-        $pollbunches = Pollbunch::orderBy('created_at', 'desc')->paginate(5);
+        $pollbunches = Pollbunch::orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
         return view('pages.pollbunches.index', [
             'pollbunches' => $pollbunches,
@@ -26,7 +28,7 @@ class PollbunchController extends Controller
 
     public function my()
     {
-        $pollbunches = Pollbunch::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
+        $pollbunches = Pollbunch::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
         return view('pages.pollbunches.index', [
             'pollbunches' => $pollbunches,
