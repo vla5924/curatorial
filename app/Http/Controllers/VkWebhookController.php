@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class VkWebhookController extends Controller
 {
-    const SECRET_KEY = 'icur27801';
     const RETURN_TEXT = 'ok';
 
     const ATTACHMENT_TYPES = ['photo', 'video', 'audio', 'poll', 'doc', 'link'];
@@ -43,7 +42,7 @@ class VkWebhookController extends Controller
 
     public function index(Request $request)
     {
-        if (!$request->has(['type', 'secret']) or $request->secret != self::SECRET_KEY)
+        if (!$request->has(['type', 'secret']) or $request->secret != config('services.vkontakte_webhook.secret'))
             return self::RETURN_TEXT;
 
         if ($request->type == 'confirmation') {
