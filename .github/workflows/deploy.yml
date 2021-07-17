@@ -12,6 +12,11 @@ jobs:
     env:
         CURATORIAL_DIR: ${{ secrets.CURATORIAL_DIR }}
     steps:
+    - name: Enable maintenance mode
+      shell: bash
+      run: |
+        cd $CURATORIAL_DIR
+        php artisan down
     - name: Pull changes
       shell: bash
       run: |
@@ -33,3 +38,8 @@ jobs:
         php artisan view:cache
         php artisan permission:cache-reset
         echo "Don't forget to run 'php artisan db:seed PermissionSeeder if needed!"
+    - name: Disable maintenance mode
+      shell: bash
+      run: |
+        cd $CURATORIAL_DIR
+        php artisan up
