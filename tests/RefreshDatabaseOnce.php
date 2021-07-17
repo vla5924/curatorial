@@ -4,16 +4,17 @@ namespace Tests;
 
 use Illuminate\Support\Facades\Artisan;
 
+$databaseRefreshedBeforeTesting = false;
+
 trait RefreshDatabaseOnce
 {
-    protected static $databaseRefreshed = false;
-
     public function refreshDatabaseOnce(): void
     {
-        if (!static::$databaseRefreshed) {
+        global $databaseRefreshedBeforeTesting;
+        if (!$databaseRefreshedBeforeTesting) {
             Artisan::call('migrate:fresh', ['--env' => 'testing']);
             Artisan::call('db:seed', ['--class' => 'PermissionSeeder', '--env' => 'testing']);
-            static::$databaseRefreshed = true;
+            $databaseRefreshedBeforeTesting = true;
         }
     }
 }
