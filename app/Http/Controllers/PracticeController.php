@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Helpers\PracticeHelper;
 use App\Http\Services\VkTokenService;
-use App\Models\Group;
 use App\Models\Practice;
 use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PracticeController extends Controller
 {
     const FILES_COUNT_MIN = 1;
     const FILES_COUNT_MAX = 12;
+
+    const PER_PAGE = 10;
 
     /**
      * Display a listing of the resource.
@@ -24,7 +25,7 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        $practices = Practice::orderBy('created_at', 'desc')->paginate(5);
+        $practices = Practice::orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
         return view('pages.practice.index', [
             'practices' => $practices,
@@ -33,7 +34,7 @@ class PracticeController extends Controller
 
     public function my()
     {
-        $practices = Practice::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
+        $practices = Practice::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
 
         return view('pages.practice.index', [
             'practices' => $practices,
@@ -134,6 +135,19 @@ class PracticeController extends Controller
         $practice->group_id = $request->group_id;
         $practice->save();
 
+        if ($request->has('picture_ids')) {
+            $idsCount = count($request->picture_ids);
+            if ($idsCount > 0) {
+                $controller = new PracticePictureController;
+                for ($i = 0; $i < $idsCount; $i++) {
+                    $pictureId = (int)$request->picture_ids[$i];
+                    $answerField = 'picture_' . $pictureId . '_answer';
+                    $answer = $request->has($answerField) ? Str::limit($request->get($answerField), 255, '') : null;
+                    $controller->setAnswer($pictureId, $answer);
+                }
+            }
+        }
+
         return redirect()->back()->withSuccess(__('practice.practice_updated_successfully'));
     }
 
@@ -145,6 +159,9 @@ class PracticeController extends Controller
      */
     public function destroy(Practice $practice)
     {
+        if ($practice->user->id != Auth::user()->id)
+            return redirect()->back()->with('failure', __('practice.you_are_not_creator'));
+
         PracticeHelper::deepDestroy($practice);
 
         return redirect()->route('practice.index')->with('success', __('practice.practice_deleted_successfully'));

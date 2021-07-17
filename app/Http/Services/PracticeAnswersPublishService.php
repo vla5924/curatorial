@@ -2,11 +2,8 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\VkTokenService;
-use App\Models\Group;
 use App\Models\PostAttachment;
 use App\Models\Practice;
-use App\Models\PracticePicture;
 use App\Models\PublishedPracticePicture;
 use ATehnix\VkClient\Exceptions\VkException;
 
@@ -16,9 +13,8 @@ class PracticeAnswersPublishService extends VkApiService
 
     public function __construct()
     {
-        if (!VkTokenService::hasExtraToken())
-            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
-        parent::__construct(VkTokenService::getExtraToken());
+        parent::__construct();
+        $this->requireExtraToken();
     }
 
     public function collectAnswers(Practice $practice): array
@@ -35,7 +31,7 @@ class PracticeAnswersPublishService extends VkApiService
     public function publishAnswers(Practice $practice)
     {
         try {
-            $this->checkToken();
+            $this->checkExtraToken();
         } catch (VkException $e) {
             return [
                 'ok' => false,
@@ -76,12 +72,12 @@ class PracticeAnswersPublishService extends VkApiService
 
             $post = $attachment->post;
             try {
-                $response = $this->api->request('wall.createComment', [
+                $response = $this->callExtraForResponse('wall.createComment', [
                     'owner_id' => -$post->group->vk_id,
                     'post_id' => $post->vk_id,
                     'from_group' => $post->group->vk_id,
                     'message' => sprintf(self::TEXT_ANSWER_FORMATTED, $answers[$picture->id]),
-                ])['response'];
+                ]);
             } catch (VkException $e) {
                 $results[] = [
                     'ok' => false,

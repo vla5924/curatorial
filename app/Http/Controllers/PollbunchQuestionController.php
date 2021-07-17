@@ -6,7 +6,6 @@ use App\Models\Pollbunch;
 use App\Models\PollbunchAnswer;
 use App\Models\PollbunchQuestion;
 use ErrorException;
-use Illuminate\Http\Request;
 
 class PollbunchQuestionController extends Controller
 {

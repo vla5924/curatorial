@@ -39,6 +39,7 @@
                             <i class="fas fa-pencil-alt"></i>
                             <span class="d-none d-md-inline">@lang('pollbunches.edit')</span>
                         </a>
+                        @if ($pollbunch->user->id == Auth::user()->id)
                         <button type="submit" class="btn btn-danger btn-sm btn-delete" form="destroy-{{ $pollbunch->id }}">
                                 <i class="fas fa-trash"></i>
                                 <span class="d-none d-md-inline">@lang('pollbunches.delete')</span>
@@ -47,6 +48,7 @@
                             @csrf
                             @method('DELETE')
                         </form>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -55,5 +57,5 @@
     </div>
 </div>
 
-{{ $pollbunches->links() }}
+{{ $pollbunches->links('vendor.pagination.bootstrap-4') }}
 @endsection

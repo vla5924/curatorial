@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\RepublisherController;
 use App\Http\Controllers\Api\RoleController as ApiRoleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PracticeController;
-use App\Http\Controllers\Auth\VKLoginController;
+use App\Http\Controllers\Auth\VkLoginController;
 use App\Http\Controllers\ExtraTokenController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HelpController;
@@ -43,11 +43,11 @@ Auth::routes();
 Route::post('/vk/webhook', [VkWebhookController::class, 'index']);
 
 Route::middleware('guest')->group(function () {
-    Route::get('/vk/redirect', [VKLoginController::class, 'redirect'])->name('login.vk.redirect');
-    Route::get('/vk/callback', [VKLoginController::class, 'callback'])->name('login.vk.callback');
+    Route::get('/vk/redirect', [VkLoginController::class, 'redirect'])->name('login.vk.redirect');
+    Route::get('/vk/callback', [VkLoginController::class, 'callback'])->name('login.vk.callback');
 });
 
-Route::middleware(['auth', 'language'])->group(function () {
+Route::middleware(['auth', 'language', 'role:user|admin'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::middleware('can:view rating')->get('/users/rating', [RatingController::class, 'index'])->name('users.rating.index');

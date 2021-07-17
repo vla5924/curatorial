@@ -40,4 +40,8 @@ return [
         'client_id' => env('VKONTAKTE_EXTRA_CLIENT_ID'),
     ],
 
+    'vkontakte_webhook' => [
+        'secret' => env('VKONTAKTE_WEBHOOK_SECRET'),
+    ],
+
 ];

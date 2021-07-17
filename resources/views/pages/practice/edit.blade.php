@@ -21,6 +21,32 @@
                     @include('components.user-groups', ['selected' => $practice->group->id])
                 </select>
             </div>
+            <div class="form-group">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>@lang('practice.order')</th>
+                        <th>@lang('practice.picture')</th>
+                        <th width=30%>@lang('practice.answer')</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1 ?>
+                        @foreach ($practice->pictures as $picture)
+                        <tr>
+                            <td>{{ $i++ }}</td>
+                            <td>
+                                <img src="{{ Storage::url($picture->path) }}" style="max-width:100%">
+                            </td>
+                            <td>
+                                <input type="hidden" name="picture_ids[]" value="{{ $picture->id }}" />
+                                <input type="text" class="form-control" value="{{ $picture->answer }}" name="picture_{{ $picture->id }}_answer" placeholder="@lang('practice.answer')">
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">@lang('practice.save')</button>

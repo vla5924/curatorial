@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Practice;
 use App\Models\PracticePicture;
@@ -14,9 +13,8 @@ class PracticePublishService extends VkApiService
 {
     public function __construct()
     {
-        if (!VkTokenService::hasExtraToken())
-            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
-        parent::__construct(VkTokenService::getExtraToken());
+        parent::__construct();
+        $this->requireExtraToken();
     }
 
     protected function uploadWallPhoto(PracticePicture $picture, string $uploadUrl)
@@ -44,7 +42,7 @@ class PracticePublishService extends VkApiService
         bool $signed
     ) {
         try {
-            $this->checkToken();
+            $this->checkExtraToken();
         } catch (VkException $e) {
             return [
                 'ok' => false,
@@ -52,9 +50,9 @@ class PracticePublishService extends VkApiService
             ];
         }
 
-        $response = $this->api->request('photos.getWallUploadServer', [
+        $response = $this->callForResponse('photos.getWallUploadServer', [
             'group_id' => $group->vk_id,
-        ], VkTokenService::getToken())['response'];
+        ]);
         $uploadUrl = $response['upload_url'];
         $ok = true;
         $results = [];
@@ -63,12 +61,12 @@ class PracticePublishService extends VkApiService
             $uploadInfo = $this->uploadWallPhoto($picture, $uploadUrl);
 
             try {
-                $response = $this->api->request('photos.saveWallPhoto', [
+                $response = $this->callForResponse('photos.saveWallPhoto', [
                     'group_id' => $group->vk_id,
                     'photo' => $uploadInfo['photo'],
                     'server' => $uploadInfo['server'],
                     'hash' => $uploadInfo['hash'],
-                ], VkTokenService::getToken())['response'];
+                ]);
             } catch (VkException $e) {
                 $results[] = [
                     'ok' => false,
@@ -82,7 +80,7 @@ class PracticePublishService extends VkApiService
             $attachments = 'photo' . $ownerId . '_' . $response[0]['id'];
 
             try {
-                $response = $this->api->request('wall.post', [
+                $response = $this->callExtraForResponse('wall.post', [
                     'owner_id'       => -$group->vk_id,
                     'from_group'     => 1,
                     'close_comments' => 0,
@@ -90,7 +88,7 @@ class PracticePublishService extends VkApiService
                     'message'        => $message,
                     'attachments'    => $attachments,
                     'publish_date'   => ($publishDate + $interval * 60 * $i++),
-                ])['response'];
+                ]);
             } catch (VkException $e) {
                 $results[] = [
                     'ok' => false,
@@ -102,7 +100,7 @@ class PracticePublishService extends VkApiService
 
             $postId = (-$group->vk_id) . '_' . $response['post_id'];
             try {
-                $response = $this->api->request('wall.getById', ['posts' => $postId], VkTokenService::getToken())['response'];
+                $response = $this->callForResponse('wall.getById', ['posts' => $postId]);
                 if (isset($response[0], $response[0]['attachments'])) {
                     $publishedPicture = new PublishedPracticePicture;
                     $publishedPicture->practice_picture_id = $picture->id;

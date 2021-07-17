@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Practice;
 use App\Models\PracticePicture;
 use ErrorException;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 class PracticePictureController extends Controller
@@ -30,5 +29,14 @@ class PracticePictureController extends Controller
         $picture->practice_id = $practice->id;
         $picture->path = $path;
         $picture->save();
+    }
+
+    public function setAnswer(int $pictureId, ?string $answer = null)
+    {
+        $picture = PracticePicture::where('id', $pictureId)->first();
+        if ($picture) {
+            $picture->answer = $answer;
+            $picture->save();
+        }
     }
 }

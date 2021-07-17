@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\VkTokenService;
 use App\Models\Group;
 use App\Models\Pollbunch;
 use App\Models\PollbunchQuestion;
@@ -14,9 +13,8 @@ class PollbunchPublishService extends VkApiService
 {
     public function __construct()
     {
-        if (!VkTokenService::hasExtraToken())
-            throw new VkException(__(self::EXTRA_TOKEN_IS_NOT_FOUND));
-        parent::__construct(VkTokenService::getExtraToken());
+        parent::__construct();
+        $this->requireExtraToken();
     }
 
     protected function createPoll(PollbunchQuestion $question, Group $group)
@@ -31,7 +29,7 @@ class PollbunchPublishService extends VkApiService
             'owner_id' => -$group->vk_id,
             'add_answers' => json_encode($answers),
         ];
-        return $this->api->request('polls.create', $parameters)['response'];
+        return $this->callExtraForResponse('polls.create', $parameters);
     }
 
     public function publish(
@@ -43,7 +41,7 @@ class PollbunchPublishService extends VkApiService
         bool $signed
     ) {
         try {
-            $this->checkToken();
+            $this->checkExtraToken();
         } catch (VkException $e) {
             return [
                 'ok' => false,
@@ -87,7 +85,7 @@ class PollbunchPublishService extends VkApiService
                     'attachments'    => $attachments,
                     'publish_date'   => ($publishDate + $interval * 60 * $i++),
                 ];
-                $response = $this->api->request('wall.post', $parameters)['response'];
+                $response = $this->callExtraForResponse('wall.post', $parameters);
             } catch (VkException $e) {
                 $posts[] = [
                     'ok' => false,

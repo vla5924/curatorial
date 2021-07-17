@@ -47,7 +47,7 @@ return [
     'interval_placeholder' => 'Введите интервал между публикациями записей (в минутах)',
     'add_signature' => 'Добавить подпись',
     'publish' => 'Опубликовать',
-    'publishihg' => 'Публикация',
+    'publishing' => 'Публикация',
     'postponed' => 'Отложено',
     'published' => 'Пятиминутка опубликована',
     'api_error' => 'Ошибка API',
