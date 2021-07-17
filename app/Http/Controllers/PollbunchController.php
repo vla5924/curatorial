@@ -132,6 +132,9 @@ class PollbunchController extends Controller
      */
     public function destroy(Pollbunch $pollbunch)
     {
+        if ($pollbunch->user->id != Auth::user()->id)
+            return redirect()->back()->with('failure', __('pollbunches.you_are_not_creator'));
+
         foreach ($pollbunch->questions as $question) {
             foreach ($question->answers as $answer)
                 $answer->delete();

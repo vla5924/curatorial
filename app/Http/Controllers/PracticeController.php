@@ -159,6 +159,9 @@ class PracticeController extends Controller
      */
     public function destroy(Practice $practice)
     {
+        if ($practice->user->id != Auth::user()->id)
+            return redirect()->back()->with('failure', __('practice.you_are_not_creator'));
+
         PracticeHelper::deepDestroy($practice);
 
         return redirect()->route('practice.index')->with('success', __('practice.practice_deleted_successfully'));
