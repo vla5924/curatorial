@@ -121,7 +121,7 @@ class PollbunchController extends Controller
         $pollbunch->group_id = $request->group_id;
         $pollbunch->save();
 
-        return redirect()->back()->withSuccess(__('pollbunches.pollbunch_updated_successfully'));
+        return redirect()->route('pollbunches.show', $pollbunch->id)->with('success', __('pollbunches.pollbunch_updated_successfully'));
     }
 
     /**

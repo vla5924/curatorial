@@ -148,7 +148,7 @@ class PracticeController extends Controller
             }
         }
 
-        return redirect()->back()->withSuccess(__('practice.practice_updated_successfully'));
+        return redirect()->route('practice.show', $practice->id)->with('success', __('practice.practice_updated_successfully'));
     }
 
     /**
