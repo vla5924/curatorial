@@ -83,6 +83,7 @@ class VkApiService
         if ($response[0]['id'] != Auth::user()->vk_id)
             throw new VkException(__(self::TOKEN_IS_UNFAMILIAR));
     }
+
     protected function checkToken()
     {
         $this->checkTokenResponse($this->callForResponse('users.get'));
