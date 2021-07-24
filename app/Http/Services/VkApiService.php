@@ -18,6 +18,10 @@ class VkApiService
     protected $extraToken;
     protected $api;
 
+    protected $limitRequestsPerSec = 3;
+    private $prevMicrotime = 0;
+    private $requestsExecuted = 0;
+
     protected function __construct()
     {
         $this->token = VkTokenService::getToken();
@@ -34,9 +38,25 @@ class VkApiService
         $this->extraToken = VkTokenService::getExtraToken();
     }
 
+    private function preventFlood()
+    {
+        $currMicrotime = microtime(true);
+        $elapsed = $currMicrotime - $this->prevMicrotime;
+        if ($elapsed <= 1 && $this->requestsExecuted >= $this->limitRequestsPerSec) {
+            $wait = 1.01 - $elapsed;
+            usleep((int)($wait * 1e6));
+            $this->requestsExecuted = 1;
+            $this->prevMicrotime = microtime(true);
+        } else {
+            if ($elapsed > 1)
+                $this->prevMicrotime = $currMicrotime;
+            $this->requestsExecuted++;
+        }
+    }
 
     protected function call(string $method, $parameters = [])
     {
+        $this->preventFlood();
         return $this->api->request($method, $parameters);
     }
 
@@ -47,6 +67,7 @@ class VkApiService
 
     protected function callExtra(string $method, $parameters = [])
     {
+        $this->preventFlood();
         return $this->api->request($method, $parameters, $this->extraToken);
     }
 
@@ -54,7 +75,6 @@ class VkApiService
     {
         return $this->callExtra($method, $parameters)['response'];
     }
-
 
     private function checkTokenResponse($response)
     {
