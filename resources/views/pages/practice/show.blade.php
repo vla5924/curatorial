@@ -69,6 +69,7 @@
             <a class="btn btn-primary btn-sm" href="{{ route('practice.publish', $practice->id) }}">
                 <i class="fab fa-vk"></i> @lang('practice.publish')
             </a>
+            @if ($practice->user->id == Auth::user()->id)
             <button class="btn btn-secondary btn-sm" onclick="Internal.publishAnswers(this)">
                 <i class="fas fa-comment-dots"></i> @lang('practice.publish_answers')
             </button>
@@ -82,6 +83,7 @@
                 @csrf
                 @method('DELETE')
             </form>
+            @endif
         </div>
 
         <div class="text-muted">

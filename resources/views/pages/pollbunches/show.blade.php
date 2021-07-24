@@ -80,6 +80,7 @@
             <a class="btn btn-primary btn-sm" href="{{ route('pollbunches.publish', $pollbunch->id) }}">
                 <i class="fab fa-vk"></i> @lang('pollbunches.publish')
             </a>
+            @if ($pollbunch->user->id == Auth::user()->id)
             <button class="btn btn-secondary btn-sm" onclick="Internal.publishAnswers(this)">
                 <i class="fas fa-comment-dots"></i> @lang('pollbunches.publish_answers')
             </button>
@@ -93,6 +94,7 @@
                 @csrf
                 @method('DELETE')
             </form>
+            @endif
         </div>
 
         <div class="text-muted">

@@ -112,6 +112,9 @@ class PracticeController extends Controller
      */
     public function edit(Practice $practice)
     {
+        if ($practice->user->id != Auth::user()->id)
+            abort(403);
+
         return view('pages.practice.edit', [
             'practice' => $practice,
         ]);
@@ -126,6 +129,9 @@ class PracticeController extends Controller
      */
     public function update(Request $request, Practice $practice)
     {
+        if ($practice->user->id != Auth::user()->id)
+            return redirect()->back()->with('failure', __('practice.you_are_not_creator'));
+
         $request->validate([
             'name' => 'required',
             'group_id' => 'required',

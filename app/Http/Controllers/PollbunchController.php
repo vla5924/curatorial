@@ -98,6 +98,9 @@ class PollbunchController extends Controller
      */
     public function edit(Pollbunch $pollbunch)
     {
+        if ($pollbunch->user->id != Auth::user()->id)
+            abort(403);
+
         return view('pages.pollbunches.edit', [
             'pollbunch' => $pollbunch,
         ]);
@@ -112,6 +115,9 @@ class PollbunchController extends Controller
      */
     public function update(Request $request, Pollbunch $pollbunch)
     {
+        if ($pollbunch->user->id != Auth::user()->id)
+            return redirect()->back()->with('failure', __('pollbunches.you_are_not_creator'));
+
         $request->validate([
             'name' => 'required',
             'group_id' => 'required',
