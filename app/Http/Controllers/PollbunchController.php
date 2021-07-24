@@ -98,6 +98,9 @@ class PollbunchController extends Controller
      */
     public function edit(Pollbunch $pollbunch)
     {
+        if ($pollbunch->user->id != Auth::user()->id)
+            abort(403);
+
         return view('pages.pollbunches.edit', [
             'pollbunch' => $pollbunch,
         ]);
@@ -112,6 +115,9 @@ class PollbunchController extends Controller
      */
     public function update(Request $request, Pollbunch $pollbunch)
     {
+        if ($pollbunch->user->id != Auth::user()->id)
+            return redirect()->back()->with('failure', __('pollbunches.you_are_not_creator'));
+
         $request->validate([
             'name' => 'required',
             'group_id' => 'required',
@@ -121,7 +127,7 @@ class PollbunchController extends Controller
         $pollbunch->group_id = $request->group_id;
         $pollbunch->save();
 
-        return redirect()->back()->withSuccess(__('pollbunches.pollbunch_updated_successfully'));
+        return redirect()->route('pollbunches.show', $pollbunch->id)->with('success', __('pollbunches.pollbunch_updated_successfully'));
     }
 
     /**

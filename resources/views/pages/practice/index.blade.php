@@ -35,11 +35,11 @@
                               <i class="fas fa-folder"></i>
                               <span class="d-none d-md-inline">@lang('practice.view')</span>
                         </a>
+                        @if ($practice->user->id == Auth::user()->id)
                         <a class="btn btn-info btn-sm" href="{{ route('practice.edit', $practice->id) }}">
                             <i class="fas fa-pencil-alt"></i>
                             <span class="d-none d-md-inline">@lang('practice.edit')</span>
                         </a>
-                        @if ($practice->user->id == Auth::user()->id)
                         <button type="submit" class="btn btn-danger btn-sm btn-delete" href="#" form="destroy-{{ $practice->id }}">
                                 <i class="fas fa-trash"></i>
                                 <span class="d-none d-md-inline">@lang('practice.delete')</span>

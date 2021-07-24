@@ -35,11 +35,11 @@
                               <i class="fas fa-folder"></i>
                               <span class="d-none d-md-inline">@lang('pollbunches.view')</span>
                         </a>
+                        @if ($pollbunch->user->id == Auth::user()->id)
                         <a class="btn btn-info btn-sm" href="{{ route('pollbunches.edit', $pollbunch->id) }}">
                             <i class="fas fa-pencil-alt"></i>
                             <span class="d-none d-md-inline">@lang('pollbunches.edit')</span>
                         </a>
-                        @if ($pollbunch->user->id == Auth::user()->id)
                         <button type="submit" class="btn btn-danger btn-sm btn-delete" form="destroy-{{ $pollbunch->id }}">
                                 <i class="fas fa-trash"></i>
                                 <span class="d-none d-md-inline">@lang('pollbunches.delete')</span>
