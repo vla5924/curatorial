@@ -36,6 +36,7 @@ class PollbunchPublishService extends VkApiService
         Pollbunch $pollbunch,
         Group $group,
         string $message,
+        string $hashtags,
         int $publishDate,
         int $interval,
         bool $signed
@@ -76,12 +77,13 @@ class PollbunchPublishService extends VkApiService
             $publishedQuestion->save();
 
             try {
+                $fullMessage = $message . PHP_EOL . PHP_EOL . $question->text . PHP_EOL . PHP_EOL . $hashtags;
                 $parameters = [
                     'owner_id'       => $ownerId,
                     'from_group'     => 1,
                     'close_comments' => 0,
                     'signed'         => (int)$signed,
-                    'message'        => $message,
+                    'message'        => $fullMessage,
                     'attachments'    => $attachments,
                     'publish_date'   => ($publishDate + $interval * 60 * $i++),
                 ];

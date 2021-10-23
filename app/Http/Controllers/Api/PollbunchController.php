@@ -26,14 +26,14 @@ class PollbunchController extends Controller
 
         $pollbunch = Pollbunch::where('id', $pollbunchId)->first();
         $group = Group::where('id', $request->group_id)->first();
-        $fullMessage = $request->message . PHP_EOL . PHP_EOL . $request->hashtags;
 
         try {
             $service = new PollbunchPublishService;
             return $service->publish(
                 $pollbunch,
                 $group,
-                $fullMessage,
+                $request->message,
+                $request->hashtags,
                 strtotime($request->publish_date),
                 (int)$request->interval,
                 (bool)$request->signed
